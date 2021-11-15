@@ -5,6 +5,7 @@
 class Block {
 public:
 	BlockId id;
+	// If the side is to be drawn.
 	char side[6];
 public:
 	static Block AIR;

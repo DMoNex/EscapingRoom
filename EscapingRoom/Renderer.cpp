@@ -44,7 +44,6 @@ void Renderer::drawSurface() {
 }
 
 void Renderer::drawCube(Block block) {
-	
 	if (block.side[5]) {
 		drawSurface();
 	}

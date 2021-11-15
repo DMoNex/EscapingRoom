@@ -30,8 +30,12 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 	}
 }
 
-void World::setMapStartPoint(Vec3 point) {
+void World::setMapStartPoint(Vec3 const& point) {
 	mapStartPoint = point;
+}
+
+void World::setMapEndPoint(Vec3 const& point) {
+	mapEndPoint = point;
 }
 
 Block World::getBlock(int x, int y, int z) const {
