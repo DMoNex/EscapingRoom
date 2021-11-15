@@ -14,6 +14,7 @@ void Renderer::onDraw() {
 			CEscapingRoomView::world.setBlock(block, wx, 0.f, wz);
 		}
 	}
+	// Cubic-Plane
 	glPushMatrix();
 	glTranslatef(startPoint.x, startPoint.y, startPoint.z);
 	for (float wx = startPoint.x; wx <= endPoint.x; wx++) {
