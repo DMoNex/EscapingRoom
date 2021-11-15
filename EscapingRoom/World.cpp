@@ -36,15 +36,41 @@ void World::setMapStartPoint(Vec3 point) {
 
 Block World::getBlock(int x, int y, int z) const {
 	if (x < 0 || y < 0 || z < 0 ||
-		x > sizeX || y > sizeY || z > sizeZ) return Block::AIR;
+		x >= sizeX || y >= sizeY || z >= sizeZ) return Block::AIR;
 	return map[x][y][z];
 }
 
 void World::setBlock(Block const& block, int x, int y, int z) {
 	if (x < 0 || y < 0 || z < 0 ||
-		x > sizeX || y > sizeY || z > sizeZ) return;
+		x >= sizeX || y >= sizeY || z >= sizeZ) return;
 	map[x][y][z] = block;
 	// TODO: side update for nearing blocks.
+	// These codes are about removing sides which are nearing.
+	if (getBlock(x, y + 1, z).id != BlockId::AIR) {
+		map[x][y][z].side[0] = 0;
+		map[x][y + 1][z].side[5] = 0;
+	}
+	if (getBlock(x, y - 1, z).id != BlockId::AIR) {
+		map[x][y][z].side[5] = 0;
+		map[x][y - 1][z].side[0] = 0;
+	}
+	if (getBlock(x + 1, y, z).id != BlockId::AIR) {
+		map[x][y][z].side[4] = 0;
+		map[x + 1][y][z].side[2] = 0;
+	}
+	if (getBlock(x - 1, y, z).id != BlockId::AIR) {
+		map[x][y][z].side[2] = 0;
+		map[x - 1][y][z].side[4] = 0;
+	}
+	if (getBlock(x, y, z + 1).id != BlockId::AIR) {
+		map[x][y][z].side[1] = 0;
+		map[x][y][z + 1].side[3] = 0;
+	}
+	if (getBlock(x, y, z - 1).id != BlockId::AIR) {
+		map[x][y][z].side[3] = 0;
+		map[x][y][z - 1].side[1] = 0;
+	}
+	// TODO: Annihilating a block which has no side to appear.
 }
 
 void World::setBlock(Block const& block, Vec3 const& loc) {
