@@ -4,17 +4,9 @@
 
 #pragma once
 
-// include header file
-#include <gl\GL.h>
-#include <gl\GLU.h>
-#include <gl\glut.h>
-#include <gl\glaux.H>
-
-//Generate auto linkage for libraries
-#pragma comment(lib, "OPENGL32.LIB")
-#pragma comment(lib, "GLAUX.LIB")
-#pragma comment(lib, "GLU32.LIB")
-#pragma comment(lib, "GLUT32.LIB")
+#include "EscapingRoomDoc.h"
+#include "Renderer.h"
+#include "World.h"
 
 class CEscapingRoomView : public CView
 {
@@ -30,6 +22,9 @@ public:
 public:
 	HDC m_hDC;
 	HGLRC m_hglRC;
+	// These objects will be placed more proper way.
+	static Renderer renderSingleton;
+	static World world;
 
 public:
 	BOOL SetDevicePixelFormat(HDC hdc);
