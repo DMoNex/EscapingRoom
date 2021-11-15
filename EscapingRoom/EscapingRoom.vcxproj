@@ -183,6 +183,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockId.h" />
     <ClInclude Include="ClassView.h" />
     <ClInclude Include="EscapingRoom.h" />
     <ClInclude Include="EscapingRoomDoc.h" />
@@ -196,9 +198,12 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Vec3.h" />
     <ClInclude Include="ViewTree.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="ClassView.cpp" />
     <ClCompile Include="EscapingRoom.cpp" />
     <ClCompile Include="EscapingRoomDoc.cpp" />
@@ -213,7 +218,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PropertiesWnd.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ViewTree.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EscapingRoom.rc" />

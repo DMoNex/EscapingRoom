@@ -17,6 +17,8 @@
 #define new DEBUG_NEW
 #endif
 
+Renderer CEscapingRoomView::renderSingleton;
+World CEscapingRoomView::world(101, 101, 101);
 
 // CEscapingRoomView
 
@@ -244,14 +246,9 @@ void CEscapingRoomView::DrawGLScene(void) {
 	glLoadIdentity();
 
 	//camera view configuration
-	gluLookAt(0.0f, 0.0f, 3.0f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f);
+	gluLookAt(3, 3, 3, 0, 0, 0, 0, 1, 0);
 
-	//draw
-	glBegin(GL_TRIANGLES);
-	glVertex3f(1.0, 0.0, 0.0);
-	glVertex3f(0.0, 1.0, 0.0);
-	glVertex3f(-1.0, 0.0, 0.0);
-	glEnd();
+	renderSingleton.onDraw();
 
 	//swap buffer
 	SwapBuffers(m_hDC);
