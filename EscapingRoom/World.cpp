@@ -35,7 +35,7 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 
 // Making a room
 void World::init() {
-	Block block(BlockId::ROOM);
+	Block block(BlockId::ROOM, 0);
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
