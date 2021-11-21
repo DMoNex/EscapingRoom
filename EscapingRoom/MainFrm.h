@@ -25,7 +25,8 @@ public:
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = nullptr, CCreateContext* pContext = nullptr);
-
+	COutputWnd* getOutputWindow();
+	bool isTerminated;
 // 구현입니다.
 public:
 	virtual ~CMainFrame();
@@ -56,6 +57,8 @@ protected:
 
 	BOOL CreateDockingWindows();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
+public:
+	afx_msg void OnDestroy();
 };
 
 

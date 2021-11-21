@@ -13,13 +13,13 @@
 // include header file
 #include <gl\GL.h>
 #include <gl\GLU.h>
-// #include <gl\glut.h>
+#include <gl\glut.h>
 // #include <gl\glaux.H>
 
 //Generate auto linkage for libraries
 #pragma comment(lib, "OPENGL32.LIB")
 // #pragma comment(lib, "GLAUX.LIB")
 #pragma comment(lib, "GLU32.LIB")
-// #pragma comment(lib, "GLUT32.LIB")
+#pragma comment(lib, "GLUT32.LIB")
 
 #endif //PCH_H

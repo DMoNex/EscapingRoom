@@ -7,6 +7,9 @@
 #include "EscapingRoomDoc.h"
 #include "Renderer.h"
 #include "World.h"
+#include <string>
+
+#define LOG(x) CEscapingRoomView::printLog(x)
 
 class CEscapingRoomView : public CView
 {
@@ -25,6 +28,8 @@ public:
 	// These objects will be placed more proper way.
 	static Renderer renderSingleton;
 	static World world;
+	static bool isThreading;
+	static CWinThread* gameThread;
 
 public:
 	BOOL SetDevicePixelFormat(HDC hdc);
@@ -60,6 +65,7 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	static void printLog(std::string);
 };
 
 #ifndef _DEBUG  // EscapingRoomView.cpp의 디버그 버전

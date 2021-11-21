@@ -27,6 +27,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 	ON_WM_SETTINGCHANGE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -173,6 +174,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_SORTING_GROUPBYTYPE);
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
+	isTerminated = false;
 
 	return 0;
 }
@@ -233,6 +235,11 @@ BOOL CMainFrame::CreateDockingWindows()
 
 	SetDockingWindowIcons(theApp.m_bHiColorIcons);
 	return TRUE;
+}
+
+COutputWnd* CMainFrame::getOutputWindow() {
+	if (isTerminated) return NULL;
+	return &m_wndOutput;
 }
 
 void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
@@ -405,4 +412,12 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CFrameWndEx::OnSettingChange(uFlags, lpszSection);
 	m_wndOutput.UpdateFonts();
+}
+
+void CMainFrame::OnDestroy()
+{
+	isTerminated = true;
+	CFrameWndEx::OnDestroy();
+
+	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 }
