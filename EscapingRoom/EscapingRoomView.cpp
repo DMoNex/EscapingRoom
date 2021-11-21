@@ -19,6 +19,7 @@
 
 Renderer CEscapingRoomView::renderSingleton;
 World CEscapingRoomView::world(101, 101, 101);
+Game CEscapingRoomView::game;
 
 // CEscapingRoomView
 
@@ -56,13 +57,14 @@ BOOL CEscapingRoomView::PreCreateWindow(CREATESTRUCT& cs)
 	return CView::PreCreateWindow(cs);
 }
 
+#include "Game.h"
 bool CEscapingRoomView::isThreading = false;
 CWinThread* CEscapingRoomView::gameThread = NULL;
 
 UINT run(LPVOID param) {
 	while (CEscapingRoomView::isThreading) {
-		LOG("Hi");
-		Sleep(50);
+		CEscapingRoomView::game.onTick();
+		Sleep(1000.0f / TICK);
 	}
 	AfxEndThread(0);
 	return 0;
@@ -77,8 +79,10 @@ void CEscapingRoomView::OnDraw(CDC* /*pDC*/)
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 	DrawGLScene();
-	isThreading = true;
-	AfxBeginThread(run, 0, 0);
+	if (!gameThread) {
+		isThreading = true;
+		CEscapingRoomView::gameThread = AfxBeginThread(run, 0, 0);
+	}
 
 	// Invalidate(FALSE);
 }
@@ -204,6 +208,7 @@ int CEscapingRoomView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 
 	// initialize renderring mode
 	InitGL();
+	gameThread = 0;
 
 	return 0;
 }
@@ -262,10 +267,12 @@ void CEscapingRoomView::DrawGLScene(void) {
 	glLoadIdentity();
 	//camera view configuration
 	gluLookAt(3, 3, 3, 0, 0, 0, 0, 1, 0);
-	renderSingleton.onDraw();
+
 	std::stringstream stream;
 	stream << time(NULL);
 	LOG(stream.str());
+
+	renderSingleton.onDraw();
 
 	//swap buffer
 	SwapBuffers(m_hDC);
@@ -276,7 +283,7 @@ const wchar_t* c2w(const char* str, int len) {
 	for (int i = 0; i < len; i++) {
 		wt[i] = str[i];
 	}
-	wt[len] = str[len];
+	wt[len] = 0;
 	return wt;
 }
 
@@ -285,6 +292,6 @@ void CEscapingRoomView::printLog(std::string str) {
 	CMainFrame* pFrame = (CMainFrame*)AfxGetApp()->GetMainWnd();
 	COutputWnd* wnd = pFrame->getOutputWindow();
 	wnd->getDebugOutputList().AddString((LPCTSTR)wt);
-	wnd->getDebugOutputList().SetTopIndex(wnd->getDebugOutputList().GetCount() - 1);
+	// wnd->getDebugOutputList().SetTopIndex(wnd->getDebugOutputList().GetCount() - 1);
 	free((void*)wt);
 }

@@ -7,6 +7,7 @@
 #include "EscapingRoomDoc.h"
 #include "Renderer.h"
 #include "World.h"
+#include "Game.h"
 #include <string>
 
 #define LOG(x) CEscapingRoomView::printLog(x)
@@ -30,6 +31,7 @@ public:
 	static World world;
 	static bool isThreading;
 	static CWinThread* gameThread;
+	static Game game;
 
 public:
 	BOOL SetDevicePixelFormat(HDC hdc);

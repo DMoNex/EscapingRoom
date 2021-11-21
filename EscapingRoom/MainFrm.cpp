@@ -96,11 +96,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
 
 	// TODO: 도구 모음 및 메뉴 모음을 도킹할 수 없게 하려면 이 다섯 줄을 삭제하십시오.
-	m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
-	EnableDocking(CBRS_ALIGN_ANY);
-	DockPane(&m_wndMenuBar);
-	DockPane(&m_wndToolBar);
+	// m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
+	// m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	// EnableDocking(CBRS_ALIGN_ANY);
+	// DockPane(&m_wndMenuBar);
+	// DockPane(&m_wndToolBar);
 
 
 	// Visual Studio 2005 스타일 도킹 창 동작을 활성화합니다.
@@ -174,7 +174,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_SORTING_GROUPBYTYPE);
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
-	isTerminated = false;
 
 	return 0;
 }
@@ -238,7 +237,6 @@ BOOL CMainFrame::CreateDockingWindows()
 }
 
 COutputWnd* CMainFrame::getOutputWindow() {
-	if (isTerminated) return NULL;
 	return &m_wndOutput;
 }
 
@@ -416,7 +414,6 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 
 void CMainFrame::OnDestroy()
 {
-	isTerminated = true;
 	CFrameWndEx::OnDestroy();
 
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
