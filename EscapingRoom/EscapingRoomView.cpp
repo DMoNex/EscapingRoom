@@ -270,7 +270,7 @@ void CEscapingRoomView::DrawGLScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	//camera view configuration
-	gluLookAt(-18, 3, 0, 0, 0, 0, 0, 1, 0);
+	gluLookAt(-18, 0, 0, 0, 0, 0, 0, 1, 0);
 
 	// How does the time is lapsing.
 	// std::stringstream stream;
@@ -300,9 +300,24 @@ void CEscapingRoomView::printLog(std::string str) {
 	free((void*)wt);
 }
 
+#define PI 3.14159265
+
 void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	world.eye.turnLeft(0.01);
+	switch (nChar) {
+	case VK_LEFT:
+		world.eye.turnLeft(PI/2);
+		break;
+	case VK_RIGHT:
+		world.eye.turnLeft(-PI/2);
+		break;
+	case VK_UP:
+		world.eye.stareUp(PI/2);
+		break;
+	case VK_DOWN:
+		world.eye.stareUp(-PI/2);
+		break;
+	}
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
