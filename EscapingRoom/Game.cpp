@@ -4,7 +4,6 @@
 #include "EscapingRoomView.h"
 
 void Game::onTick() {
-	LOG("Hi");
-	AfxGetApp()->GetMainWnd()->Invalidate(FALSE);
-	AfxGetApp()->GetMainWnd()->RedrawWindow();
+	CEscapingRoomView::singleton->Invalidate(FALSE);
+	CEscapingRoomView::singleton->UpdateWindow();
 }

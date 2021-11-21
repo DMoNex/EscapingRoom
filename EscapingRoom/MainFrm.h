@@ -23,6 +23,7 @@ public:
 
 // 재정의입니다.
 public:
+	static CMainFrame* singleton;
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = nullptr, CCreateContext* pContext = nullptr);
 	COutputWnd* getOutputWindow();

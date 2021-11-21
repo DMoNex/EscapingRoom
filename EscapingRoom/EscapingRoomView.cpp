@@ -18,7 +18,8 @@
 #endif
 
 Renderer CEscapingRoomView::renderSingleton;
-World CEscapingRoomView::world(101, 101, 101);
+// 9 by 9 by 9
+World CEscapingRoomView::world(9, 9, 9);
 Game CEscapingRoomView::game;
 
 // CEscapingRoomView
@@ -35,14 +36,17 @@ BEGIN_MESSAGE_MAP(CEscapingRoomView, CView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 // CEscapingRoomView 생성/소멸
 
+CEscapingRoomView* CEscapingRoomView::singleton = NULL;
+
 CEscapingRoomView::CEscapingRoomView() noexcept
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-
+	singleton = this;
 }
 
 CEscapingRoomView::~CEscapingRoomView()
@@ -266,11 +270,12 @@ void CEscapingRoomView::DrawGLScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	//camera view configuration
-	gluLookAt(3, 3, 3, 0, 0, 0, 0, 1, 0);
+	gluLookAt(-18, 3, 0, 0, 0, 0, 0, 1, 0);
 
-	std::stringstream stream;
-	stream << time(NULL);
-	LOG(stream.str());
+	// How does the time is lapsing.
+	// std::stringstream stream;
+	// stream << time(NULL);
+	// LOG(stream.str());
 
 	renderSingleton.onDraw();
 
@@ -289,9 +294,15 @@ const wchar_t* c2w(const char* str, int len) {
 
 void CEscapingRoomView::printLog(std::string str) {
 	const wchar_t* wt = c2w(str.c_str(), str.size());
-	CMainFrame* pFrame = (CMainFrame*)AfxGetApp()->GetMainWnd();
-	COutputWnd* wnd = pFrame->getOutputWindow();
+	COutputWnd* wnd = CMainFrame::singleton->getOutputWindow();
 	wnd->getDebugOutputList().AddString((LPCTSTR)wt);
 	// wnd->getDebugOutputList().SetTopIndex(wnd->getDebugOutputList().GetCount() - 1);
 	free((void*)wt);
+}
+
+void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	glRotatef(90, 0, 1, 0);
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }

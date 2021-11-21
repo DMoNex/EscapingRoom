@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "World.h"
+#include "EscapingRoomView.h"
 
 World::~World() {
 	for (int i = 0; i < sizeX; i++) {
@@ -26,6 +27,27 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 	for (int i = 0; i < sizeX; i++) {
 		for (int j = 0; j < sizeY; j++) {
 			map[i][j] = new Block[sizeZ];
+		}
+	}
+	init();
+}
+
+// Making a room
+void World::init() {
+	Block block(BlockId::ROOM);
+	for (int wx = 0; wx < sizeX; wx++) {
+		for (int wy = 0; wy < sizeY; wy++) {
+			for (int wz = 0; wz < sizeZ; wz++) {
+				setBlock(block, wx, wy, wz);
+			}
+		}
+	}
+	for (int wx = 0; wx < sizeX; wx++) {
+		for (int wy = 0; wy < sizeY; wy++) {
+			for (int wz = 0; wz < sizeZ; wz++) {
+				if (!getBlock(wx, wy, wz).isVisible())
+					setBlock(Block::AIR, wx, wy, wz);
+			}
 		}
 	}
 }

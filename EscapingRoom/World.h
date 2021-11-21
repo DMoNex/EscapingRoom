@@ -23,6 +23,7 @@ public:
 	// The size of world must be included.
 	World() : sizeX(0), sizeY(0), sizeZ(0) {}
 	World(int, int, int);
+	void init();
 	void setMapStartPoint(Vec3 const&);
 	void setMapEndPoint(Vec3 const&);
 	// Unavailable access may return Block::AIR

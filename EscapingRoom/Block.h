@@ -19,4 +19,5 @@ public:
 			side[i] = !(id == BlockId::AIR);
 		}
 	}
+	bool isVisible();
 };
