@@ -6,7 +6,7 @@
 
 void Renderer::onDraw() {
 	// For test.
-	Block block(BlockId::ROOM);
+	Block block(BlockId::ROOM, 0);
 	Vec3 startPoint = CEscapingRoomView::world.mapStartPoint;
 	Vec3 endPoint = CEscapingRoomView::world.mapEndPoint;
 	for (float wx = -50; wx <= 50; wx++) {
