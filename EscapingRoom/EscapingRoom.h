@@ -35,6 +35,7 @@ public:
 
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
+	virtual void OnClosingMainFrame(CFrameImpl* pFrameImpl);
 };
 
 extern CEscapingRoomApp theApp;

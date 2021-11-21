@@ -7,6 +7,10 @@
 #include "EscapingRoomDoc.h"
 #include "Renderer.h"
 #include "World.h"
+#include "Game.h"
+#include <string>
+
+#define LOG(x) CEscapingRoomView::printLog(x)
 
 class CEscapingRoomView : public CView
 {
@@ -16,6 +20,7 @@ protected: // serialization에서만 만들어집니다.
 
 // 특성입니다.
 public:
+	static CEscapingRoomView* singleton;
 	CEscapingRoomDoc* GetDocument() const;
 
 // 작업입니다.
@@ -25,6 +30,9 @@ public:
 	// These objects will be placed more proper way.
 	static Renderer renderSingleton;
 	static World world;
+	static bool isThreading;
+	static CWinThread* gameThread;
+	static Game game;
 
 public:
 	BOOL SetDevicePixelFormat(HDC hdc);
@@ -60,6 +68,8 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	static void printLog(std::string);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 #ifndef _DEBUG  // EscapingRoomView.cpp의 디버그 버전

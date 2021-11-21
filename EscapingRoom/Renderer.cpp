@@ -6,14 +6,8 @@
 
 void Renderer::onDraw() {
 	// For test.
-	Block block(BlockId::ROOM, 0);
 	Vec3 startPoint = CEscapingRoomView::world.mapStartPoint;
 	Vec3 endPoint = CEscapingRoomView::world.mapEndPoint;
-	for (float wx = -50; wx <= 50; wx++) {
-		for (float wz = -50; wz <= 50; wz++) {
-			CEscapingRoomView::world.setBlock(block, wx, 0.f, wz);
-		}
-	}
 	// Cubic-Plane
 	glPushMatrix();
 	glTranslatef(startPoint.x, startPoint.y, startPoint.z);

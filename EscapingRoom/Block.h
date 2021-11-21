@@ -30,6 +30,7 @@ public:
 
 	// ROOM : 천장/벽/바닥 나눠서 static으로 구현하는지?
 public:
+  bool isVisible();
 	Block() : id(BlockId::AIR), align(0) {
 		caseCrash = false;
 		lightTransmission = true;

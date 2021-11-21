@@ -8,3 +8,12 @@ Block Block::LEFT_WALL(BlockId::ROOM, 5); // -> Left Wall이면 반댓면(Right 
 Block Block::RIGHT_WALL(BlockId::ROOM, 4);
 Block Block::FORWARD_WALL(BlockId::ROOM, 3);
 Block Block::BACK_WALL(BlockId::ROOM, 2);
+
+bool Block::isVisible() {
+	bool ret = true;
+	for (int i = 0; i < 6; i++) {
+		ret |= side[i];
+	}
+	if (id == BlockId::AIR) ret = false;
+	return ret;
+}

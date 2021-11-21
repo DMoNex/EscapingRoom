@@ -26,6 +26,7 @@ COutputWnd::~COutputWnd()
 BEGIN_MESSAGE_MAP(COutputWnd, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -175,6 +176,10 @@ void COutputList::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	SetFocus();
 }
 
+COutputList& COutputWnd::getDebugOutputList() {
+	return m_wndOutputDebug;
+}
+
 void COutputList::OnEditCopy()
 {
 	MessageBox(_T("출력 복사"));
@@ -197,4 +202,11 @@ void COutputList::OnViewOutput()
 		pMainFrame->RecalcLayout();
 
 	}
+}
+
+void COutputWnd::OnDestroy()
+{
+	CDockablePane::OnDestroy();
+
+	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 }

@@ -18,7 +18,9 @@
 #endif
 
 Renderer CEscapingRoomView::renderSingleton;
-World CEscapingRoomView::world(101, 101, 101);
+// 9 by 9 by 9
+World CEscapingRoomView::world(9, 9, 9);
+Game CEscapingRoomView::game;
 
 // CEscapingRoomView
 
@@ -34,14 +36,17 @@ BEGIN_MESSAGE_MAP(CEscapingRoomView, CView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 // CEscapingRoomView 생성/소멸
 
+CEscapingRoomView* CEscapingRoomView::singleton = NULL;
+
 CEscapingRoomView::CEscapingRoomView() noexcept
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-
+	singleton = this;
 }
 
 CEscapingRoomView::~CEscapingRoomView()
@@ -56,7 +61,18 @@ BOOL CEscapingRoomView::PreCreateWindow(CREATESTRUCT& cs)
 	return CView::PreCreateWindow(cs);
 }
 
-// CEscapingRoomView 그리기
+#include "Game.h"
+bool CEscapingRoomView::isThreading = false;
+CWinThread* CEscapingRoomView::gameThread = NULL;
+
+UINT run(LPVOID param) {
+	while (CEscapingRoomView::isThreading) {
+		CEscapingRoomView::game.onTick();
+		Sleep(1000.0f / TICK);
+	}
+	AfxEndThread(0);
+	return 0;
+}
 
 void CEscapingRoomView::OnDraw(CDC* /*pDC*/)
 {
@@ -67,7 +83,12 @@ void CEscapingRoomView::OnDraw(CDC* /*pDC*/)
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 	DrawGLScene();
-	Invalidate(FALSE);
+	if (!gameThread) {
+		isThreading = true;
+		CEscapingRoomView::gameThread = AfxBeginThread(run, 0, 0);
+	}
+
+	// Invalidate(FALSE);
 }
 
 
@@ -191,6 +212,7 @@ int CEscapingRoomView::OnCreate(LPCREATESTRUCT lpCreateStruct) {
 
 	// initialize renderring mode
 	InitGL();
+	gameThread = 0;
 
 	return 0;
 }
@@ -240,16 +262,47 @@ void CEscapingRoomView::ReSizeGLScene(GLsizei width, GLsizei height) {
 	glLoadIdentity();
 }
 
+#include "MainFrm.h"
+#include <sstream>
+
 void CEscapingRoomView::DrawGLScene(void) {
 	//clear screen and depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
 	//camera view configuration
-	gluLookAt(3, 3, 3, 0, 0, 0, 0, 1, 0);
+	gluLookAt(-18, 3, 0, 0, 0, 0, 0, 1, 0);
+
+	// How does the time is lapsing.
+	// std::stringstream stream;
+	// stream << time(NULL);
+	// LOG(stream.str());
 
 	renderSingleton.onDraw();
 
 	//swap buffer
 	SwapBuffers(m_hDC);
+}
+
+const wchar_t* c2w(const char* str, int len) {
+	wchar_t* wt = (wchar_t*)malloc(sizeof(wchar_t) * ((long long)len + 1));
+	for (int i = 0; i < len; i++) {
+		wt[i] = str[i];
+	}
+	wt[len] = 0;
+	return wt;
+}
+
+void CEscapingRoomView::printLog(std::string str) {
+	const wchar_t* wt = c2w(str.c_str(), str.size());
+	COutputWnd* wnd = CMainFrame::singleton->getOutputWindow();
+	wnd->getDebugOutputList().AddString((LPCTSTR)wt);
+	// wnd->getDebugOutputList().SetTopIndex(wnd->getDebugOutputList().GetCount() - 1);
+	free((void*)wt);
+}
+
+void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	glRotatef(90, 0, 1, 0);
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
