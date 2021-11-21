@@ -66,6 +66,7 @@ void World::setBlock(Block const& block, int x, int y, int z) {
 	if (x < 0 || y < 0 || z < 0 ||
 		x >= sizeX || y >= sizeY || z >= sizeZ) return;
 	map[x][y][z] = block;
+	/*
 	// TODO: side update for nearing blocks.
 	// These codes are about removing sides which are nearing.
 	if (getBlock(x, y + 1, z).id != BlockId::AIR) {
@@ -93,6 +94,7 @@ void World::setBlock(Block const& block, int x, int y, int z) {
 		map[x][y][z - 1].side[1] = 0;
 	}
 	// TODO: Annihilating a block which has no side to appear.
+	*/
 }
 
 void World::setBlock(Block const& block, Vec3 const& loc) {

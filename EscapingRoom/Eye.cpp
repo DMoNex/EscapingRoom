@@ -3,7 +3,7 @@
 #include "Matrix.h"
 
 Vec3 Eye::getLeft() {
-	return up.cross(front).normalize();
+	return (-1) * up.cross(front).normalize();
 }
 
 void Eye::rotateGLMatrix() {

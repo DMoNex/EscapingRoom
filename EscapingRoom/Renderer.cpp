@@ -6,7 +6,6 @@
 
 void Renderer::onDraw() {
 	// For test.
-	glPushMatrix();
 	CEscapingRoomView::world.eye.rotateGLMatrix();
 	Vec3 startPoint = CEscapingRoomView::world.mapStartPoint;
 	Vec3 endPoint = CEscapingRoomView::world.mapEndPoint;
@@ -25,7 +24,6 @@ void Renderer::onDraw() {
 		glTranslatef(0, -(endPoint.y - startPoint.y + 1), 0);
 		glTranslatef(1, 0, 0);
 	}
-	glPopMatrix();
 	glPopMatrix();
 	drawAxis();
 }
