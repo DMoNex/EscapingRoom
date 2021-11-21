@@ -19,7 +19,7 @@
 
 Renderer CEscapingRoomView::renderSingleton;
 // 9 by 9 by 9
-World CEscapingRoomView::world(9, 9, 9);
+World CEscapingRoomView::world(10, 10, 10);
 Game CEscapingRoomView::game;
 
 // CEscapingRoomView
@@ -303,6 +303,6 @@ void CEscapingRoomView::printLog(std::string str) {
 void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	glRotatef(90, 0, 1, 0);
+	world.eye.turnLeft(0.01);
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }

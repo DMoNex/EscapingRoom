@@ -4,6 +4,7 @@
 #include "Vec3.h"
 #include "Renderer.h"
 #include "World.h"
+#include "Eye.h"
 
 class World {
 	// This will be used when the world is de-allocated.
@@ -14,7 +15,11 @@ class World {
 	Vec3 mapStartPoint;
 	// This is the end coord of map. Vec3(maxX, maxY, maxZ)
 	Vec3 mapEndPoint;
-
+public:
+	// Used for rendering of map.
+	// Gravitational variation and rotations are defined in this variable.
+	Eye eye;
+private:
 	// This only act over array, not real coord.
 	Block getBlock(int, int, int) const;
 	void setBlock(Block const&, int, int, int);;

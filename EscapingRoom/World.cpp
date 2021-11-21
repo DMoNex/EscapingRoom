@@ -30,6 +30,7 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 		}
 	}
 	init();
+	eye = Eye();
 }
 
 // Making a room
@@ -38,15 +39,10 @@ void World::init() {
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
-				setBlock(block, wx, wy, wz);
-			}
-		}
-	}
-	for (int wx = 0; wx < sizeX; wx++) {
-		for (int wy = 0; wy < sizeY; wy++) {
-			for (int wz = 0; wz < sizeZ; wz++) {
-				if (!getBlock(wx, wy, wz).isVisible())
-					setBlock(Block::AIR, wx, wy, wz);
+				if (wx == 0 || wx == sizeX - 1 ||
+					wy == 0 || wy == sizeY - 1 ||
+					wz == 0 || wz == sizeZ - 1)
+					setBlock(block, wx, wy, wz);
 			}
 		}
 	}
