@@ -3,22 +3,25 @@
 enum class BlockId {
 	AIR, 			// 0
 	ROOM,
-	PLAYER,
 	DOOR_CLOSED,
 	DOOR_OPENED,
-	WALL, 			// 5
-	STAIRS,
+	WALL, 			
+	STAIRS,			// 5
 	PORTAL,
 	LADDER,
 	PAD,
-	BOX, 			// 10
-	BALLOON,
 	SWITCH,
-	LASER_SENDER,
+	LASER_SENDER,	// 10
 	LASER_RECEIVER,
-	PRISM_BLOCK, 		// 15
-	MIRROR_BLOCK,
-	THORNS_TRAP,
 	THORNS_TRAP_FIXED,
-	ARROW_TRAP 		// 19
+	ARROW_TRAP, 		// 13
+};
+
+enum class EntityId {
+	PLAYER,			// 0
+	BOX,
+	BALLON,
+	PRISM_BLOCK,
+	MIRROR_BLOCK,
+	THORNS_TRAP		// 5
 };
