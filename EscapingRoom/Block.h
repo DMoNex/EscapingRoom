@@ -85,7 +85,7 @@ public:
 	char lightTransmission; // 0 : 차단(그림자), 1 : 투과
 
 public:
-	Block(BlockId id, int align) : id(id), align(align % 6) {
+	Entity(EntityId id) : id(id) {
 		
 	}
 };
