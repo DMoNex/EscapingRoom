@@ -30,6 +30,7 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 		}
 	}
 	init();
+	eye = Eye();
 }
 
 // Making a room
@@ -38,15 +39,10 @@ void World::init() {
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
-				setBlock(block, wx, wy, wz);
-			}
-		}
-	}
-	for (int wx = 0; wx < sizeX; wx++) {
-		for (int wy = 0; wy < sizeY; wy++) {
-			for (int wz = 0; wz < sizeZ; wz++) {
-				if (!getBlock(wx, wy, wz).isVisible())
-					setBlock(Block::AIR, wx, wy, wz);
+				if (wx == 0 || wx == sizeX - 1 ||
+					wy == 0 || wy == sizeY - 1 ||
+					wz == 0 || wz == sizeZ - 1)
+					setBlock(block, wx, wy, wz);
 			}
 		}
 	}
@@ -61,6 +57,24 @@ void World::setMapEndPoint(Vec3 const& point) {
 }
 
 Block World::getBlock(int x, int y, int z) const {
+	// Error by float type itself -It comes from definition of Eye- cannot be fixed.
+	// Rotating map..
+	Vec3 minVect(0, 0, 0);
+	Vec3 maxVect(sizeX - 1, sizeY - 1, sizeZ - 1);
+	Matrix mat;
+	mat.c1 = eye.front;
+	mat.c2 = eye.up;
+	mat.c3 = eye.left;
+	maxVect = mat * maxVect;
+	// Fixing error occured due to rotation.
+	Vec3 errVect;
+	errVect.x = min(minVect.x, maxVect.x);
+	errVect.y = min(minVect.y, maxVect.y);
+	errVect.z = min(minVect.z, maxVect.z);
+	Vec3 blockLoc = (mat * Vec3(x, y, z)) - errVect;
+	x = blockLoc.x;
+	y = blockLoc.y;
+	z = blockLoc.z;
 	if (x < 0 || y < 0 || z < 0 ||
 		x >= sizeX || y >= sizeY || z >= sizeZ) return Block::AIR;
 	return map[x][y][z];
@@ -70,6 +84,7 @@ void World::setBlock(Block const& block, int x, int y, int z) {
 	if (x < 0 || y < 0 || z < 0 ||
 		x >= sizeX || y >= sizeY || z >= sizeZ) return;
 	map[x][y][z] = block;
+	/*
 	// TODO: side update for nearing blocks.
 	// These codes are about removing sides which are nearing.
 	if (getBlock(x, y + 1, z).id != BlockId::AIR) {
@@ -97,20 +112,31 @@ void World::setBlock(Block const& block, int x, int y, int z) {
 		map[x][y][z - 1].side[1] = 0;
 	}
 	// TODO: Annihilating a block which has no side to appear.
+	*/
 }
 
+// Eye is acting to change the location to the rotated one.
 void World::setBlock(Block const& block, Vec3 const& loc) {
-	setBlock(block, loc.x - mapStartPoint.x, loc.y - mapStartPoint.y, loc.z - mapStartPoint.z);
+	setBlock(block, (int)(loc.x - mapStartPoint.x), (int)(loc.y - mapStartPoint.y), (int)(loc.z - mapStartPoint.z));
 }
 
+// Eye is acting to change the location to the rotated one.
 Block World::getBlock(Vec3 const& loc) const {
-	return getBlock(loc.x - mapStartPoint.x, loc.y - mapStartPoint.y, loc.z - mapStartPoint.z);
+	return getBlock((int)(loc.x - mapStartPoint.x), (int)(loc.y - mapStartPoint.y), (int)(loc.z - mapStartPoint.z));
 }
 
 void World::setBlock(Block const& block, float x, float y, float z) {
-	setBlock(block, (int)(x - mapStartPoint.x), (int)(y - mapStartPoint.y), (int)(z - mapStartPoint.z));
+	Vec3 vect;
+	vect.x = x;
+	vect.y = y;
+	vect.z = z;
+	setBlock(block, vect);
 }
 
 Block World::getBlock(float x, float y, float z) const {
-	return getBlock((int)(x - mapStartPoint.x), (int)(y - mapStartPoint.y), (int)(z - mapStartPoint.z));
+	Vec3 vect;
+	vect.x = x;
+	vect.y = y;
+	vect.z = z;
+	return getBlock(vect);
 }

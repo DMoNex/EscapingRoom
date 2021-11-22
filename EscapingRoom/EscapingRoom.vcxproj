@@ -189,10 +189,12 @@
     <ClInclude Include="EscapingRoom.h" />
     <ClInclude Include="EscapingRoomDoc.h" />
     <ClInclude Include="EscapingRoomView.h" />
+    <ClInclude Include="Eye.h" />
     <ClInclude Include="FileView.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -209,9 +211,11 @@
     <ClCompile Include="EscapingRoom.cpp" />
     <ClCompile Include="EscapingRoomDoc.cpp" />
     <ClCompile Include="EscapingRoomView.cpp" />
+    <ClCompile Include="Eye.cpp" />
     <ClCompile Include="FileView.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -221,6 +225,7 @@
     </ClCompile>
     <ClCompile Include="PropertiesWnd.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Vec3.cpp" />
     <ClCompile Include="ViewTree.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
