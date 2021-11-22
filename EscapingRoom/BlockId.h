@@ -16,12 +16,3 @@ enum class BlockId {
 	THORNS_TRAP_FIXED,
 	ARROW_TRAP, 		// 13
 };
-
-enum class EntityId {
-	PLAYER,			// 0
-	BOX,
-	BALLON,
-	PRISM_BLOCK,
-	MIRROR_BLOCK,
-	THORNS_TRAP		// 5
-};

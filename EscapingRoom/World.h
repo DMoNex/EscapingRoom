@@ -6,6 +6,13 @@
 #include "World.h"
 #include "Eye.h"
 
+#include <vector>
+#include "Entity.h"
+#include "Player.h"
+
+// Cannot include game because of hierarchys.
+class Game;
+
 class World {
 	// This will be used when the world is de-allocated.
 	int sizeX, sizeY, sizeZ;
@@ -15,6 +22,9 @@ class World {
 	Vec3 mapStartPoint;
 	// This is the end coord of map. Vec3(maxX, maxY, maxZ)
 	Vec3 mapEndPoint;
+	std::vector<Entity*> entityList;
+	// The player of this map.
+	Player* player;
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
@@ -36,4 +46,5 @@ public:
 	void setBlock(Block const&, Vec3 const&);
 	void setBlock(Block const&, float, float, float);
 	friend Renderer;
+	friend Game;
 };
