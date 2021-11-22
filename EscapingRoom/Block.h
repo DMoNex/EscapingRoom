@@ -37,7 +37,7 @@ public:
 		for (int i = 0; i < 6; i++)
 			side[i] = 0;
 	}
-	Block(BlockId id, int align) : id(id), align(align % 6) { // ROOM은 한 면만 활성화
+	Block(BlockId id, int align) : id(id), align(align % 6) {
 		for (int i = 0; i < 6; i++) {
 			side[i] = !((id == BlockId::AIR) || (id == BlockId::ROOM));
 		}
@@ -67,7 +67,7 @@ public:
 			caseCrash = true;
 			lightTransmission = false;
 			break;
-		case BlockId::ROOM:
+		case BlockId::ROOM: // ROOM은 한 면만 활성화
 			side[align] = 1;
 			caseCrash = true;
 			lightTransmission = false;
@@ -79,4 +79,13 @@ public:
 class Entity {
 public:
 	EntityId id;
+	// If the side is to be drawn.
+	char side[6]; // TOP / BOTTOM / FOWARD / BACK / LEFT / RIGHT
+	BOOL caseCrash; // false : can't crash / true : can crash
+	char lightTransmission; // 0 : 차단(그림자), 1 : 투과
+
+public:
+	Entity(EntityId id) : id(id) {
+		
+	}
 };
