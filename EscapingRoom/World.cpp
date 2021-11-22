@@ -57,6 +57,24 @@ void World::setMapEndPoint(Vec3 const& point) {
 }
 
 Block World::getBlock(int x, int y, int z) const {
+	// Error by float type itself -It comes from definition of Eye- cannot be fixed.
+	// Rotating map..
+	Vec3 minVect(0, 0, 0);
+	Vec3 maxVect(sizeX - 1, sizeY - 1, sizeZ - 1);
+	Matrix mat;
+	mat.c1 = eye.front;
+	mat.c2 = eye.up;
+	mat.c3 = eye.left;
+	maxVect = mat * maxVect;
+	// Fixing error occured due to rotation.
+	Vec3 errVect;
+	errVect.x = min(minVect.x, maxVect.x);
+	errVect.y = min(minVect.y, maxVect.y);
+	errVect.z = min(minVect.z, maxVect.z);
+	Vec3 blockLoc = (mat * Vec3(x, y, z)) - errVect;
+	x = blockLoc.x;
+	y = blockLoc.y;
+	z = blockLoc.z;
 	if (x < 0 || y < 0 || z < 0 ||
 		x >= sizeX || y >= sizeY || z >= sizeZ) return Block::AIR;
 	return map[x][y][z];
@@ -99,22 +117,12 @@ void World::setBlock(Block const& block, int x, int y, int z) {
 
 // Eye is acting to change the location to the rotated one.
 void World::setBlock(Block const& block, Vec3 const& loc) {
-	Matrix mat;
-	mat.c1 = eye.front;
-	mat.c2 = eye.up;
-	mat.c3 = eye.left;
-	Vec3 newLoc = mat * loc;
-	setBlock(block, (int)(newLoc.x - mapStartPoint.x), (int)(newLoc.y - mapStartPoint.y), (int)(newLoc.z - mapStartPoint.z));
+	setBlock(block, (int)(loc.x - mapStartPoint.x), (int)(loc.y - mapStartPoint.y), (int)(loc.z - mapStartPoint.z));
 }
 
 // Eye is acting to change the location to the rotated one.
 Block World::getBlock(Vec3 const& loc) const {
-	Matrix mat;
-	mat.c1 = eye.front;
-	mat.c2 = eye.up;
-	mat.c3 = eye.left;
-	Vec3 newLoc = mat * loc;
-	return getBlock((int)(newLoc.x - mapStartPoint.x), (int)(newLoc.y - mapStartPoint.y), (int)(newLoc.z - mapStartPoint.z));
+	return getBlock((int)(loc.x - mapStartPoint.x), (int)(loc.y - mapStartPoint.y), (int)(loc.z - mapStartPoint.z));
 }
 
 void World::setBlock(Block const& block, float x, float y, float z) {

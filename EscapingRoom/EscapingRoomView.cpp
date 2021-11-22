@@ -18,8 +18,8 @@
 #endif
 
 Renderer CEscapingRoomView::renderSingleton;
-// 9 by 9 by 9
-World CEscapingRoomView::world(9, 9, 9);
+// 10 by 10 by 10 to make it symmetric.
+World CEscapingRoomView::world(10, 10, 10);
 Game CEscapingRoomView::game;
 
 // CEscapingRoomView
