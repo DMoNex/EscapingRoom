@@ -28,4 +28,14 @@ public:
 	virtual Entity* getPointingEntity() {
 		return NULL;
 	};
+	bool isCrashable();
+	// Unavailable movement will be blocked later.
+	// This is same with teleportation which does not change velocity.
+	void moveTo(Vec3);
+	// This is a natural movement due to gravity or something.
+	// Change velocity.
+	void moving();
+	// This will call moving.
+	void gravitizing();
+	void resetVelocity();
 };

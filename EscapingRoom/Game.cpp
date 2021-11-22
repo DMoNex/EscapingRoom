@@ -18,9 +18,33 @@ void Game::init() {
 	worldList[0]->player = player;
 }
 
+void Game::rotateWorldLeft() {
+	getCurrentWorld()->eye.turnLeft(PI / 2);
+}
+
+void Game::rotateWorldUp() {
+	getCurrentWorld()->eye.stareUp(PI / 2);
+}
+
 void Game::onTick() {
 	CEscapingRoomView::singleton->Invalidate(FALSE);
 	CEscapingRoomView::singleton->UpdateWindow();
+	entityTick();
+	playerTick();
+}
+
+void Game::entityTick() {
+
+}
+
+void Game::playerTick() {
+	// Vec3 vec3 = getPlayer()->getDirection();
+	// LOG(std::to_string(vec3.x) + " " + std::to_string(vec3.y) + " " + std::to_string(vec3.z));
+	getPlayer()->velocity + getPlayer()->speed * getPlayer()->getDirection();
+	getPlayer()->moveTo(getPlayer()->location + 
+		getPlayer()->velocity + 
+		getPlayer()->speed * getPlayer()->getDirection());
+	getPlayer()->resetKey();
 }
 
 void Game::createWorld(World* world) {
