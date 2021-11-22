@@ -300,23 +300,23 @@ void CEscapingRoomView::printLog(std::string str) {
 	free((void*)wt);
 }
 
-#define PI 3.14159265
-
 void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
+	static float pi = atan(1) * 4; // Defining pi using trigonometry.
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	switch (nChar) {
 	case VK_LEFT:
-		world.eye.turnLeft(PI/2);
+		world.eye.turnLeft(pi/2);
 		break;
 	case VK_RIGHT:
-		world.eye.turnLeft(-PI/2);
+		world.eye.turnLeft(-pi/2);
 		break;
+		// UP and DOWN will be disabled in real game playing.
 	case VK_UP:
-		world.eye.stareUp(PI/2);
+		world.eye.stareUp(pi/2);
 		break;
 	case VK_DOWN:
-		world.eye.stareUp(-PI/2);
+		world.eye.stareUp(-pi/2);
 		break;
 	}
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
