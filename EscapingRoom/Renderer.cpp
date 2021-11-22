@@ -6,7 +6,6 @@
 
 void Renderer::onDraw() {
 	// For test.
-	CEscapingRoomView::world.eye.rotateGLMatrix();
 	Vec3 startPoint = CEscapingRoomView::world.mapStartPoint;
 	Vec3 endPoint = CEscapingRoomView::world.mapEndPoint;
 	// Cubic-Plane

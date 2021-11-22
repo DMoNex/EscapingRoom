@@ -16,8 +16,7 @@ class World {
 	// This is the end coord of map. Vec3(maxX, maxY, maxZ)
 	Vec3 mapEndPoint;
 public:
-	// Used for rendering of map.
-	// Gravitational variation and rotations are defined in this variable.
+	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
 private:
 	// This only act over array, not real coord.

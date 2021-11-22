@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Vec3.h"
-#include "Eye.h"
 
 class Matrix {
 public:

@@ -97,18 +97,38 @@ void World::setBlock(Block const& block, int x, int y, int z) {
 	*/
 }
 
+// Eye is acting to change the location to the rotated one.
 void World::setBlock(Block const& block, Vec3 const& loc) {
-	setBlock(block, loc.x - mapStartPoint.x, loc.y - mapStartPoint.y, loc.z - mapStartPoint.z);
+	Matrix mat;
+	mat.c1 = eye.front;
+	mat.c2 = eye.up;
+	mat.c3 = eye.left;
+	Vec3 newLoc = mat * loc;
+	setBlock(block, (int)(newLoc.x - mapStartPoint.x), (int)(newLoc.y - mapStartPoint.y), (int)(newLoc.z - mapStartPoint.z));
 }
 
+// Eye is acting to change the location to the rotated one.
 Block World::getBlock(Vec3 const& loc) const {
-	return getBlock(loc.x - mapStartPoint.x, loc.y - mapStartPoint.y, loc.z - mapStartPoint.z);
+	Matrix mat;
+	mat.c1 = eye.front;
+	mat.c2 = eye.up;
+	mat.c3 = eye.left;
+	Vec3 newLoc = mat * loc;
+	return getBlock((int)(newLoc.x - mapStartPoint.x), (int)(newLoc.y - mapStartPoint.y), (int)(newLoc.z - mapStartPoint.z));
 }
 
 void World::setBlock(Block const& block, float x, float y, float z) {
-	setBlock(block, (int)(x - mapStartPoint.x), (int)(y - mapStartPoint.y), (int)(z - mapStartPoint.z));
+	Vec3 vect;
+	vect.x = x;
+	vect.y = y;
+	vect.z = z;
+	setBlock(block, vect);
 }
 
 Block World::getBlock(float x, float y, float z) const {
-	return getBlock((int)(x - mapStartPoint.x), (int)(y - mapStartPoint.y), (int)(z - mapStartPoint.z));
+	Vec3 vect;
+	vect.x = x;
+	vect.y = y;
+	vect.z = z;
+	return getBlock(vect);
 }

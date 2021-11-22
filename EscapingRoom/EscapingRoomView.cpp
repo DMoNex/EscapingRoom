@@ -19,7 +19,7 @@
 
 Renderer CEscapingRoomView::renderSingleton;
 // 9 by 9 by 9
-World CEscapingRoomView::world(10, 10, 10);
+World CEscapingRoomView::world(9, 9, 9);
 Game CEscapingRoomView::game;
 
 // CEscapingRoomView

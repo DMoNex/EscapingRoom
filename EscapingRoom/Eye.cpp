@@ -1,17 +1,20 @@
 #include "pch.h"
 #include "Eye.h"
-#include "Matrix.h"
 
 Vec3 Eye::getLeft() {
 	return (-1) * up.cross(front).normalize();
 }
 
-void Eye::rotateGLMatrix() {
+Matrix Eye::getEyeMatrix() {
 	Matrix mat;
 	mat.c1 = front;
 	mat.c2 = up;
-	mat.c3 = getLeft();
-	mat.mulToOpenGL();
+	mat.c3 = left;
+	return mat;
+}
+
+void Eye::rotateGLMatrix() {
+	getEyeMatrix().mulToOpenGL();
 }
 
 #include <cmath>
