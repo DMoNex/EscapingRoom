@@ -35,7 +35,9 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 
 // Making a room
 void World::init() {
-	Block block(BlockId::ROOM, 5);
+	Block closedDoor(BlockId::DOOR_CLOSED);
+	Block openedDoor(BlockId::DOOR_OPENED);
+
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
@@ -58,6 +60,17 @@ void World::init() {
 				}
 				else if (wy == sizeY - 1 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeY - 1) {
 					setBlock(Block::LOOP, wx, wy, wz);
+				}
+				/*임시 테스트용 코드(문)*/
+				else if (wx == 3 && (wy == 5 || wy == 6) && wz == 3) {
+					glColor3f(1.0, 0.0, 0.0);
+					setBlock(closedDoor, wx, wy, wz);
+					glColor3f(1.0, 1.0, 1.0);
+				}
+				else if (wx == 3 && (wy == 5 || wy == 6) && wz == 6) {
+					glColor3f(0.0, 0.5, 0.5);
+					setBlock(openedDoor, wx, wy, wz);
+					glColor3f(1.0, 1.0, 1.0);
 				}
 			}
 		}
