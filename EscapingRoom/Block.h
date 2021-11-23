@@ -21,11 +21,11 @@ public:
 	BOOL lightTransmission; // false : 차단(그림자), true : 투과
 public:
 	static Block AIR;
-	static Block LOOP;
+	static Block LOOP; 
 	static Block FLOOR;
 	static Block LEFT_WALL;
 	static Block RIGHT_WALL;
-	static Block FORWARD_WALL;
+	static Block FRONT_WALL;
 	static Block BACK_WALL;
 
 	// ROOM : 천장/벽/바닥 나눠서 static으로 구현하는지?

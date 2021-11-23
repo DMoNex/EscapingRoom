@@ -39,10 +39,26 @@ void World::init() {
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
-				if (wx == 0 || wx == sizeX - 1 ||
-					wy == 0 || wy == sizeY - 1 ||
-					wz == 0 || wz == sizeZ - 1)
-					setBlock(block, wx, wy, wz);
+				if ((wx == 0 || wx == sizeX - 1) && (wy == 0 || wy == sizeY - 1) && (wz == 0 || wz == sizeZ - 1)) {
+					// 각 꼭짓점 (8개) 투명
+					setBlock(Block::AIR, wx, wy, wz);
+				}
+				else if (wy == 0 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeZ - 1) {
+					// Range of Floor : ([1,sizeX-2], [1,sizeZ-2])
+					setBlock(Block::FLOOR, wx, wy, wz);
+				}
+				else if (false/*wx == sizeX - 1 && wy < sizeY - 1*/) {
+					//setBlock(Block::BACK_WALL, wx, wy, wz);
+				}
+				else if (wz == 0 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
+					setBlock(Block::LEFT_WALL, wx, wy, wz);
+				}
+				else if (wz == sizeZ - 1 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
+					setBlock(Block::RIGHT_WALL, wx, wy, wz);
+				}
+				else if (wy == sizeY - 1 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeY - 1) {
+					setBlock(Block::LOOP, wx, wy, wz);
+				}
 			}
 		}
 	}

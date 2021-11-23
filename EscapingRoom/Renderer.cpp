@@ -63,32 +63,32 @@ void Renderer::drawSurface() {
 }
 
 void Renderer::drawCube(Block block) {
-	if (block.side[5]) {
+	if (block.side[1]) { // 아랫면 활성화 -> LOOP
 		drawSurface();
 	}
-	if (block.side[0]) {
+	if (block.side[0]) { // 윗면 활성화 -> FLOOR
 		glTranslatef(0, 1, 0);
 		drawSurface();
 		glTranslatef(0, -1, 0);
 	}
-	if (block.side[3]) {
+	if (block.side[4]) { // 왼면 활성화 -> RIGHT
 		glRotatef(-90, 1, 0, 0);
 		drawSurface();
 		glRotatef(90, 1, 0, 0);
 	}
-	if (block.side[2]) {
+	if (block.side[2]) { // 앞면 활성화 -> BACK
 		glRotatef(90, 0, 0, 1);
 		drawSurface();
 		glRotatef(-90, 0, 0, 1);
 	}
-	if (block.side[1]) {
+	if (block.side[5]) { // 오른면 활성화 -> LEFT
 		glTranslatef(0, 0, 1);
 		glRotatef(-90, 1, 0, 0);
 		drawSurface();
 		glRotatef(90, 1, 0, 0);
 		glTranslatef(0, 0, -1);
 	}
-	if (block.side[4]) {
+	if (block.side[3]) { // 뒷면 활성화 -> FRONT
 		glTranslatef(1, 0, 0);
 		glRotatef(90, 0, 0, 1);
 		drawSurface();
