@@ -29,7 +29,6 @@ public:
 	HGLRC m_hglRC;
 	// These objects will be placed more proper way.
 	static Renderer renderSingleton;
-	static World world;
 	static bool isThreading;
 	static CWinThread* gameThread;
 	static Game game;

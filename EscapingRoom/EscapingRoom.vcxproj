@@ -186,6 +186,8 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockId.h" />
     <ClInclude Include="ClassView.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityId.h" />
     <ClInclude Include="EscapingRoom.h" />
     <ClInclude Include="EscapingRoomDoc.h" />
     <ClInclude Include="EscapingRoomView.h" />
@@ -197,6 +199,7 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
@@ -208,6 +211,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EscapingRoom.cpp" />
     <ClCompile Include="EscapingRoomDoc.cpp" />
     <ClCompile Include="EscapingRoomView.cpp" />
@@ -223,6 +227,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Vec3.cpp" />

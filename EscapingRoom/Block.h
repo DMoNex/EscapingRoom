@@ -37,7 +37,7 @@ public:
 		for (int i = 0; i < 6; i++)
 			side[i] = 0;
 	}
-	Block(BlockId id, int align) : id(id), align(align % 6) {
+	Block(BlockId id, int align = 0) : id(id), align(align % 6) {
 		for (int i = 0; i < 6; i++) {
 			side[i] = !((id == BlockId::AIR) || (id == BlockId::ROOM));
 		}
@@ -73,19 +73,5 @@ public:
 			lightTransmission = false;
 			break;
 		}
-	}
-};
-
-class Entity {
-public:
-	EntityId id;
-	// If the side is to be drawn.
-	char side[6]; // TOP / BOTTOM / FOWARD / BACK / LEFT / RIGHT
-	BOOL caseCrash; // false : can't crash / true : can crash
-	char lightTransmission; // 0 : 차단(그림자), 1 : 투과
-
-public:
-	Entity(EntityId id) : id(id) {
-		
 	}
 };
