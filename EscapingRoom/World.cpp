@@ -31,7 +31,7 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 	}
 	init();
 	eye = Eye();
-	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front;
+	cameraInit();
 }
 
 // Making a room
@@ -76,6 +76,10 @@ void World::init() {
 			}
 		}
 	}
+}
+
+void World::cameraInit() {
+	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front;
 }
 
 void World::setMapStartPoint(Vec3 const& point) {
@@ -178,7 +182,7 @@ void World::rotateFL() {
 	Vec3 left = eye.left;
 	eye.front = cos(PI / 2) * front + sin(PI / 2) * left;
 	eye.left = -sin(PI / 2) * front + cos(PI / 2) * left;
-	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front;
+	cameraInit();
 }
 
 void World::rotateLU() {
@@ -186,7 +190,7 @@ void World::rotateLU() {
 	Vec3 up = eye.up;
 	eye.left = cos(PI / 2) * left + sin(PI / 2) * up;
 	eye.up = -sin(PI / 2) * left + cos(PI / 2) * up;
-	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front;
+	cameraInit();
 }
 
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
