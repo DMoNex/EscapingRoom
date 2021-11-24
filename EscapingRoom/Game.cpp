@@ -39,6 +39,7 @@ void Game::entityTick() {
 		getCurrentWorld()->entityList[i]->gravitizing();
 		getCurrentWorld()->entityList[i]->moveTo(getCurrentWorld()->entityList[i]->location +
 			getCurrentWorld()->entityList[i]->velocity);
+		getCurrentWorld()->entityList[i]->velocity = Vec3(0, 0, 0);
 	}
 }
 

@@ -243,7 +243,12 @@ void CEscapingRoomView::OnSize(UINT nType, int cx, int cy)
 	ReSizeGLScene(cx, cy);
 }
 
+Vec3 camera(-18, 3, 0);
+float _height = 640, _width = 320;
+
 void CEscapingRoomView::ReSizeGLScene(GLsizei width, GLsizei height) {
+	_height = height;
+	_width = width;
 	// don't want a divide by zero
 	if (height == 0)
 		height = 1;
@@ -254,7 +259,7 @@ void CEscapingRoomView::ReSizeGLScene(GLsizei width, GLsizei height) {
 	glLoadIdentity();
 
 	// calculate aspect ratio of the window
-	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 1000.0f);
+	// gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, (game.getPlayer()->location - camera).length(), 1000.0f);
 
 	//set modelview matrix
 	glMatrixMode(GL_MODELVIEW);
@@ -266,10 +271,15 @@ void CEscapingRoomView::ReSizeGLScene(GLsizei width, GLsizei height) {
 
 void CEscapingRoomView::DrawGLScene(void) {
 	//clear screen and depth buffer
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, 2.0f, (game.getPlayer()->location - camera).length(), 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	//camera view configuration
-	gluLookAt(-18, 3, 0, 0, 0, 0, 0, 1, 0);
+	gluLookAt(camera.x, camera.y, camera.z, 0, 0, 0, 0, 1, 0);
 
 	// How does the time is lapsing.
 	// std::stringstream stream;
