@@ -195,6 +195,7 @@
     <ClInclude Include="FileView.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="OutputWnd.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="Eye.cpp" />
     <ClCompile Include="FileView.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
