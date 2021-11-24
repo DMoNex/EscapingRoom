@@ -15,7 +15,7 @@ void Player::resetKey() {
 	keyD = false;
 }
 
-Vec3 Player::getDirection() {
+Vec3 Player::getKeyboardMovingDirection() {
 	Vec3 direction(0, 0, 0);
 	if (keyW) {
 		direction = direction + Vec3(1, 0, 0);

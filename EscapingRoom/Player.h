@@ -23,5 +23,5 @@ public:
 	// Controlling using keyboard wasd.
 	void control(bool, bool, bool, bool);
 	void resetKey();
-	Vec3 getDirection();
+	Vec3 getKeyboardMovingDirection();
 };

@@ -33,17 +33,20 @@ void Game::onTick() {
 	playerTick();
 }
 
+// Gravity moving part.
 void Game::entityTick() {
-
+	for (int i = 0; i < getCurrentWorld()->entityList.size(); i++) {
+		getCurrentWorld()->entityList[i]->gravitizing();
+		getCurrentWorld()->entityList[i]->moveTo(getCurrentWorld()->entityList[i]->location +
+			getCurrentWorld()->entityList[i]->velocity);
+	}
 }
 
+// Keyboard moving part
 void Game::playerTick() {
-	// Vec3 vec3 = getPlayer()->getDirection();
-	// LOG(std::to_string(vec3.x) + " " + std::to_string(vec3.y) + " " + std::to_string(vec3.z));
-	getPlayer()->velocity + getPlayer()->speed * getPlayer()->getDirection();
+	getPlayer()->velocity + getPlayer()->speed * getPlayer()->getKeyboardMovingDirection();
 	getPlayer()->moveTo(getPlayer()->location + 
-		getPlayer()->velocity + 
-		getPlayer()->speed * getPlayer()->getDirection());
+		getPlayer()->speed * getPlayer()->getKeyboardMovingDirection());
 	getPlayer()->resetKey();
 }
 
