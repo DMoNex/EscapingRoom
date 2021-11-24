@@ -28,6 +28,7 @@ class World {
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
+	Vec3 camera;
 private:
 	// This only act over array, not real coord.
 	Block getBlock(int, int, int) const;
@@ -45,6 +46,11 @@ public:
 	Block getBlock(float, float, float) const;
 	void setBlock(Block const&, Vec3 const&);
 	void setBlock(Block const&, float, float, float);
+	// Rotating ovre front-left plane(90 degree)
+	void rotateFL();
+	// Rotating over left-up plane(90 degree)
+	void rotateLU();
+	void onCollisingWithBlockAndEntity(Entity*, Vec3);
 	friend Renderer;
 	friend Game;
 };

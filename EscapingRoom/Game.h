@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "Player.h"
+#include "Eye.h"
 
 class Game {
 	std::vector<World*> worldList;
@@ -24,8 +25,6 @@ public:
 	// Moving by player will
 	void playerTick();
 	void createWorld(World* world);
-	void rotateWorldLeft();
-	void rotateWorldUp();
 	World* getCurrentWorld();
 	void gotoNextWorld();
 	Player* getPlayer();

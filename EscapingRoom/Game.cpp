@@ -18,14 +18,6 @@ void Game::init() {
 	worldList[0]->player = player;
 }
 
-void Game::rotateWorldLeft() {
-	getCurrentWorld()->eye.turnLeft(PI / 2);
-}
-
-void Game::rotateWorldUp() {
-	getCurrentWorld()->eye.stareUp(PI / 2);
-}
-
 void Game::onTick() {
 	CEscapingRoomView::singleton->Invalidate(FALSE);
 	CEscapingRoomView::singleton->UpdateWindow();
@@ -36,7 +28,7 @@ void Game::onTick() {
 // Gravity moving part.
 void Game::entityTick() {
 	for (int i = 0; i < getCurrentWorld()->entityList.size(); i++) {
-		getCurrentWorld()->entityList[i]->gravitizing();
+		getCurrentWorld()->entityList[i]->velocity = getCurrentWorld()->entityList[i]->velocity - 1 / 5.0f * getCurrentWorld()->eye.up;
 		getCurrentWorld()->entityList[i]->moveTo(getCurrentWorld()->entityList[i]->location +
 			getCurrentWorld()->entityList[i]->velocity);
 		getCurrentWorld()->entityList[i]->velocity = Vec3(0, 0, 0);
@@ -46,8 +38,8 @@ void Game::entityTick() {
 // Keyboard moving part
 void Game::playerTick() {
 	getPlayer()->velocity + getPlayer()->speed * getPlayer()->getKeyboardMovingDirection();
-	getPlayer()->moveTo(getPlayer()->location + 
-		getPlayer()->speed * getPlayer()->getKeyboardMovingDirection());
+	getPlayer()->moveTo(getPlayer()->location +
+		getCurrentWorld()->eye.getEyeMatrix() * (getPlayer()->speed * getPlayer()->getKeyboardMovingDirection()));
 	getPlayer()->resetKey();
 }
 

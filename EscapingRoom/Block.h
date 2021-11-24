@@ -11,6 +11,8 @@ enum class Direction {
 	RIGHT	// 5
 };
 
+class Entity;
+
 class Block { // Block은 모두 중력의 영향을 받지 않는다.
 public:
 	BlockId id;
@@ -25,12 +27,12 @@ public:
 	static Block FLOOR;
 	static Block LEFT_WALL;
 	static Block RIGHT_WALL;
-	static Block FORWARD_WALL;
+	static Block FRONT_WALL;
 	static Block BACK_WALL;
 
 	// ROOM : 천장/벽/바닥 나눠서 static으로 구현하는지?
 public:
-  bool isVisible();
+	bool isVisible();
 	Block() : id(BlockId::AIR), align(0) {
 		caseCrash = false;
 		lightTransmission = true;
@@ -43,6 +45,7 @@ public:
 		}
 		switch (this->id) {
 		case BlockId::AIR:
+			caseCrash = false;
 		case BlockId::DOOR_OPENED:
 		case BlockId::PORTAL:
 		case BlockId::LADDER:
@@ -74,4 +77,5 @@ public:
 			break;
 		}
 	}
+	bool isCrashable();
 };

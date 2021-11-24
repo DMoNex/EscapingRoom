@@ -43,9 +43,15 @@ void Renderer::drawEntity() {
 		switch (currentWorld->entityList[i]->getEntityType()) {
 		case EntityId::PLAYER:
 			// Temporally using.
+			glPushMatrix();
+			// Inversing matrix which rotates 90 degrees.
+			CEscapingRoomView::game.getCurrentWorld()->eye.rotateGLMatrix();
+			CEscapingRoomView::game.getCurrentWorld()->eye.rotateGLMatrix();
+			CEscapingRoomView::game.getCurrentWorld()->eye.rotateGLMatrix();
 			drawCube(Block(BlockId::WALL));
 			glTranslatef(0, 1, 0);
 			drawCube(Block(BlockId::WALL));
+			glPopMatrix();
 			break;
 		}
 		glPopMatrix();
@@ -63,32 +69,32 @@ void Renderer::drawSurface() {
 }
 
 void Renderer::drawCube(Block block) {
-	if (block.side[5]) {
+	if (block.side[1]) { // 아랫면 활성화 -> LOOP
 		drawSurface();
 	}
-	if (block.side[0]) {
+	if (block.side[0]) { // 윗면 활성화 -> FLOOR
 		glTranslatef(0, 1, 0);
 		drawSurface();
 		glTranslatef(0, -1, 0);
 	}
-	if (block.side[3]) {
+	if (block.side[4]) { // 왼면 활성화 -> RIGHT
 		glRotatef(-90, 1, 0, 0);
 		drawSurface();
 		glRotatef(90, 1, 0, 0);
 	}
-	if (block.side[2]) {
+	if (block.side[2]) { // 앞면 활성화 -> BACK
 		glRotatef(90, 0, 0, 1);
 		drawSurface();
 		glRotatef(-90, 0, 0, 1);
 	}
-	if (block.side[1]) {
+	if (block.side[5]) { // 오른면 활성화 -> LEFT
 		glTranslatef(0, 0, 1);
 		glRotatef(-90, 1, 0, 0);
 		drawSurface();
 		glRotatef(90, 1, 0, 0);
 		glTranslatef(0, 0, -1);
 	}
-	if (block.side[4]) {
+	if (block.side[3]) { // 뒷면 활성화 -> FRONT
 		glTranslatef(1, 0, 0);
 		glRotatef(90, 0, 0, 1);
 		drawSurface();
@@ -96,7 +102,6 @@ void Renderer::drawCube(Block block) {
 		glTranslatef(-1, 0, 0);
 	}
 }
-
 void Renderer::drawAxis() {
 	glBegin(GL_LINES);
 	// x-axis

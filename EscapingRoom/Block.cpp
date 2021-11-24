@@ -6,7 +6,7 @@ Block Block::LOOP(BlockId::ROOM, 1);
 Block Block::FLOOR(BlockId::ROOM, 0);
 Block Block::LEFT_WALL(BlockId::ROOM, 5); // -> Left Wall이면 반댓면(Right side)활성화 ... 
 Block Block::RIGHT_WALL(BlockId::ROOM, 4);
-Block Block::FORWARD_WALL(BlockId::ROOM, 3);
+Block Block::FRONT_WALL(BlockId::ROOM, 3);
 Block Block::BACK_WALL(BlockId::ROOM, 2);
 
 bool Block::isVisible() {
@@ -16,4 +16,8 @@ bool Block::isVisible() {
 	}
 	if (id == BlockId::AIR) ret = false;
 	return ret;
+}
+
+bool Block::isCrashable() {
+	return caseCrash;
 }

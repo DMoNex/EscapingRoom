@@ -31,6 +31,7 @@ public:
 	bool isCrashable();
 	// Unavailable movement will be blocked later.
 	// This is same with teleportation which does not change velocity.
+	void teleport(Vec3);
 	void moveTo(Vec3);
 	// This is a natural movement due to gravity or something.
 	// Change velocity.
