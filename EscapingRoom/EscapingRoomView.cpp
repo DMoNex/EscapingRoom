@@ -16,7 +16,7 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+#include "Light.h"
 Renderer CEscapingRoomView::renderSingleton;
 // 10 by 10 by 10 to make it symmetric.
 Game CEscapingRoomView::game;
@@ -226,13 +226,26 @@ void CEscapingRoomView::OnDestroy() {
 	wglMakeCurrent(m_hDC, NULL);
 	wglDeleteContext(m_hglRC);
 }
-
+const static GLfloat LightAmbient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+const static GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+const static GLfloat LightPosition[] = { 0.0f, 0.0f, 15.0f, 1.0f };
 void CEscapingRoomView::InitGL(GLvoid) {
+	glEnable(GL_TEXTURE_2D);
+	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	glEnable(GL_NORMALIZE);
+
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
+	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
+	glEnable(GL_LIGHT1);
 }
 
 void CEscapingRoomView::OnSize(UINT nType, int cx, int cy)

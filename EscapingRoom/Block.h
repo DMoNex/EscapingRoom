@@ -23,7 +23,7 @@ public:
 	BOOL lightTransmission; // false : 차단(그림자), true : 투과
 public:
 	static Block AIR;
-	static Block LOOP;
+	static Block LOOP; 
 	static Block FLOOR;
 	static Block LEFT_WALL;
 	static Block RIGHT_WALL;

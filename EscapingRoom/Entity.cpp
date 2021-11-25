@@ -15,7 +15,33 @@ void Entity::init() {
 	switch (id) {
 	case EntityId::PLAYER:
 		caseCrash = true;
-		lightTransmission = false;
+		lightTransmission = 1;
+		flight = false;
+		break;
+	case EntityId::BOX:
+		caseCrash = true;
+		lightTransmission = 0;
+		flight = false;
+		break;
+	case EntityId::BALLON:
+		caseCrash = true;
+		lightTransmission = 0;
+		flight = true;
+		break;
+	case EntityId::PRISM_BLOCK:
+		caseCrash = true;
+		lightTransmission = 2; // ±¼Àý
+		flight = false;
+		break;
+	case EntityId::MIRROR_BLOCK:
+		caseCrash = true;
+		lightTransmission = 3; // ¹Ý»ç
+		flight = false;
+		break;
+	case EntityId::THORNS_TRAP:
+		caseCrash = false;
+		lightTransmission = 1;
+		flight = false;
 		break;
 	}
 }

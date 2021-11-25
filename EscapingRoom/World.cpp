@@ -43,7 +43,7 @@ void World::init() {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
 				if ((wx == 0 || wx == sizeX - 1) && (wy == 0 || wy == sizeY - 1) && (wz == 0 || wz == sizeZ - 1)) {
-					// °¢ ²ÀÁþÁ¡ (8°³) Åõ¸í
+					// ê° ê¼­ì§“ì  (8ê°œ) íˆ¬ëª…
 					setBlock(Block::AIR, wx, wy, wz);
 				}
 				else if (wy == 0 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeZ - 1) {
