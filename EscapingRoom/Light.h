@@ -1,7 +1,6 @@
 #pragma once
 #include "Vec3.h"
 
-//구조체 배열로?
 class DirectLight {
 	Vec3 dir;
 	Vec3 color;

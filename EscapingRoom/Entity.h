@@ -13,7 +13,7 @@ public:
 	bool flight;
 	Vec3 location;
 	Vec3 velocity;
-	Vec3 acceleration;
+	// Vec3 acceleration; should we use this?
 public:
 	virtual ~Entity() {}
 	// Showing the entity is what.
@@ -47,4 +47,6 @@ public:
 	// This will call moving.
 	void gravitizing();
 	void resetVelocity();
+	// The value can be -1 or 0 or 1
+	int getGravityDirection();
 };
