@@ -17,3 +17,7 @@ bool Block::isVisible() {
 	if (id == BlockId::AIR) ret = false;
 	return ret;
 }
+
+bool Block::isCrashable() {
+	return caseCrash;
+}

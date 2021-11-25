@@ -31,6 +31,7 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 	}
 	init();
 	eye = Eye();
+	cameraInit();
 }
 
 // Making a room
@@ -42,14 +43,14 @@ void World::init() {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
 				if ((wx == 0 || wx == sizeX - 1) && (wy == 0 || wy == sizeY - 1) && (wz == 0 || wz == sizeZ - 1)) {
-					// °¢ ²ÀÁþÁ¡ (8°³) Åõ¸í
+					// ê° ê¼­ì§“ì  (8ê°œ) íˆ¬ëª…
 					setBlock(Block::AIR, wx, wy, wz);
 				}
 				else if (wy == 0 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeZ - 1) {
 					// Range of Floor : ([1,sizeX-2], [1,sizeZ-2])
 					setBlock(Block::FLOOR, wx, wy, wz);
 				}
-				else if (false/*wx == sizeX - 1 && wy < sizeY - 1*/) {
+				else if (wx == sizeX - 1 && wy < sizeY - 1) {
 					//setBlock(Block::BACK_WALL, wx, wy, wz);
 				}
 				else if (wz == 0 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
@@ -61,13 +62,13 @@ void World::init() {
 				else if (wy == sizeY - 1 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeY - 1) {
 					setBlock(Block::LOOP, wx, wy, wz);
 				}
-				/*ÀÓ½Ã Å×½ºÆ®¿ë ÄÚµå(¹®)*/
-				else if (wx == 3 && (wy == 5 || wy == 6) && wz == 3) {
+				// DOOR
+				else if (wx == 3 && (wy == 0 || wy == 1) && wz == 3) {
 					glColor3f(1.0, 0.0, 0.0);
 					setBlock(closedDoor, wx, wy, wz);
 					glColor3f(1.0, 1.0, 1.0);
 				}
-				else if (wx == 3 && (wy == 5 || wy == 6) && wz == 6) {
+				else if (wx == 3 && (wy == 0 || wy == 1) && wz == 6) {
 					glColor3f(0.0, 0.5, 0.5);
 					setBlock(openedDoor, wx, wy, wz);
 					glColor3f(1.0, 1.0, 1.0);
@@ -75,6 +76,10 @@ void World::init() {
 			}
 		}
 	}
+}
+
+void World::cameraInit() {
+	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front;
 }
 
 void World::setMapStartPoint(Vec3 const& point) {
@@ -86,6 +91,7 @@ void World::setMapEndPoint(Vec3 const& point) {
 }
 
 Block World::getBlock(int x, int y, int z) const {
+	/*
 	// Error by float type itself -It comes from definition of Eye- cannot be fixed.
 	// Rotating map..
 	Vec3 minVect(0, 0, 0);
@@ -104,6 +110,7 @@ Block World::getBlock(int x, int y, int z) const {
 	x = blockLoc.x;
 	y = blockLoc.y;
 	z = blockLoc.z;
+	*/
 	if (x < 0 || y < 0 || z < 0 ||
 		x >= sizeX || y >= sizeY || z >= sizeZ) return Block::AIR;
 	return map[x][y][z];
@@ -168,4 +175,25 @@ Block World::getBlock(float x, float y, float z) const {
 	vect.y = y;
 	vect.z = z;
 	return getBlock(vect);
+}
+
+void World::rotateFL() {
+	Vec3 front = eye.front;
+	Vec3 left = eye.left;
+	eye.front = cos(PI / 2) * front + sin(PI / 2) * left;
+	eye.left = -sin(PI / 2) * front + cos(PI / 2) * left;
+	cameraInit();
+}
+
+void World::rotateLU() {
+	Vec3 left = eye.left;
+	Vec3 up = eye.up;
+	eye.left = cos(PI / 2) * left + sin(PI / 2) * up;
+	eye.up = -sin(PI / 2) * left + cos(PI / 2) * up;
+	cameraInit();
+}
+
+void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
+	if (getBlock(location).id != BlockId::ROOM)
+		LOG("COLLISING BLOCK ID: " + std::to_string((int)getBlock(location).id));
 }

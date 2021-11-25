@@ -267,7 +267,7 @@ void CEscapingRoomView::ReSizeGLScene(GLsizei width, GLsizei height) {
 	glLoadIdentity();
 
 	// calculate aspect ratio of the window
-	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 1000.0f);
+	// gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, (game.getPlayer()->location - camera).length(), 1000.0f);
 
 	//set modelview matrix
 	glMatrixMode(GL_MODELVIEW);
@@ -279,10 +279,19 @@ void CEscapingRoomView::ReSizeGLScene(GLsizei width, GLsizei height) {
 
 void CEscapingRoomView::DrawGLScene(void) {
 	//clear screen and depth buffer
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, 2.0f, (game.getPlayer()->location - game.getCurrentWorld()->camera).length() - 0.5f, 1000.0f);
+	glMatrixMode(GL_MODELVIEW);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	//camera view configuration
-	gluLookAt(-18, 3, 0, 0, 0, 0, 0, 1, 0);
+	gluLookAt(game.getCurrentWorld()->camera.x, game.getCurrentWorld()->camera.y, game.getCurrentWorld()->camera.z, 
+		0, 0, 0, 
+		game.getCurrentWorld()->eye.up.x, 
+		game.getCurrentWorld()->eye.up.y, 
+		game.getCurrentWorld()->eye.up.z);
 
 	// How does the time is lapsing.
 	// std::stringstream stream;
@@ -308,7 +317,7 @@ void CEscapingRoomView::printLog(std::string str) {
 	const wchar_t* wt = c2w(str.c_str(), str.size());
 	COutputWnd* wnd = CMainFrame::singleton->getOutputWindow();
 	wnd->getDebugOutputList().AddString((LPCTSTR)wt);
-	// wnd->getDebugOutputList().SetTopIndex(wnd->getDebugOutputList().GetCount() - 1);
+	wnd->getDebugOutputList().SetTopIndex(wnd->getDebugOutputList().GetCount() - 1);
 	free((void*)wt);
 }
 
@@ -321,21 +330,21 @@ void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		GetKeyState('D') & 0x8000);
 	switch (nChar) {
 	case VK_LEFT:
-		game.rotateWorldLeft();
+		game.getCurrentWorld()->rotateFL();
 		break;
 	case VK_RIGHT:
-		game.rotateWorldLeft();
-		game.rotateWorldLeft();
-		game.rotateWorldLeft();
+		game.getCurrentWorld()->rotateFL();
+		game.getCurrentWorld()->rotateFL();
+		game.getCurrentWorld()->rotateFL();
 		break;
 		// UP and DOWN will be disabled in real game playing.
 	case VK_UP:
-		game.rotateWorldUp();
+		game.getCurrentWorld()->rotateLU();
 		break;
 	case VK_DOWN:
-		game.rotateWorldUp();
-		game.rotateWorldUp();
-		game.rotateWorldUp();
+		game.getCurrentWorld()->rotateLU();
+		game.getCurrentWorld()->rotateLU();
+		game.getCurrentWorld()->rotateLU();
 		break;
 	}
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);

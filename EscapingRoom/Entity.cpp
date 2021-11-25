@@ -51,28 +51,28 @@ bool Entity::isCrashable() {
 }
 
 #include "EscapingRoomView.h"
+void Entity::teleport(Vec3 location) {
+	this->location = location;
+}
+
 void Entity::moveTo(Vec3 location) {
+	bool crashingState = false;
 	if (isCrashable()) {
-		int i;
-		bool collisionState = false;
-		// TODO: Preventing movement when the movement is not avilable.
-		Vec3 directing = location - this->location;
-		// when the directing is so small then ignore the moving.
-		// Stucking bug must be fixed, Side detecting updated.
-		if (directing.length() >= 0.01) {
-			directing.normalize();
-			for (i = 0; i <= directing.length(); i++) {
-				if (CEscapingRoomView::game.getCurrentWorld()->getBlock(i * directing + this->location).id != BlockId::AIR) {
-					collisionState = true;
-					break;
-				}
-			}
-			if (collisionState) {
-				location = i * directing + this->location;
-			}
+		Vec3 collisingPoint = this->location + 0.5f * (CEscapingRoomView::game.getCurrentWorld()->eye.front + CEscapingRoomView::game.getCurrentWorld()->eye.left);
+		Vec3 diff = location - this->location;
+		Vec3 directing = (location - this->location).normalize();
+		for (int i = 0; i < diff.length() * 100; i++) {
+			if (!CEscapingRoomView::game.getCurrentWorld()->getBlock(0.01f * directing + collisingPoint).isCrashable())
+				collisingPoint = collisingPoint + 0.01f * directing;
 			else {
-				this->location = location;
+				crashingState = true;
+				break;
 			}
+		}
+		teleport(collisingPoint - 0.5f * (CEscapingRoomView::game.getCurrentWorld()->eye.front + CEscapingRoomView::game.getCurrentWorld()->eye.left));
+		// Crashing callback
+		if (crashingState) {
+			CEscapingRoomView::game.getCurrentWorld()->onCollisingWithBlockAndEntity(this, collisingPoint = collisingPoint + 0.01f * directing);
 		}
 	}
 	else {
@@ -82,13 +82,4 @@ void Entity::moveTo(Vec3 location) {
 
 void Entity::moving() {
 
-}
-
-void Entity::gravitizing() {
-	velocity = velocity + getGravityDirection() * Vec3(0, 0.5, 0);
-}
-
-int Entity::getGravityDirection() {
-	// this can be changed.
-	return -1;
 }
