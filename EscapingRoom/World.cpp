@@ -40,13 +40,15 @@ void World::init() {
 	Block closedDoor(BlockId::DOOR_CLOSED);
 	Block openedDoor(BlockId::DOOR_OPENED);
 
-	GLuint textureId[14];
+
+	
 
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
 				if ((wx == 0 || wx == sizeX - 1) && (wy == 0 || wy == sizeY - 1) && (wz == 0 || wz == sizeZ - 1)) {
 					// 각 꼭짓점 (8개) 투명
+					//glBindTexture(GL_TEXTURE_2D, textureId[0]);
 					setBlock(Block::AIR, wx, wy, wz);
 				}
 				else if (wy == 0 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeZ - 1) {
@@ -54,19 +56,19 @@ void World::init() {
 					setBlock(Block::FLOOR, wx, wy, wz);
 				}
 				else if (wx == 0 && wy > 0 && wy < sizeY - 1 && wz > 0 && wz < sizeY - 1) {
-					glBindTexture(GL_TEXTURE_2D, textureId[1]);
+					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::FRONT_WALL, wx, wy, wz);
 				}
 				else if (wx == sizeX - 1 && wy > 0 && wy < sizeY - 1 && wz > 0 && wz < sizeY - 1) {
-					glBindTexture(GL_TEXTURE_2D, textureId[1]);
+					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::BACK_WALL, wx, wy, wz);
 				}
 				else if (wz == 0 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
-					glBindTexture(GL_TEXTURE_2D, textureId[1]);
+					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::LEFT_WALL, wx, wy, wz);
 				}
 				else if (wz == sizeZ - 1 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
-					glBindTexture(GL_TEXTURE_2D, textureId[1]);
+					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::RIGHT_WALL, wx, wy, wz);
 				}
 				else if (wy == sizeY - 1 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeY - 1) {

@@ -231,7 +231,7 @@ const static GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 const static GLfloat LightPosition[] = { 0.0f, 0.0f, 15.0f, 1.0f };
 void CEscapingRoomView::InitGL(GLvoid) {
 	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);
@@ -247,6 +247,7 @@ void CEscapingRoomView::InitGL(GLvoid) {
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
 	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
 	glEnable(GL_LIGHT1);
+	renderSingleton.makeTexture(textureId);
 }
 
 void CEscapingRoomView::OnSize(UINT nType, int cx, int cy)
@@ -293,7 +294,6 @@ void CEscapingRoomView::DrawGLScene(void) {
 		game.getCurrentWorld()->eye.up.x, 
 		game.getCurrentWorld()->eye.up.y, 
 		game.getCurrentWorld()->eye.up.z);
-
 	// How does the time is lapsing.
 	// std::stringstream stream;
 	// stream << time(NULL);
