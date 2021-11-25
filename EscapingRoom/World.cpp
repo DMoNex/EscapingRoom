@@ -2,6 +2,7 @@
 #include "World.h"
 #include "EscapingRoomView.h"
 
+
 World::~World() {
 	for (int i = 0; i < sizeX; i++) {
 		for (int j = 0; j < sizeY; j++) {
@@ -39,6 +40,8 @@ void World::init() {
 	Block closedDoor(BlockId::DOOR_CLOSED);
 	Block openedDoor(BlockId::DOOR_OPENED);
 
+	GLuint textureId[14];
+
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
@@ -50,19 +53,26 @@ void World::init() {
 					// Range of Floor : ([1,sizeX-2], [1,sizeZ-2])
 					setBlock(Block::FLOOR, wx, wy, wz);
 				}
-				else if (wx == sizeX - 1 && wy < sizeY - 1) {
-					//setBlock(Block::BACK_WALL, wx, wy, wz);
+				else if (wx == 0 && wy > 0 && wy < sizeY - 1 && wz > 0 && wz < sizeY - 1) {
+					glBindTexture(GL_TEXTURE_2D, textureId[1]);
+					setBlock(Block::FRONT_WALL, wx, wy, wz);
+				}
+				else if (wx == sizeX - 1 && wy > 0 && wy < sizeY - 1 && wz > 0 && wz < sizeY - 1) {
+					glBindTexture(GL_TEXTURE_2D, textureId[1]);
+					setBlock(Block::BACK_WALL, wx, wy, wz);
 				}
 				else if (wz == 0 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
+					glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::LEFT_WALL, wx, wy, wz);
 				}
 				else if (wz == sizeZ - 1 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
+					glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::RIGHT_WALL, wx, wy, wz);
 				}
 				else if (wy == sizeY - 1 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeY - 1) {
 					setBlock(Block::LOOP, wx, wy, wz);
 				}
-				// DOOR
+				// DOOR for test
 				else if (wx == 3 && (wy == 0 || wy == 1) && wz == 3) {
 					glColor3f(1.0, 0.0, 0.0);
 					setBlock(closedDoor, wx, wy, wz);
@@ -197,3 +207,4 @@ void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	if (getBlock(location).id != BlockId::ROOM)
 		LOG("COLLISING BLOCK ID: " + std::to_string((int)getBlock(location).id));
 }
+

@@ -10,6 +10,7 @@
 #include "Entity.h"
 #include "Player.h"
 
+
 // Cannot include game because of hierarchys.
 class Game;
 
@@ -54,4 +55,5 @@ public:
 	void onCollisingWithBlockAndEntity(Entity*, Vec3);
 	friend Renderer;
 	friend Game;
+
 };

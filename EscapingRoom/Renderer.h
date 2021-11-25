@@ -10,4 +10,7 @@ public:
 	void drawSurface();
 	void drawCube(Block);
 	void drawAxis();
+
+
+	void makeTexture(GLuint*);
 };

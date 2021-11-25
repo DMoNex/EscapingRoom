@@ -231,6 +231,7 @@ const static GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 const static GLfloat LightPosition[] = { 0.0f, 0.0f, 15.0f, 1.0f };
 void CEscapingRoomView::InitGL(GLvoid) {
 	glEnable(GL_TEXTURE_2D);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 	glClearDepth(1.0f);

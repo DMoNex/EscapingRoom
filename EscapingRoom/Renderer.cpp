@@ -4,6 +4,9 @@
 
 #include <stdio.h>
 
+
+#include "stb_image.h" // https://github.com/nothings/stb/blob/af1a5bc352164740c1cc1354942b1c6b72eacb8a/stb_image.h
+
 void Renderer::onDraw() {
 	drawCurrentWorld();
 	drawEntity();
@@ -118,3 +121,43 @@ void Renderer::drawAxis() {
 	glVertex3f(0, 0, 100);
 	glEnd();
 }
+
+void Renderer::makeTexture(GLuint* textureId) {
+	GLint i;
+	unsigned char* data = 0;
+	GLint width = 1024, height = 1024, nrChannels;
+	//texture creat
+	glGenTextures(14, textureId); // textureId 1~13 (0 == empty)
+	for (i = 0; i < 14; i++) {
+		//texture bind
+		glBindTexture(GL_TEXTURE_2D, textureId[i]);
+		//set binded texture's option
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		switch (i) {
+		case 0:
+			break;
+		case 1:
+			data = stbi_load("image/ROOM.jpg", &width, &height, &nrChannels, 0);
+			break;
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+			break;
+		}
+		if (data) { // 유효성검사
+			//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+		}
+	}
+}
+/*		glBindTexture(GL_TEXTURE_2D, textureId[1]);		*/
