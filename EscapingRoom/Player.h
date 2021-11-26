@@ -16,12 +16,16 @@ public:
 	float speed;
 public:
 	virtual ~Player() {}
-	Player() : Entity(EntityId::PLAYER), speed(0.1), keyW(false), keyS(false), keyA(false), keyD(false) {}
+	Player() : Entity(EntityId::PLAYER), speed(0.1), keyW(false), keyS(false), keyA(false), keyD(false) {
+		initCollisionPoints();
+	}
 	virtual Entity* getPointingEntity() {
 		return NULL;
 	}
+	void initCollisionPoints();
 	// Controlling using keyboard wasd.
 	void control(bool, bool, bool, bool);
 	void resetKey();
 	Vec3 getKeyboardMovingDirection();
+	virtual void onSteppingBlock();
 };

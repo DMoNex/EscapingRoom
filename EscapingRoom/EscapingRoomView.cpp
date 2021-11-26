@@ -283,7 +283,8 @@ void CEscapingRoomView::DrawGLScene(void) {
 	//clear screen and depth buffer
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0f, 2.0f, (game.getPlayer()->location - game.getCurrentWorld()->camera).length() - 0.5f, 1000.0f);
+	Vec3 pLoc = CEscapingRoomView::game.getPlayer()->location + Vec3(0.5, 0.5, 0.5);
+	gluPerspective(45.0f, 2.0f, (pLoc - CEscapingRoomView::game.getCurrentWorld()->camera).length() - 0.75f, 1000.0f);
 	glMatrixMode(GL_MODELVIEW);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
