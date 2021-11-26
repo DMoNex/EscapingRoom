@@ -46,6 +46,7 @@ public:
 		switch (this->id) {
 		case BlockId::AIR:
 			caseCrash = false;
+			break;
 		case BlockId::DOOR_OPENED:
 		case BlockId::PORTAL:
 		case BlockId::LADDER:
