@@ -43,7 +43,6 @@ void World::init() {
 	Block portalDown(BlockId::PORTAL_DOWN);
 	Block pad(BlockId::PAD);
 	
-
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
@@ -212,7 +211,10 @@ void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	if (getBlock(location).id != BlockId::ROOM) {
 		LOG("COLLISING BLOCK ID: " + std::to_string((int)getBlock(location).id));
 		// TODO: Portal event, PAD event
-
+		if (getBlock(location).id == BlockId::DOOR_OPENED) {
+			// When the player is entering a opened door: game closing.
+			CEscapingRoomView::game.gotoNextWorld();
+		}
 	}
 }
 
