@@ -32,8 +32,8 @@ public:
 	static bool isThreading;
 	static CWinThread* gameThread;
 	static Game game;
-	GLuint textureId[14];
 
+	static GLuint textureId[14];
 public:
 	BOOL SetDevicePixelFormat(HDC hdc);
 	void InitGL(void);

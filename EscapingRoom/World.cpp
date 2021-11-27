@@ -39,7 +39,8 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 void World::init() {
 	Block closedDoor(BlockId::DOOR_CLOSED);
 	Block openedDoor(BlockId::DOOR_OPENED);
-
+	Block portalUp(BlockId::PORTAL_UP);
+	Block portalDown(BlockId::PORTAL_DOWN);
 
 	
 
@@ -48,7 +49,6 @@ void World::init() {
 			for (int wz = 0; wz < sizeZ; wz++) {
 				if ((wx == 0 || wx == sizeX - 1) && (wy == 0 || wy == sizeY - 1) && (wz == 0 || wz == sizeZ - 1)) {
 					// 각 꼭짓점 (8개) 투명
-					//glBindTexture(GL_TEXTURE_2D, textureId[0]);
 					setBlock(Block::AIR, wx, wy, wz);
 				}
 				else if (wy == 0 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeZ - 1) {
@@ -56,34 +56,33 @@ void World::init() {
 					setBlock(Block::FLOOR, wx, wy, wz);
 				}
 				else if (wx == 0 && wy > 0 && wy < sizeY - 1 && wz > 0 && wz < sizeY - 1) {
-					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::FRONT_WALL, wx, wy, wz);
 				}
 				else if (wx == sizeX - 1 && wy > 0 && wy < sizeY - 1 && wz > 0 && wz < sizeY - 1) {
-					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::BACK_WALL, wx, wy, wz);
 				}
 				else if (wz == 0 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
-					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::LEFT_WALL, wx, wy, wz);
 				}
 				else if (wz == sizeZ - 1 && wx > 0 && wx < sizeX - 1 && wy > 0 && wy < sizeY - 1) {
-					//glBindTexture(GL_TEXTURE_2D, textureId[1]);
 					setBlock(Block::RIGHT_WALL, wx, wy, wz);
 				}
 				else if (wy == sizeY - 1 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeY - 1) {
 					setBlock(Block::LOOP, wx, wy, wz);
 				}
 				// DOOR for test
-				else if (wx == 3 && (wy == 0 || wy == 1) && wz == 3) {
-					glColor3f(1.0, 0.0, 0.0);
+				else if (wx == sizeX - 2 && (wy == 1 || wy == 2) && wz == 3) {
 					setBlock(closedDoor, wx, wy, wz);
-					glColor3f(1.0, 1.0, 1.0);
 				}
-				else if (wx == 3 && (wy == 0 || wy == 1) && wz == 6) {
-					glColor3f(0.0, 0.5, 0.5);
+				else if (wx == sizeX - 2 && (wy == 1 || wy == 2) && wz == 6) {
 					setBlock(openedDoor, wx, wy, wz);
-					glColor3f(1.0, 1.0, 1.0);
+				}
+				//PORTAL for test
+				else if (wx == sizeX - 2 && wy == 1 && wz == 2) {
+					setBlock(portalDown, wx, wy, wz);
+				}
+				else if (wx == sizeX - 2 && wy == 2 && wz == 2) {
+					setBlock(portalUp, wx, wy, wz);
 				}
 			}
 		}

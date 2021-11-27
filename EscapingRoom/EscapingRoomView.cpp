@@ -247,7 +247,7 @@ void CEscapingRoomView::InitGL(GLvoid) {
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
 	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
 	glEnable(GL_LIGHT1);
-	renderSingleton.makeTexture(textureId);
+	renderSingleton.makeTexture();
 }
 
 void CEscapingRoomView::OnSize(UINT nType, int cx, int cy)

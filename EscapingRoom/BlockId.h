@@ -1,18 +1,19 @@
 #pragma once
 
 enum class BlockId {
-	AIR, 			// 0
+	AIR, 			// 0, empty
 	ROOM,
 	DOOR_CLOSED,
-	DOOR_OPENED,
+	DOOR_OPENED,	// empty
 	WALL, 			
 	STAIRS,			// 5
-	PORTAL,
+	PORTAL_UP,
+	PORTAL_DOWN,
 	LADDER,
-	PAD,
-	SWITCH,
-	LASER_SENDER,	// 10
+	PAD,			
+	SWITCH,			// 10
+	LASER_SENDER,
 	LASER_RECEIVER,
 	THORNS_TRAP_FIXED,
-	ARROW_TRAP, 		// 13
+	ARROW_TRAP 		// 14
 };

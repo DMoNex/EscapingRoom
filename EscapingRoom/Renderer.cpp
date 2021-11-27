@@ -63,7 +63,6 @@ void Renderer::drawEntity() {
 
 void Renderer::drawSurface() {
 	glBegin(GL_POLYGON);
-	//glColor3f(1, 1, 1);
 	glVertex3f(0, 0, 0); glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(1, 0, 0); glTexCoord2f(1.0f, 0.0f);
 	glVertex3f(1, 0, 1); glTexCoord2f(1.0f, 1.0f);
@@ -72,6 +71,23 @@ void Renderer::drawSurface() {
 }
 
 void Renderer::drawCube(Block block) {
+	switch (block.id) {
+	case(BlockId::AIR):
+	case(BlockId::DOOR_OPENED):
+		break;
+	case(BlockId::ROOM):
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[1]);
+		break;
+	case(BlockId::DOOR_CLOSED):
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[2]);
+		break;
+	case(BlockId::PORTAL_UP):
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[6]);
+		break;
+	case(BlockId::PORTAL_DOWN):
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[7]);
+		break;
+	}
 	if (block.side[1]) { // 아랫면 활성화 -> LOOP
 		drawSurface();
 	}
@@ -104,6 +120,7 @@ void Renderer::drawCube(Block block) {
 		glRotatef(-90, 0, 0, 1);
 		glTranslatef(-1, 0, 0);
 	}
+	glBindTexture(GL_TEXTURE_2D, 0); // bind cancel
 }
 void Renderer::drawAxis() {
 	glBegin(GL_LINES);
@@ -122,15 +139,15 @@ void Renderer::drawAxis() {
 	glEnd();
 }
 
-void Renderer::makeTexture(GLuint* textureId) {
+void Renderer::makeTexture() {
 	GLint i;
 	unsigned char* data = 0;
 	GLint width = 1024, height = 1024, nrChannels;
 	//texture creat
-	glGenTextures(14, textureId); // textureId 1~13 (0 == empty)
+	glGenTextures(14, CEscapingRoomView::game.getCurrentWorld()->textureId); // textureId 1~13 (0 == empty)
 	for (i = 0; i < 14; i++) {
 		//texture bind
-		glBindTexture(GL_TEXTURE_2D, textureId[i]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[i]);
 		//set binded texture's option
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -139,26 +156,32 @@ void Renderer::makeTexture(GLuint* textureId) {
 
 		switch (i) {
 		case 0:
+		case 3: // DOOR_Opened
 			break;
-		case 1:
+		case 1: // ROOM
 			data = stbi_load("image/ROOM.jpg", &width, &height, &nrChannels, 0);
 			break;
-		case 2:
-		case 3:
+		case 2: // DOOR_Closed
+			data = stbi_load("image/DOOR.jpg", &width, &height, &nrChannels, 0);
+			break;
 		case 4:
 		case 5:
-		case 6:
-		case 7:
+		case 6: // portal_up
+			data = stbi_load("image/PORTAL_UP.jpg", &width, &height, &nrChannels, 0);
+			break;
+		case 7: // portal_down
+			data = stbi_load("image/PORTAL_DOWN.jpg", &width, &height, &nrChannels, 0);
+			break;
 		case 8:
 		case 9:
 		case 10:
 			break;
 		}
 		if (data) { // 유효성검사
-			//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
 			
 		}
+		data = 0;
 	}
 }
 /*		glBindTexture(GL_TEXTURE_2D, textureId[1]);		*/

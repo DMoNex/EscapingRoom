@@ -4,6 +4,8 @@
 
 class Renderer {
 public:
+	GLuint* textureId;
+public:
 	void onDraw();
 	void drawCurrentWorld();
 	void drawEntity();
@@ -12,5 +14,5 @@ public:
 	void drawAxis();
 
 
-	void makeTexture(GLuint*);
+	void makeTexture();
 };

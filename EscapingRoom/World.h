@@ -26,6 +26,8 @@ class World {
 	std::vector<Entity*> entityList;
 	// The player of this map.
 	Player* player;
+
+	GLuint textureId[14];
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
