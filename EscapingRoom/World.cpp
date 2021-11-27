@@ -41,7 +41,7 @@ void World::init() {
 	Block openedDoor(BlockId::DOOR_OPENED);
 	Block portalUp(BlockId::PORTAL_UP);
 	Block portalDown(BlockId::PORTAL_DOWN);
-
+	Block pad(BlockId::PAD);
 	
 
 	for (int wx = 0; wx < sizeX; wx++) {
@@ -64,6 +64,10 @@ void World::init() {
 				}
 				else if (wx == sizeX - 1 && (wy == 1 || wy == 2) && wz == 6) {
 					setBlock(openedDoor, wx, wy, wz);
+				}
+				//PAD for test
+				else if (wx == 2 && wy == 0 && wz == 4) {
+					setBlock(pad, wx, wy, wz);
 				}
 				else if (wy == 0 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeZ - 1) {
 					// Range of Floor : ([1,sizeX-2], [1,sizeZ-2])

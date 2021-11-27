@@ -90,6 +90,9 @@ void Renderer::drawCube(Block block) {
 	case(BlockId::PORTAL_DOWN):
 		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[7]);
 		break;
+	case(BlockId::PAD):
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[9]);
+		break;
 	}
 	if (block.side[1]) { // 아랫면 활성화 -> LOOP
 		drawSurface();
@@ -177,6 +180,8 @@ void Renderer::makeTexture() {
 			break;
 		case 8:
 		case 9:
+			data = stbi_load("image/PAD.jpg", &width, &height, &nrChannels, 0);
+			break;
 		case 10:
 			break;
 		}

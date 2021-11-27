@@ -42,7 +42,7 @@ public:
 	Block(BlockId id, int align = 0) : id(id), align(align % 6) {
 		for (int i = 0; i < 6; i++) {
 			side[i] = !((id == BlockId::AIR) || (id == BlockId::ROOM) || (id == BlockId::DOOR_CLOSED) ||
-						(id == BlockId::PORTAL_DOWN) || (id == BlockId::PORTAL_UP));
+						(id == BlockId::PORTAL_DOWN) || (id == BlockId::PORTAL_UP) || (id == BlockId::PAD));
 		}
 		switch (this->id) {
 		case BlockId::AIR:
@@ -50,7 +50,6 @@ public:
 			break;
 		case BlockId::DOOR_OPENED:
 		case BlockId::LADDER:
-		case BlockId::PAD:
 		case BlockId::SWITCH:
 		case BlockId::LASER_SENDER:
 		case BlockId::LASER_RECEIVER:
@@ -60,9 +59,14 @@ public:
 			break;
 		case BlockId::PORTAL_UP:
 		case BlockId::PORTAL_DOWN:
-			caseCrash == true;
+			caseCrash = true;
 			lightTransmission = true;
 			side[2] = 1;
+			break;
+		case BlockId::PAD:
+			caseCrash = true;
+			lightTransmission = true;
+			side[0] = 1;
 			break;
 		case BlockId::ARROW_TRAP:
 			caseCrash = false;
