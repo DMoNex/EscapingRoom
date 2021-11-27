@@ -14,18 +14,20 @@ public:
 	// TODO: Grabbing and placing
 	// Moving speed per tick.
 	float speed;
+	Entity* grabbingEntity;
 public:
 	virtual ~Player() {}
 	Player() : Entity(EntityId::PLAYER), speed(0.1), keyW(false), keyS(false), keyA(false), keyD(false) {
 		initCollisionPoints();
 	}
-	virtual Entity* getPointingEntity() {
-		return NULL;
-	}
+	Entity* getPointingEntity(float);
 	void initCollisionPoints();
 	// Controlling using keyboard wasd.
 	void control(bool, bool, bool, bool);
 	void resetKey();
+	void grab();
+	// Releasing the grabbed entity.
+	void release();
 	Vec3 getKeyboardMovingDirection();
-	virtual void onSteppingBlock();
+	Vec3 getCentralizingVector();
 };
