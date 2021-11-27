@@ -226,6 +226,18 @@ void World::rotateLU() {
 
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	Block collisingBlock = getBlock(location);
+	if (collisingBlock.id == BlockId::PORTAL_DOWN ||
+		collisingBlock.id == BlockId::PORTAL_UP) {
+		// PORTALLING
+		if (!entity->portaled) {
+			entity->portaled = true;
+			entity->teleport(getNextPortal(location));
+		}
+	}
+	else {
+		entity->portaled = false;
+	}
+
 	if (collisingBlock.id != BlockId::ROOM) {
 		LOG("COLLISING BLOCK ID: " + std::to_string((int)collisingBlock.id));
 		switch (collisingBlock.id) {
