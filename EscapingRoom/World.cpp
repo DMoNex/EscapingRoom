@@ -51,6 +51,20 @@ void World::init() {
 					// 각 꼭짓점 (8개) 투명
 					setBlock(Block::AIR, wx, wy, wz);
 				}
+				//PORTAL for test
+				else if (wx == sizeX - 1 && wy == 1 && wz == 4) {
+					setBlock(portalDown, wx, wy, wz);
+				}
+				else if (wx == sizeX - 1 && wy == 2 && wz == 4) {
+					setBlock(portalUp, wx, wy, wz);
+				}
+				// DOOR for test
+				else if (wx == sizeX - 1 && (wy == 1 || wy == 2) && wz == 3) {
+					setBlock(closedDoor, wx, wy, wz);
+				}
+				else if (wx == sizeX - 1 && (wy == 1 || wy == 2) && wz == 6) {
+					setBlock(openedDoor, wx, wy, wz);
+				}
 				else if (wy == 0 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeZ - 1) {
 					// Range of Floor : ([1,sizeX-2], [1,sizeZ-2])
 					setBlock(Block::FLOOR, wx, wy, wz);
@@ -69,20 +83,6 @@ void World::init() {
 				}
 				else if (wy == sizeY - 1 && wx > 0 && wx < sizeX - 1 && wz > 0 && wz < sizeY - 1) {
 					setBlock(Block::LOOP, wx, wy, wz);
-				}
-				// DOOR for test
-				else if (wx == sizeX - 2 && (wy == 1 || wy == 2) && wz == 3) {
-					setBlock(closedDoor, wx, wy, wz);
-				}
-				else if (wx == sizeX - 2 && (wy == 1 || wy == 2) && wz == 6) {
-					setBlock(openedDoor, wx, wy, wz);
-				}
-				//PORTAL for test
-				else if (wx == sizeX - 2 && wy == 1 && wz == 2) {
-					setBlock(portalDown, wx, wy, wz);
-				}
-				else if (wx == sizeX - 2 && wy == 2 && wz == 2) {
-					setBlock(portalUp, wx, wy, wz);
 				}
 			}
 		}

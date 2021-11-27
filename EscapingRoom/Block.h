@@ -60,9 +60,9 @@ public:
 			break;
 		case BlockId::PORTAL_UP:
 		case BlockId::PORTAL_DOWN:
-			caseCrash == false;
+			caseCrash == true;
 			lightTransmission = true;
-			side[3] = 1;
+			side[2] = 1;
 			break;
 		case BlockId::ARROW_TRAP:
 			caseCrash = false;
@@ -71,7 +71,7 @@ public:
 		case BlockId::DOOR_CLOSED:
 			caseCrash = true;
 			lightTransmission = true;
-			side[3] = 1;
+			side[2] = 1;
 			break;
 		case BlockId::WALL:
 		case BlockId::STAIRS:
