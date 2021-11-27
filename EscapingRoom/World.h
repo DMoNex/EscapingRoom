@@ -28,6 +28,8 @@ class World {
 	Player* player;
 
 	GLuint textureId[14];
+	int nextPortalNum, nextPortalGen;
+	int portalInfo[5][2][3] = { 0 }; // [ Portal Num ] [ src, dst ] [ x,y,z ] 
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
@@ -58,5 +60,7 @@ public:
 	std::vector<Entity*> getEntityList();
 	friend Renderer;
 	friend Game;
+
+	void makePortal(int, int, int);
 	friend Player;
 };
