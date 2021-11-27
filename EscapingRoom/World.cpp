@@ -21,6 +21,8 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 	this->sizeX = sizeX;
 	this->sizeY = sizeY;
 	this->sizeZ = sizeZ;
+	this->nextPortalNum = 0;
+	this->nextPortalGen = 0;
 	map = new Block * *[sizeX];
 	for (int i = 0; i < sizeX; i++) {
 		map[i] = new Block * [sizeY];
@@ -54,6 +56,7 @@ void World::init() {
 				//PORTAL for test
 				else if (wx == sizeX - 1 && wy == 1 && wz == 4) {
 					setBlock(portalDown, wx, wy, wz);
+					makePortal(wx, wy, wz);
 				}
 				else if (wx == sizeX - 1 && wy == 2 && wz == 4) {
 					setBlock(portalUp, wx, wy, wz);
@@ -213,3 +216,11 @@ void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 		LOG("COLLISING BLOCK ID: " + std::to_string((int)getBlock(location).id));
 }
 
+void World::makePortal(int x, int y, int z) {
+	if (nextPortalNum < 5) { // Portal Num Max : 5
+		portalInfo[nextPortalNum][nextPortalGen][0] = x;
+		portalInfo[nextPortalNum][nextPortalGen][1] = y;
+		portalInfo[nextPortalNum++][nextPortalGen++][2] = z;
+		nextPortalGen %= 2;
+	}
+}
