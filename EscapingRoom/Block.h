@@ -49,6 +49,9 @@ public:
 			caseCrash = false;
 			break;
 		case BlockId::DOOR_OPENED:
+			caseCrash = true;
+			lightTransmission = false;
+			break;
 		case BlockId::LADDER:
 		case BlockId::SWITCH:
 		case BlockId::LASER_SENDER:

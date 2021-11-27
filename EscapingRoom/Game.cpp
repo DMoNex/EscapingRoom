@@ -3,9 +3,13 @@
 #include "MainFrm.h"
 #include "EscapingRoomView.h"
 
-World* Game::emptyWorld = new World(0, 0, 0);
+World* Game::emptyWorld;
 
 Game::Game() {
+	Player* tempPlayer = new Player();
+	emptyWorld = new World(0, 0, 0);
+	emptyWorld->entityList.push_back(tempPlayer);
+	emptyWorld->player = tempPlayer;
 	currentWorldPhase = 0;
 	init();
 }
