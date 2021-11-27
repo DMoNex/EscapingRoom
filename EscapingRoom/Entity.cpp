@@ -70,8 +70,10 @@ void Entity::teleport(Vec3 location) {
 // Chekcing whether at least one collising point is collising.
 bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
 	for (int i = 0; i < list.size(); i++) {
-		if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).isCrashable())
+		if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).isCrashable()) {
+			CEscapingRoomView::game.getCurrentWorld()->onCollisingWithBlockAndEntity(entity, entity->location + list[i]);
 			return true;
+		}
 	}
 	return false;
 }
@@ -89,19 +91,17 @@ void printVectorList(std::vector<Vec3>& list) {
 // Exactness of collision checking
 #define PRECISION 100.0f
 void Entity::moveTo(Vec3 location) {
-	bool crashingState = false;
 	if (isCrashable()) {
 		Vec3 diff = location - this->location;
 		std::vector<Vec3> temp;
 		for (int i = 0; i < collisingPoints.size(); i++) {
 			temp.push_back(CEscapingRoomView::game.getCurrentWorld()->eye.getEyeMatrix() * (collisingPoints[i] - Vec3(0.5, 1.0, 0.5) + CEscapingRoomView::game.getCurrentWorld()->eye.getInversedEyeMatrix() * Vec3(0.5, 1.0, 0.5)));
 		}
-		
+
 		for (int i = 0; i < PRECISION; i++) {
 			teleport(this->location + ((1.0f / PRECISION) * diff));
 			if (checkCollision(temp, this)) {
 				teleport(this->location - ((1.0f / PRECISION) * diff));
-				crashingState = true;
 				/*
 				if (CEscapingRoomView::game.getCurrentWorld()->getBlock(this->location - 1 / 5.0f * CEscapingRoomView::game.getCurrentWorld()->eye.up).isCrashable()) {
 					onSteppingBlock(this->location - 1 / 5.0f * CEscapingRoomView::game.getCurrentWorld()->eye.up);
@@ -110,12 +110,6 @@ void Entity::moveTo(Vec3 location) {
 				*/
 				break;
 			}
-		}
-
-		// Crashing callback
-		if (crashingState) {
-			// CEscapingRoomView::game.getCurrentWorld()->onCollisingWithBlockAndEntity(this, this->location + 1 / PRECISION * directing);
-			velocity = Vec3(0, 0, 0);
 		}
 	}
 	else {
