@@ -36,6 +36,8 @@ void Renderer::drawCurrentWorld() {
 	glPopMatrix();
 }
 
+#include "Vec3.h"
+
 void Renderer::drawEntity() {
 	World* currentWorld = CEscapingRoomView::game.getCurrentWorld();
 	for (int i = 0; i < currentWorld->entityList.size(); i++) {
@@ -47,10 +49,11 @@ void Renderer::drawEntity() {
 		case EntityId::PLAYER:
 			// Temporally using.
 			glPushMatrix();
-			// Inversing matrix which rotates 90 degrees.
-			CEscapingRoomView::game.getCurrentWorld()->eye.rotateGLMatrix();
-			CEscapingRoomView::game.getCurrentWorld()->eye.rotateGLMatrix();
-			CEscapingRoomView::game.getCurrentWorld()->eye.rotateGLMatrix();
+			Vec3 vect(0.5, 1.0, 0.5);
+			vect = vect - currentWorld->eye.getInversedEyeMatrix() * vect;
+			glTranslatef(vect.x, vect.y, vect.z);
+			currentWorld->eye.rotateGLMatrix();
+			// ERROR.
 			drawCube(Block(BlockId::WALL));
 			glTranslatef(0, 1, 0);
 			drawCube(Block(BlockId::WALL));

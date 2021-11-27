@@ -3,6 +3,7 @@
 #include "EntityId.h"
 #include "Vec3.h"
 
+#include <vector>
 class Entity {
 public:
 	EntityId id;
@@ -14,6 +15,9 @@ public:
 	Vec3 location;
 	Vec3 velocity;
 	// Vec3 acceleration; should we use this?
+	// Relative to entity leg location meaing aligned by up vector.
+	// It is recommended to give some minimum points as possible.
+	std::vector<Vec3> collisingPoints;
 public:
 	virtual ~Entity() {}
 	// Showing the entity is what.
@@ -32,6 +36,7 @@ public:
 	// Judging whether the flags such as crash and giving location.
 	// Constructing internal part of Entity.
 	void init();
+	void initCollisionPoints();
 	// Should entity also need this?
 	// Needed for player grabbing entity/block
 	virtual Entity* getPointingEntity() {
@@ -50,4 +55,5 @@ public:
 	void resetVelocity();
 	// The value can be -1 or 0 or 1
 	int getGravityDirection();
+	virtual void onSteppingBlock(Vec3);
 };

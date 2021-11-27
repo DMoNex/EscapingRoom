@@ -14,6 +14,7 @@ public:
 	Eye(Vec3 front, Vec3 up) : front(front.normalize()), up(up.normalize()), left(getLeft()) {}
 	Vec3 getLeft();
 	Matrix getEyeMatrix();
+	Matrix getInversedEyeMatrix();
 	void rotateGLMatrix();
 	void turnLeft(float angle);
 	void stareUp(float angle);

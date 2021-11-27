@@ -13,6 +13,21 @@ Matrix Eye::getEyeMatrix() {
 	return mat;
 }
 
+void swap(float& a, float& b) {
+	float temp = a;
+	a = b;
+	b = temp;
+}
+
+// Transposing the rotation matrix.
+Matrix Eye::getInversedEyeMatrix() {
+	Matrix& mat = getEyeMatrix();
+	swap(mat.c1.y, mat.c2.x);
+	swap(mat.c1.z, mat.c3.x);
+	swap(mat.c2.z, mat.c3.y);
+	return mat;
+}
+
 void Eye::rotateGLMatrix() {
 	getEyeMatrix().mulToOpenGL();
 }

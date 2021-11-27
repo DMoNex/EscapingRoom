@@ -15,3 +15,8 @@ public:
 };
 
 Vec3 operator*(float, Vec3);
+Vec3 minimum(Vec3, Vec3);
+
+#include <vector>
+Vec3 findMinima(std::vector<Vec3>&);
+void ucsRotation(std::vector<Vec3>&);

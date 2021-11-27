@@ -47,3 +47,33 @@ Vec3 operator*(float c, Vec3 v) {
 	v2.z = v.z * c;
 	return v2;
 }
+
+Vec3 minimum(Vec3 a, Vec3 b) {
+	Vec3 m;
+	m.x = min(a.x, b.x);
+	m.y = min(a.y, b.y);
+	m.z = min(a.z, b.z);
+	return m;
+}
+
+Vec3 findMinima(std::vector<Vec3>& list) {
+	if (list.size() == 0) return Vec3(0, 0, 0);
+	Vec3 min = list[0];
+	for (int i = 1; i < list.size(); i++) {
+		min = minimum(min, list[i]);
+	}
+	return min;
+}
+
+#include "EscapingRoomView.h"
+// Transforming and appropriating to Vec3(0, 0, 0) vector lists(collising points).
+void ucsRotation(std::vector<Vec3>& list) {
+	for (int i = 0; i < list.size(); i++) {
+		list[i] = CEscapingRoomView::game.getCurrentWorld()->eye.getEyeMatrix() * list[i];
+	}
+	Vec3 min = findMinima(list);
+	// Parallel transformation
+	for (int i = 0; i < list.size(); i++) {
+		list[i] = list[i] - min;
+	}
+}
