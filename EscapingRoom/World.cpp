@@ -21,8 +21,6 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 	this->sizeX = sizeX;
 	this->sizeY = sizeY;
 	this->sizeZ = sizeZ;
-	this->nextPortalNum = 0;
-	this->nextPortalGen = 0;
 	map = new Block * *[sizeX];
 	for (int i = 0; i < sizeX; i++) {
 		map[i] = new Block * [sizeY];
@@ -246,10 +244,40 @@ std::vector<Entity*> World::getEntityList() {
 }
 
 void World::makePortal(int x, int y, int z) {
-	if (nextPortalNum < 5) { // Portal Num Max : 5
-		portalInfo[nextPortalNum][nextPortalGen][0] = x;
-		portalInfo[nextPortalNum][nextPortalGen][1] = y;
-		portalInfo[nextPortalNum++][nextPortalGen++][2] = z;
-		nextPortalGen %= 2;
+	Portal portal;
+	portal.x = x;
+	portal.y = y;
+	portal.z = z;
+	portalRelation.push_back(portal);
+}
+
+void World::directizePortal(int id1, int id2) {
+	if (id1 > portalRelation.size() - 1 || id2 > portalRelation.size() - 1) {
+		LOG("[E] Portal size overflowing");
+		return;
 	}
+	portalRelation[id1].nx = portalRelation[id2].x;
+	portalRelation[id1].ny = portalRelation[id2].y;
+	portalRelation[id1].nz = portalRelation[id2].z;
+}
+
+void World::connectPortal(int id1, int id2) {
+	directizePortal(id1, id2);
+	directizePortal(id2, id1);
+}
+
+Vec3 World::getNextPortal(Vec3 loc) {
+	int x = (int)(loc.x - mapStartPoint.x);
+	int y = (int)(loc.y - mapStartPoint.y);
+	int z = (int)(loc.z - mapStartPoint.z);
+	for (int i = 0; i < portalRelation.size(); i++) {
+		if (portalRelation[i].x == x &&
+			portalRelation[i].y == y &&
+			portalRelation[i].z == z)
+			return Vec3(portalRelation[i].nx + mapStartPoint.x,
+				portalRelation[i].ny + mapStartPoint.y,
+				portalRelation[i].nz + mapStartPoint.z);
+	}
+	LOG("[E]: Getting a non-existing portal");
+	return Vec3(0, 0, 0);
 }

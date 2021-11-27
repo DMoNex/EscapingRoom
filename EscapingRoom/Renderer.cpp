@@ -62,7 +62,6 @@ void Renderer::drawEntity() {
 			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
 			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
-
 			drawCube(Block(BlockId::WALL));
 			break;
 		}

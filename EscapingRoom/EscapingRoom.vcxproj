@@ -201,6 +201,7 @@
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Portal.h" />
     <ClInclude Include="PropertiesWnd.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
