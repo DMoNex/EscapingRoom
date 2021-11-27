@@ -44,7 +44,15 @@ void World::init() {
 	Block portalUp(BlockId::PORTAL_UP);
 	Block portalDown(BlockId::PORTAL_DOWN);
 	Block pad(BlockId::PAD);
-	
+
+	Block portal2Up(BlockId::PORTAL_UP);
+	Block portal2Down(BlockId::PORTAL_DOWN);
+	portal2Up.side[2] = 0;
+	portal2Down.side[2] = 0;
+	portal2Up.side[1] = 1;
+	portal2Down.side[1] = 1;
+
+
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
 			for (int wz = 0; wz < sizeZ; wz++) {
@@ -52,13 +60,21 @@ void World::init() {
 					// 각 꼭짓점 (8개) 투명
 					setBlock(Block::AIR, wx, wy, wz);
 				}
-				//PORTAL for test
+				// PORTAL 1 for test
 				else if (wx == sizeX - 1 && wy == 1 && wz == 4) {
 					setBlock(portalDown, wx, wy, wz);
 					makePortal(wx, wy, wz);
 				}
 				else if (wx == sizeX - 1 && wy == 2 && wz == 4) {
 					setBlock(portalUp, wx, wy, wz);
+				}
+				//PORTAL 2 for test
+				else if (wx == 4 && wy == sizeY - 1 && wz == 1) {
+					setBlock(portal2Down, wx, wy, wz);
+					makePortal(wx, wy, wz);
+				}
+				else if (wx == 4 && wy == sizeY - 1 && wz == 2) {
+					setBlock(portal2Up, wx, wy, wz);
 				}
 				// DOOR for test
 				else if (wx == sizeX - 1 && (wy == 1 || wy == 2) && wz == 3) {
