@@ -70,9 +70,25 @@ void Player::initCollisionPoints() {
 }
 
 void Player::grab() {
+	if (grabbingEntity) return;
 	Entity* pointingEntity = getPointingEntity(2.0f);
+	World* currentWorld = CEscapingRoomView::game.getCurrentWorld();
 	if (pointingEntity) {
 		LOG("POINTING ENITTY ID: " + std::to_string((int)pointingEntity->getEntityType()));
+		for (int i = 0; i < currentWorld->entityList.size(); i++) {
+			if (currentWorld->entityList[i] == pointingEntity)
+				currentWorld->entityList.erase(currentWorld->entityList.begin() + i--);
+		}
+		grabbingEntity = pointingEntity;
+	}
+}
+
+void Player::release() {
+	if (grabbingEntity) {
+		World* currentWorld = CEscapingRoomView::game.getCurrentWorld();
+		grabbingEntity->location = this->location;
+		currentWorld->entityList.push_back(grabbingEntity);
+		grabbingEntity = NULL;
 	}
 }
 
