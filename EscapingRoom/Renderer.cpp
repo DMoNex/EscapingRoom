@@ -40,7 +40,9 @@ void Renderer::drawCurrentWorld() {
 
 void Renderer::drawEntity() {
 	World* currentWorld = CEscapingRoomView::game.getCurrentWorld();
+	Vec3 centralizingVect;
 	for (int i = 0; i < currentWorld->entityList.size(); i++) {
+		centralizingVect = currentWorld->entityList[i]->getCentralizingVector();
 		glPushMatrix();
 		glTranslatef(currentWorld->entityList[i]->location.x,
 			currentWorld->entityList[i]->location.y,
@@ -48,16 +50,20 @@ void Renderer::drawEntity() {
 		switch (currentWorld->entityList[i]->getEntityType()) {
 		case EntityId::PLAYER:
 			// Temporally using.
-			glPushMatrix();
-			Vec3 vect(0.5, 1.0, 0.5);
-			vect = vect - currentWorld->eye.getInversedEyeMatrix() * vect;
-			glTranslatef(vect.x, vect.y, vect.z);
+			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
+			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
 			// ERROR.
 			drawCube(Block(BlockId::WALL));
 			glTranslatef(0, 1, 0);
 			drawCube(Block(BlockId::WALL));
-			glPopMatrix();
+			break;
+		case EntityId::BOX:
+			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
+			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
+			currentWorld->eye.rotateGLMatrix();
+
+			drawCube(Block(BlockId::WALL));
 			break;
 		}
 		glPopMatrix();

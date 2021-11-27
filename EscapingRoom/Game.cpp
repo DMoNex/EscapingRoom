@@ -14,7 +14,10 @@ void Game::init() {
 	// Currently only the basic world is loaded.
 	createWorld(new World(10, 10, 10));
 	Player* player = new Player();
+	Entity* box = new Entity(EntityId::BOX);
+	box->location = Vec3(0, 0, 0);
 	worldList[0]->entityList.push_back(player);
+	worldList[0]->entityList.push_back(box);
 	worldList[0]->player = player;
 }
 

@@ -37,23 +37,13 @@ public:
 	// Constructing internal part of Entity.
 	void init();
 	void initCollisionPoints();
-	// Should entity also need this?
-	// Needed for player grabbing entity/block
-	virtual Entity* getPointingEntity() {
-		return NULL;
-	};
 	bool isCrashable();
+	bool canFly();
 	// Unavailable movement will be blocked later.
 	// This is same with teleportation which does not change velocity.
 	void teleport(Vec3);
 	void moveTo(Vec3);
-	// This is a natural movement due to gravity or something.
-	// Change velocity.
-	void moving();
-	// This will call moving.
-	void gravitizing();
-	void resetVelocity();
-	// The value can be -1 or 0 or 1
-	int getGravityDirection();
-	virtual void onSteppingBlock(Vec3);
+	bool isPlayer();
+	std::vector<Entity*> getNearingEntities(float);
+	virtual Vec3 getCentralizingVector();
 };

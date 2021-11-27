@@ -226,6 +226,7 @@ void CEscapingRoomView::OnDestroy() {
 	wglMakeCurrent(m_hDC, NULL);
 	wglDeleteContext(m_hglRC);
 }
+
 const static GLfloat LightAmbient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 const static GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 const static GLfloat LightPosition[] = { 0.0f, 0.0f, 15.0f, 1.0f };
@@ -242,11 +243,11 @@ void CEscapingRoomView::InitGL(GLvoid) {
 	glEnable(GL_LIGHT0);
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	glEnable(GL_NORMALIZE);
+	glEnable(GL_LIGHT1);
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
 	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
-	glEnable(GL_LIGHT1);
 	renderSingleton.makeTexture();
 }
 
@@ -331,6 +332,9 @@ void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		GetKeyState('A') & 0x8000, 
 		GetKeyState('D') & 0x8000);
 	switch (nChar) {
+	case 'G':
+		game.getPlayer()->grab();
+		break;
 	case VK_LEFT:
 		game.getCurrentWorld()->rotateFL();
 		break;
