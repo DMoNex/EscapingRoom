@@ -126,7 +126,7 @@ void CEscapingRoomView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 void CEscapingRoomView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 {
 #ifndef SHARED_HANDLERS
-	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
+	//theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 #endif
 }
 

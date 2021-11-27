@@ -57,9 +57,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
-
+	/* /// Delete Tool Bar ///
 	BOOL bNameValid;
-
+	
 	if (!m_wndMenuBar.Create(this))
 	{
 		TRACE0("메뉴 모음을 만들지 못했습니다.\n");
@@ -70,7 +70,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// 메뉴 모음을 활성화해도 포커스가 이동하지 않게 합니다.
 	CMFCPopupMenu::SetForceMenuFocus(FALSE);
-
+	
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(theApp.m_bHiColorIcons ? IDR_MAINFRAME_256 : IDR_MAINFRAME))
 	{
@@ -82,7 +82,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	bNameValid = strToolBarName.LoadString(IDS_TOOLBAR_STANDARD);
 	ASSERT(bNameValid);
 	m_wndToolBar.SetWindowText(strToolBarName);
-
+	
 	CString strCustomize;
 	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
 	ASSERT(bNameValid);
@@ -97,7 +97,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // 만들지 못했습니다.
 	}
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
-
+	
 	// TODO: 도구 모음 및 메뉴 모음을 도킹할 수 없게 하려면 이 다섯 줄을 삭제하십시오.
 	// m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
 	// m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
@@ -120,7 +120,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("도킹 창을 만들지 못했습니다.\n");
 		return -1;
 	}
-
+	
 	m_wndFileView.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndClassView.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndFileView);
@@ -136,7 +136,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// 도구 모음 및 도킹 창 메뉴 바꾸기를 활성화합니다.
 	EnablePaneMenu(TRUE, ID_VIEW_CUSTOMIZE, strCustomize, ID_VIEW_TOOLBAR);
-
 	// 빠른(<Alt> 키를 누른 채 끌기) 도구 모음 사용자 지정을 활성화합니다.
 	CMFCToolBar::EnableQuickCustomization();
 
@@ -149,6 +148,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		}
 	}
 
+	*/ /// Delete Tool Bar ///
 	// 메뉴 개인 설정을 활성화합니다(가장 최근에 사용한 명령).
 	// TODO: 사용자의 기본 명령을 정의하여 각 풀다운 메뉴에 하나 이상의 기본 명령을 포함시킵니다.
 	CList<UINT, UINT> lstBasicCommands;
@@ -187,7 +187,11 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 		return FALSE;
 	// TODO: CREATESTRUCT cs를 수정하여 여기에서
 	//  Window 클래스 또는 스타일을 수정합니다.
-
+	if (cs.hMenu != NULL) 
+	{
+		::DestroyMenu(cs.hMenu);
+		cs.hMenu = NULL; 
+	}
 	return TRUE;
 }
 
@@ -224,7 +228,6 @@ BOOL CMainFrame::CreateDockingWindows()
 		TRACE0("출력 창을 만들지 못했습니다.\n");
 		return FALSE; // 만들지 못했습니다.
 	}
-
 	// 속성 창을 만듭니다.
 	CString strPropertiesWnd;
 	bNameValid = strPropertiesWnd.LoadString(IDS_PROPERTIES_WND);
@@ -290,7 +293,6 @@ LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp,LPARAM lp)
 	{
 		return 0;
 	}
-
 	CMFCToolBar* pUserToolbar = (CMFCToolBar*)lres;
 	ASSERT_VALID(pUserToolbar);
 
