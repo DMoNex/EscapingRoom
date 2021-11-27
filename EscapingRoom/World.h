@@ -9,6 +9,7 @@
 #include <vector>
 #include "Entity.h"
 #include "Player.h"
+#include "Portal.h"
 
 
 // Cannot include game because of hierarchys.
@@ -26,10 +27,8 @@ class World {
 	std::vector<Entity*> entityList;
 	// The player of this map.
 	Player* player;
-
 	GLuint textureId[14];
-	int nextPortalNum, nextPortalGen;
-	int portalInfo[5][2][3] = { 0 }; // [ Portal Num ] [ src, dst ] [ x,y,z ] 
+	std::vector<Portal> portalRelation;
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
@@ -57,10 +56,13 @@ public:
 	// Rotating over left-up plane(90 degree)
 	void rotateLU();
 	void onCollisingWithBlockAndEntity(Entity*, Vec3);
+	void makePortal(int, int, int);
+	// id1 -> id2, portal id starts from 0.
+	void directizePortal(int, int);
+	void connectPortal(int, int);
+	Vec3 getNextPortal(Vec3);
 	std::vector<Entity*> getEntityList();
 	friend Renderer;
 	friend Game;
-
-	void makePortal(int, int, int);
 	friend Player;
 };
