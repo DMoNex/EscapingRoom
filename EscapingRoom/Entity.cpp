@@ -48,18 +48,19 @@ void Entity::init() {
 }
 
 void Entity::initCollisionPoints() {
+	collisingPoints.clear();
 	collisingPoints.push_back(Vec3(0, 0, 0));
 	collisingPoints.push_back(Vec3(1, 0, 0));
-	collisingPoints.push_back(Vec3(1, 0, 1));
-	collisingPoints.push_back(Vec3(0, 0, 1));
 	collisingPoints.push_back(Vec3(0, 1, 0));
-	collisingPoints.push_back(Vec3(1, 1, 0));
-	collisingPoints.push_back(Vec3(1, 1, 1));
-	collisingPoints.push_back(Vec3(0, 1, 1));
+	collisingPoints.push_back(Vec3(0, 0, 1));
 }
 
 bool Entity::isCrashable() {
 	return caseCrash;
+}
+
+bool Entity::canFly() {
+	return flight;
 }
 
 #include "EscapingRoomView.h"
@@ -91,11 +92,12 @@ void printVectorList(std::vector<Vec3>& list) {
 // Exactness of collision checking
 #define PRECISION 100.0f
 void Entity::moveTo(Vec3 location) {
+	Vec3 centralizingVect = getCentralizingVector();
 	if (isCrashable()) {
 		Vec3 diff = location - this->location;
 		std::vector<Vec3> temp;
 		for (int i = 0; i < collisingPoints.size(); i++) {
-			temp.push_back(CEscapingRoomView::game.getCurrentWorld()->eye.getEyeMatrix() * (collisingPoints[i] - Vec3(0.5, 1.0, 0.5) + CEscapingRoomView::game.getCurrentWorld()->eye.getInversedEyeMatrix() * Vec3(0.5, 1.0, 0.5)));
+			temp.push_back(CEscapingRoomView::game.getCurrentWorld()->eye.getEyeMatrix() * (collisingPoints[i] - centralizingVect + CEscapingRoomView::game.getCurrentWorld()->eye.getInversedEyeMatrix() * centralizingVect));
 		}
 
 		for (int i = 0; i < PRECISION; i++) {
@@ -117,10 +119,27 @@ void Entity::moveTo(Vec3 location) {
 	}
 }
 
-void Entity::onSteppingBlock(Vec3 vect) {
-
+bool Entity::isPlayer() {
+	return id == EntityId::PLAYER;
 }
 
-void Entity::moving() {
+std::vector<Entity*> Entity::getNearingEntities(float radius) {
+	std::vector<Entity*> nearingEntities;
 
+	for (int i = 0; i < CEscapingRoomView::game.getCurrentWorld()->getEntityList().size(); i++) {
+		Entity* indexedEntity = CEscapingRoomView::game.getCurrentWorld()->getEntityList()[i];
+		Vec3 centralizingVect = Vec3(0.5, 0.5, 0.5);
+		// Excepting self.
+		if (indexedEntity == this) continue;
+		if (indexedEntity->getEntityType() == EntityId::PLAYER)
+			centralizingVect = Vec3(0.5, 1.0, 0.5);
+		if ((indexedEntity->location - this->location + centralizingVect).length() <= radius)
+			nearingEntities.push_back(indexedEntity);
+	}
+
+	return nearingEntities;
+}
+
+Vec3 Entity::getCentralizingVector() {
+	return Vec3(0.5, 0.5, 0.5);
 }

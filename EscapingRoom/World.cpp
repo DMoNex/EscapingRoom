@@ -205,7 +205,14 @@ void World::rotateLU() {
 }
 
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
-	if (getBlock(location).id != BlockId::ROOM)
+	if (getBlock(location).id != BlockId::ROOM) {
 		LOG("COLLISING BLOCK ID: " + std::to_string((int)getBlock(location).id));
+		// TODO: Portal event, PAD event
+
+	}
+}
+
+std::vector<Entity*> World::getEntityList() {
+	return entityList;
 }
 

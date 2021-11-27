@@ -55,7 +55,7 @@ public:
 	// Rotating over left-up plane(90 degree)
 	void rotateLU();
 	void onCollisingWithBlockAndEntity(Entity*, Vec3);
+	std::vector<Entity*> getEntityList();
 	friend Renderer;
 	friend Game;
-
 };
