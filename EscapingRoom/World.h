@@ -58,4 +58,5 @@ public:
 	std::vector<Entity*> getEntityList();
 	friend Renderer;
 	friend Game;
+	friend Player;
 };

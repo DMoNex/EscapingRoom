@@ -335,6 +335,9 @@ void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case 'G':
 		game.getPlayer()->grab();
 		break;
+	case 'B':
+		game.getPlayer()->release();
+		break;
 	case VK_LEFT:
 		game.getCurrentWorld()->rotateFL();
 		break;
