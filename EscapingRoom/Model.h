@@ -10,7 +10,7 @@ public:
 	Model(int size = 0);
 	void init(); // loading included.
 	// Removing contiguous side of blocks.
-	void setBlock(int, int, int);
+	void setBlock(Block, int, int, int);
 	Block getBlock(int, int, int);
 	void draw();
 };
