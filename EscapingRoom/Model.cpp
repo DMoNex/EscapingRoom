@@ -36,6 +36,7 @@ void Model::free() {
 }
 
 void Model::init() {
+	alloc();
 	for (int wx = 0; wx < size; wx++) {
 		for (int wy = 0; wy < size * 2; wy++) {
 			for (int wz = 0; wz < size; wz++) {
