@@ -39,17 +39,12 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 void World::init() {
 	Block closedDoor(BlockId::DOOR_CLOSED);
 	Block openedDoor(BlockId::DOOR_OPENED);
-	Block portalUp(BlockId::PORTAL_UP);
-	Block portalDown(BlockId::PORTAL_DOWN);
+	Block portalUp(BlockId::PORTAL_UP, 2);
+	Block portalDown(BlockId::PORTAL_DOWN, 2);
 	Block pad(BlockId::PAD);
 
-	Block portal2Up(BlockId::PORTAL_UP);
-	Block portal2Down(BlockId::PORTAL_DOWN);
-	portal2Up.side[2] = 0;
-	portal2Down.side[2] = 0;
-	portal2Up.side[1] = 1;
-	portal2Down.side[1] = 1;
-
+	Block portal2Up(BlockId::PORTAL_UP, 1);
+	Block portal2Down(BlockId::PORTAL_DOWN, 1);
 
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {

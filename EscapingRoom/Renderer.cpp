@@ -145,6 +145,7 @@ void Renderer::drawCube(Entity entity) {
 		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->entityTextureId[1]);
 		break;
 	}
+	// Entity 확장시 각 면을 분리해서 활성화해야 할지도....?
 	if (true) { // 아랫면 활성화 -> LOOP
 		drawSurface();
 	}

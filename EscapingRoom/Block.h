@@ -62,9 +62,9 @@ public:
 			break;
 		case BlockId::PORTAL_UP:
 		case BlockId::PORTAL_DOWN:
+			side[align] = 1;
 			caseCrash = true;
 			lightTransmission = true;
-			side[2] = 1;
 			break;
 		case BlockId::PAD:
 			caseCrash = true;
