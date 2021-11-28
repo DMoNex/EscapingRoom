@@ -39,7 +39,7 @@ void Game::init() {
 				z -= 1;
 				y -= 2;
 				if (abs(x) + abs(y / 2) + abs(z) <= 1) {
-					playerModel->setBlock(Block(BlockId::WALL), wx, wy, wz);
+					playerModel->setBlock(Block((BlockId)100), wx, wy, wz);
 				}
 			}
 		}
