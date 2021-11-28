@@ -70,13 +70,18 @@ void Entity::teleport(Vec3 location) {
 
 // Chekcing whether at least one collising point is collising.
 bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
+	bool isCollising = false;
+	bool isCollisingWithPortal = false;
 	for (int i = 0; i < list.size(); i++) {
 		if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).isCrashable()) {
 			CEscapingRoomView::game.getCurrentWorld()->onCollisingWithBlockAndEntity(entity, entity->location + list[i]);
-			return true;
+			isCollising = true;
+			if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).id == BlockId::PORTAL_DOWN)
+				isCollisingWithPortal = true;
 		}
 	}
-	return false;
+	entity->portaled = isCollisingWithPortal + !entity->portaled;
+	return isCollising;
 }
 
 void printVector(Vec3& v) {
