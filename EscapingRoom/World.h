@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "World.h"
 #include "Eye.h"
+#include "Data.h"
 
 #include <vector>
 #include "Entity.h"
@@ -30,6 +31,7 @@ class World {
 	GLuint textureId[14];
 	GLuint entityTextureId[6];
 	std::vector<Portal> portalRelation;
+	Data* data;
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
@@ -61,6 +63,7 @@ public:
 	// id1 -> id2, portal id starts from 0.
 	void directizePortal(int, int);
 	void connectPortal(int, int);
+	void load(char* filename);
 	Vec3 getNextPortal(Vec3);
 	std::vector<Entity*> getEntityList();
 	friend Renderer;
