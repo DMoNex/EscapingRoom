@@ -3,19 +3,68 @@
 
 Model::Model(int size) {
 	this->size = size;
-	init();
+	if (size)
+		init();
 }
 
 void Model::init() {
+	singleton = new Block * *[size];
+	for (int i = 0; i < size; i++) {
+		singleton[i] = new Block * [size * 2];
+	}
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size * 2; j++) {
+			singleton[i][j] = new Block[size];
+		}
+	}
 
+	for (int wx = 0; wx < size; wx++) {
+		for (int wy = 0; wy < size * 2; wy++) {
+			for (int wz = 0; wz < size; wz++) {
+				setBlock(BlockId::WALL, wx, wy, wz);
+			}
+		}
+	}
 }
 
-void Model::setBlock(int x, int y, int z) {
-
+void Model::setBlock(Block semiBlock, int x, int y, int z) {
+	if (x < 0 || x > size - 1 ||
+		y < 0 || y > size * 2 - 1 ||
+		z < 0 || z > size - 1)
+		return;
+	singleton[x][y][z] = semiBlock;
+	if (getBlock(x, y + 1, z).id != BlockId::AIR) {
+		singleton[x][y][z].side[TOP] = 0;
+		singleton[x][y + 1][z].side[BOTTOM] = 0;
+	}
+	if (getBlock(x, y - 1, z).id != BlockId::AIR) {
+		singleton[x][y][z].side[BOTTOM] = 0;
+		singleton[x][y - 1][z].side[TOP] = 0;
+	}
+	if (getBlock(x + 1, y, z).id != BlockId::AIR) {
+		singleton[x][y][z].side[FORWARD] = 0;
+		singleton[x + 1][y][z].side[BACK] = 0;
+	}
+	if (getBlock(x - 1, y, z).id != BlockId::AIR) {
+		singleton[x][y][z].side[BACK] = 0;
+		singleton[x - 1][y][z].side[FORWARD] = 0;
+	}
+	if (getBlock(x, y, z + 1).id != BlockId::AIR) {
+		singleton[x][y][z].side[LEFT] = 0;
+		singleton[x][y][z + 1].side[RIGHT] = 0;
+	}
+	if (getBlock(x, y, z - 1).id != BlockId::AIR) {
+		singleton[x][y][z].side[RIGHT] = 0;
+		singleton[x][y][z - 1].side[LEFT] = 0;
+	}
 }
 
 Block Model::getBlock(int x, int y, int z) {
-	return Block::AIR;
+	if (x < 0 || x > size - 1 ||
+		y < 0 || y > size * 2 - 1 ||
+		z < 0 || z > size - 1)
+		return Block::AIR;
+	return singleton[x][y][z];
 }
 
 void Model::draw() {
