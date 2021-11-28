@@ -19,4 +19,5 @@ public:
 	void turnLeft(float angle);
 	void stareUp(float angle);
 	void rotate(float yaw, float pitch);
+	void upping(Vec3);
 };

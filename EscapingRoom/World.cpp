@@ -40,16 +40,15 @@ void World::init() {
 	Block closedDoor(BlockId::DOOR_CLOSED);
 	Block openedDoor(BlockId::DOOR_OPENED);
 	Block portalUp(BlockId::PORTAL_UP);
-	Block portalDown(BlockId::PORTAL_DOWN);
+	Block portalDown(BlockId::PORTAL_DOWN, FORWARD);
 	Block pad(BlockId::PAD);
 
 	Block portal2Up(BlockId::PORTAL_UP);
-	Block portal2Down(BlockId::PORTAL_DOWN);
+	Block portal2Down(BlockId::PORTAL_DOWN, TOP);
 	portal2Up.side[2] = 0;
 	portal2Down.side[2] = 0;
 	portal2Up.side[1] = 1;
 	portal2Down.side[1] = 1;
-
 
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
@@ -225,17 +224,16 @@ void World::rotateLU() {
 }
 
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
+	connectPortal(0, 1);
 	Block collisingBlock = getBlock(location);
-	if (collisingBlock.id == BlockId::PORTAL_DOWN ||
-		collisingBlock.id == BlockId::PORTAL_UP) {
+	// Portalling only for PORTAL_DOWN... this can cause errr......
+	if (collisingBlock.id == BlockId::PORTAL_DOWN) {
 		// PORTALLING
 		if (!entity->portaled) {
-			entity->portaled = true;
-			entity->teleport(getNextPortal(location));
+			entity->teleport(getNextPortal(location) + Vec3(0, -2.5, 0));
+			CEscapingRoomView::game.getCurrentWorld()->eye.upping(Vec3(0, -1, 0));
+			cameraInit();
 		}
-	}
-	else {
-		entity->portaled = false;
 	}
 
 	if (collisingBlock.id != BlockId::ROOM) {
@@ -256,21 +254,17 @@ std::vector<Entity*> World::getEntityList() {
 }
 
 void World::makePortal(int x, int y, int z) {
-	Portal portal;
-	portal.x = x;
-	portal.y = y;
-	portal.z = z;
+	Portal* portal = new Portal();
+	portal->x = x;
+	portal->y = y;
+	portal->z = z;
 	portalRelation.push_back(portal);
 }
 
 void World::directizePortal(int id1, int id2) {
-	if (id1 > portalRelation.size() - 1 || id2 > portalRelation.size() - 1) {
-		LOG("[E] Portal size overflowing");
-		return;
-	}
-	portalRelation[id1].nx = portalRelation[id2].x;
-	portalRelation[id1].ny = portalRelation[id2].y;
-	portalRelation[id1].nz = portalRelation[id2].z;
+	portalRelation[id1]->nx = portalRelation[id2]->x;
+	portalRelation[id1]->ny = portalRelation[id2]->y;
+	portalRelation[id1]->nz = portalRelation[id2]->z;
 }
 
 void World::connectPortal(int id1, int id2) {
@@ -283,12 +277,12 @@ Vec3 World::getNextPortal(Vec3 loc) {
 	int y = (int)(loc.y - mapStartPoint.y);
 	int z = (int)(loc.z - mapStartPoint.z);
 	for (int i = 0; i < portalRelation.size(); i++) {
-		if (portalRelation[i].x == x &&
-			portalRelation[i].y == y &&
-			portalRelation[i].z == z)
-			return Vec3(portalRelation[i].nx + mapStartPoint.x,
-				portalRelation[i].ny + mapStartPoint.y,
-				portalRelation[i].nz + mapStartPoint.z);
+		if (portalRelation[i]->x == x &&
+			portalRelation[i]->y == y &&
+			portalRelation[i]->z == z)
+			return Vec3(portalRelation[i]->nx + mapStartPoint.x,
+				portalRelation[i]->ny + mapStartPoint.y,
+				portalRelation[i]->nz + mapStartPoint.z);
 	}
 	LOG("[E]: Getting a non-existing portal");
 	return Vec3(0, 0, 0);

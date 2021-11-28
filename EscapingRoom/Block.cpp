@@ -21,3 +21,27 @@ bool Block::isVisible() {
 bool Block::isCrashable() {
 	return caseCrash;
 }
+
+Vec3 Block::getNormal() {
+	switch (align) {
+	case TOP:
+		return Vec3(0, -1, 0);
+		break;
+	case BOTTOM:
+		return Vec3(0, 1, 0);
+		break;
+	case FORWARD:
+		return Vec3(-1, 0, 0);
+		break;
+	case BACK:
+		return Vec3(1, 0, 0);
+		break;
+	case LEFT:
+		return Vec3(0, 0, -1);
+		break;
+	case RIGHT:
+		return Vec3(0, 0, 1);
+		break;
+	}
+	return Vec3(0, 1, 0);
+}
