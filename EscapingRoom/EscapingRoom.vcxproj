@@ -199,6 +199,8 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelPart.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
@@ -226,6 +228,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
