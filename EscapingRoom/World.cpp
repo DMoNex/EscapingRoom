@@ -130,7 +130,7 @@ Block World::getBlock(int x, int y, int z) const {
 	// Fixing error occured due to rotation.
 	Vec3 errVect;
 	errVect.x = min(minVect.x, maxVect.x);
-	errVect.y = min(minVect.y, maxVect.y);
+	errVect.y = min(minVect.y, maxVect.y); 
 	errVect.z = min(minVect.z, maxVect.z);
 	Vec3 blockLoc = (mat * Vec3(x, y, z)) - errVect;
 	x = blockLoc.x;
@@ -221,13 +221,16 @@ void World::rotateLU() {
 
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	Block collisingBlock = getBlock(location);
+	Vec3 centralizingVect = entity->getCentralizingVector() + Vec3(0, 1, 0);
 	// Portalling only for PORTAL_DOWN... this can cause errr......
 	if (collisingBlock.id == BlockId::PORTAL) {
 		// PORTALLING
-		if (!entity->portaled) {
-			entity->teleport(getNextPortal(location) + 2.5 * getBlock(getNextPortal(location)).getNormal());
-			CEscapingRoomView::game.getCurrentWorld()->eye.upping(getBlock(getNextPortal(location)).getNormal());
+		if (!entity->portaled && !entity->portallingDelay) {
+			// CEscapingRoomView::game.getCurrentWorld()->eye.getEyeMatrix() * (collisingPoints[i] - centralizingVect + CEscapingRoomView::game.getCurrentWorld()->eye.getInversedEyeMatrix() * centralizingVect)
+			eye.upping(getBlock(getNextPortal(location)).getNormal());
+			entity->teleport(getNextPortal(location) + 1.1 * getBlock(getNextPortal(location)).getNormal().teleportizing());
 			cameraInit();
+			entity->portallingDelay = 50;
 		}
 	}
 

@@ -10,7 +10,7 @@
 void Renderer::onDraw() {
 	drawCurrentWorld();
 	drawEntity();
-	drawAxis();
+	// drawAxis();
 }
 
 void Renderer::drawCurrentWorld() {
@@ -49,11 +49,12 @@ void Renderer::drawEntity() {
 			currentWorld->entityList[i]->location.z);
 		switch (currentWorld->entityList[i]->getEntityType()) {
 		case EntityId::PLAYER:
-			// Temporally using.
-			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
+			drawAxis();
 			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
+			glTranslatef(-centralizingVect.x, -centralizingVect.y, -centralizingVect.z);
 			// ERROR.
+			drawAxis();
 			drawCube(Entity(EntityId::PLAYER));
 			glTranslatef(0, 1, 0);
 			drawCube(Entity(EntityId::PLAYER));

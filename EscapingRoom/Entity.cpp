@@ -4,6 +4,7 @@
 #include "EscapingRoomView.h"
 Entity::Entity(EntityId id) {
 	this->id = id;
+	portallingDelay = 0;
 	init();
 }
 
@@ -72,6 +73,7 @@ void Entity::teleport(Vec3 location) {
 bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
 	bool isCollising = false;
 	bool isCollisingWithPortal = false;
+	bool isSteppingPortal = false;
 	for (int i = 0; i < list.size(); i++) {
 		if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).isCrashable()) {
 			CEscapingRoomView::game.getCurrentWorld()->onCollisingWithBlockAndEntity(entity, entity->location + list[i]);
@@ -80,7 +82,7 @@ bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
 				isCollisingWithPortal = true;
 		}
 	}
-	entity->portaled = isCollisingWithPortal + !entity->portaled;
+	entity->portaled = isCollisingWithPortal + !entity->portaled + isSteppingPortal;
 	return isCollising;
 }
 
