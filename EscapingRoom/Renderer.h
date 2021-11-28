@@ -11,6 +11,7 @@ public:
 	void drawEntity();
 	void drawSurface();
 	void drawCube(Block);
+	void drawCube(Entity);
 	void drawAxis();
 
 

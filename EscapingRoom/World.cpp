@@ -287,3 +287,44 @@ Vec3 World::getNextPortal(Vec3 loc) {
 	LOG("[E]: Getting a non-existing portal");
 	return Vec3(0, 0, 0);
 }
+
+void World::load(char* filename) {
+	//맵이 이미 있으면 제거
+	if (map != NULL) {
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				delete[] map[i][j];
+			}
+		}
+		for (int i = 0; i < sizeX; i++) {
+			delete[] map[i];
+		}
+		delete[] map;
+	}
+	this->data->loadData(filename);
+	mapStartPoint = { data->mapStartX, data->mapStartY, data->mapStartZ };
+	this->sizeX = sizeX;
+	this->sizeY = sizeY;
+	this->sizeZ = sizeZ;
+	map = new Block * *[sizeX];
+	for (int i = 0; i < sizeX; i++) {
+		map[i] = new Block * [sizeY];
+	}
+	for (int i = 0; i < sizeX; i++) {
+		for (int j = 0; j < sizeY; j++) {
+			map[i][j] = new Block[sizeZ];
+		}
+	}
+	init();
+	eye = Eye();
+	cameraInit();
+
+	player->location = { data->playerSpawnX - mapStartPoint.x, data->playerSpawnY - mapStartPoint.y, data->playerSpawnZ - mapStartPoint.z };
+	for (int y = 0; y < sizeY; y++) {
+		for (int x = sizeX - 1; x >= 0; x--) {
+			for (int z = sizeZ - 1; y >= 0; z--) {
+				setBlock(Block(data->mapData[x][y][z]), x - mapStartPoint.x, y - mapStartPoint.y, z - mapStartPoint.z);
+			}
+		}
+	}
+}

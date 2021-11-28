@@ -186,6 +186,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="BlockId.h" />
     <ClInclude Include="ClassView.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityId.h" />
     <ClInclude Include="EscapingRoom.h" />
@@ -214,6 +215,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="ClassView.cpp" />
+    <ClCompile Include="Data.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EscapingRoom.cpp" />
     <ClCompile Include="EscapingRoomDoc.cpp" />
