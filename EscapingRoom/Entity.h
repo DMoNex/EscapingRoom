@@ -12,6 +12,7 @@ public:
 	bool/*BOOL*/ caseCrash; // false : can't crash / true : can crash
 	char lightTransmission; // 0 : 차단(그림자), 1 : 투과, 2 : 굴절, 3 : 반사
 	bool flight;
+	bool portaled;
 	Vec3 location;
 	Vec3 velocity;
 	// Vec3 acceleration; should we use this?

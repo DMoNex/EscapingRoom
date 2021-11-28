@@ -15,6 +15,7 @@ public:
 	// Moving speed per tick.
 	float speed;
 	Entity* grabbingEntity;
+	bool portaled;
 public:
 	virtual ~Player() {}
 	Player() : Entity(EntityId::PLAYER), speed(0.1), keyW(false), keyS(false), keyA(false), keyD(false) {
