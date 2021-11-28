@@ -3,7 +3,7 @@
 enum class EntityId {
 	PLAYER,			// 0
 	BOX,
-	BALLON,
+	BALLOON,
 	PRISM_BLOCK,
 	MIRROR_BLOCK,
 	THORNS_TRAP		// 5

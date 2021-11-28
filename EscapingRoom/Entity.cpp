@@ -23,7 +23,7 @@ void Entity::init() {
 		lightTransmission = 0;
 		flight = false;
 		break;
-	case EntityId::BALLON:
+	case EntityId::BALLOON:
 		caseCrash = true;
 		lightTransmission = 0;
 		flight = true;

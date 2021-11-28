@@ -54,15 +54,15 @@ void Renderer::drawEntity() {
 			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
 			// ERROR.
-			drawCube(Block(BlockId::WALL));
+			drawCube(Entity(EntityId::PLAYER));
 			glTranslatef(0, 1, 0);
-			drawCube(Block(BlockId::WALL));
+			drawCube(Entity(EntityId::PLAYER));
 			break;
 		case EntityId::BOX:
 			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
 			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
-			drawCube(Block(BlockId::WALL));
+			drawCube(Entity(EntityId::BOX));
 			break;
 		}
 		glPopMatrix();
@@ -133,6 +133,52 @@ void Renderer::drawCube(Block block) {
 	}
 	glBindTexture(GL_TEXTURE_2D, 0); // bind cancel
 }
+void Renderer::drawCube(Entity entity) {
+	switch (entity.id) {
+	case(EntityId::PLAYER): // empty block
+	case(EntityId::BALLOON):
+	case(EntityId::MIRROR_BLOCK):
+	case(EntityId::PRISM_BLOCK):
+	case(EntityId::THORNS_TRAP):
+		break;
+	case(EntityId::BOX): // BOX
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->entityTextureId[1]);
+		break;
+	}
+	if (true) { // 아랫면 활성화 -> LOOP
+		drawSurface();
+	}
+	if (true) { // 윗면 활성화 -> FLOOR
+		glTranslatef(0, 1, 0);
+		drawSurface();
+		glTranslatef(0, -1, 0);
+	}
+	if (true) { // 왼면 활성화 -> RIGHT
+		glRotatef(-90, 1, 0, 0);
+		drawSurface();
+		glRotatef(90, 1, 0, 0);
+	}
+	if (true) { // 앞면 활성화 -> BACK
+		glRotatef(90, 0, 0, 1);
+		drawSurface();
+		glRotatef(-90, 0, 0, 1);
+	}
+	if (true) { // 오른면 활성화 -> LEFT
+		glTranslatef(0, 0, 1);
+		glRotatef(-90, 1, 0, 0);
+		drawSurface();
+		glRotatef(90, 1, 0, 0);
+		glTranslatef(0, 0, -1);
+	}
+	if (true) { // 뒷면 활성화 -> FRONT
+		glTranslatef(1, 0, 0);
+		glRotatef(90, 0, 0, 1);
+		drawSurface();
+		glRotatef(-90, 0, 0, 1);
+		glTranslatef(-1, 0, 0);
+	}
+	glBindTexture(GL_TEXTURE_2D, 0); // bind cancel
+}
 void Renderer::drawAxis() {
 	glBegin(GL_LINES);
 	// x-axis
@@ -193,6 +239,33 @@ void Renderer::makeTexture() {
 		if (data) { // 유효성검사
 			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
 			
+		}
+		data = 0;
+	}
+	glGenTextures(6, CEscapingRoomView::game.getCurrentWorld()->entityTextureId); // textureId 1~6 (0 == empty)
+	for (i = 0; i < 6; i++) { // create Entity Texture
+		//texture Bind
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->entityTextureId[i]);
+		//set binded texture's option
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		switch (i) {
+		case 0: // Player
+		case 2: // Ballon
+		case 3:
+		case 4:
+		case 5:
+			break;
+		case 1: // BOX
+			data = stbi_load("image/BOX.jpg", &width, &height, &nrChannels, 0);
+			break;
+		}
+		if (data) { // 유효성검사
+			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+
 		}
 		data = 0;
 	}
