@@ -11,6 +11,7 @@ public:
 	float dot(Vec3);
 	float length();
 	Vec3& normalize();
+	Vec3& teleportizing();
 	Vec3 cross(Vec3 const&);
 	Vec3 gramSchmidting(Vec3);
 };

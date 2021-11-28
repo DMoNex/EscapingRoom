@@ -19,9 +19,9 @@ Matrix operator*(Matrix m1, Matrix m2) {
 
 void Matrix::mulToOpenGL() {
 	float m[16] = {
-		c1.x, c2.x, c3.x, 0,
-		c1.y, c2.y, c3.y, 0,
-		c1.z, c2.z, c3.z, 0,
+		c1.x, c1.y, c1.z, 0,
+		c2.x, c2.y, c2.z, 0,
+		c3.x, c3.y, c3.z, 0,
 		0,	  0,	0,	  1
 	};
 	glMultMatrixf(m);

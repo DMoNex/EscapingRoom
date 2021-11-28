@@ -32,6 +32,11 @@ Vec3& Vec3::normalize() {
 	return (*this);
 }
 
+Vec3& Vec3::teleportizing() {
+	if (y < 0) y -= 1;
+	return (*this);
+}
+
 Vec3 Vec3::cross(Vec3 const& v) {
 	Vec3 v2;
 	v2.x = y * v.z - z * v.y;

@@ -55,14 +55,14 @@ void Eye::rotate(float yaw, float pitch) {
 void Eye::upping(Vec3 up) {
 	if (abs(this->up.dot(up)) >= 0.5) {
 		this->up = up;
-		this->left = (-1) * this->up.cross(this->front);
+		this->left = getLeft();
 	}
 	else {
 		if (abs(this->front.dot(up)) >= 0.5) {
 			this->front = this->up;
 			this->up = this->left;
 			this->up = up;
-			this->left = (-1) * this->up.cross(this->front);
+			this->left = getLeft();
 		}
 		else if (abs(this->left.dot(up)) >= 0.5) {
 			this->left = this->up;
