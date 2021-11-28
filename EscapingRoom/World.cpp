@@ -50,7 +50,7 @@ void World::init() {
 	Block portal(BlockId::PORTAL, TOP);
 	Block pad(BlockId::PAD);
 
-	Block portal2(BlockId::PORTAL, TOP);
+	Block portal2(BlockId::PORTAL, BOTTOM);
 
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {

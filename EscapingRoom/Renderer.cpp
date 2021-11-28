@@ -69,16 +69,16 @@ void Renderer::drawEntity() {
 	}
 }
 
-void Renderer::drawSurface() {
+void Renderer::drawSurface(float x, float y) {
 	glBegin(GL_POLYGON);
 	glVertex3f(0, 0, 0); glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(1, 0, 0); glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(1, 0, 1); glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(0, 0, 1); glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(x, 0, 0); glTexCoord2f(x, 0.0f);
+	glVertex3f(x, 0, y); glTexCoord2f(x, y);
+	glVertex3f(0, 0, y); glTexCoord2f(0.0f, y);
 	glEnd();
 }
 
-void Renderer::drawCube(Block block) {
+void Renderer::drawCube(Block block, float size) {
 	switch (block.id) {
 	case(BlockId::AIR):
 	case(BlockId::DOOR_OPENED):
@@ -97,36 +97,36 @@ void Renderer::drawCube(Block block) {
 		break;
 	}
 	if (block.side[1]) { // 아랫면 활성화 -> LOOP
-		drawSurface();
+		drawSurface(size, size);
 	}
 	if (block.side[0]) { // 윗면 활성화 -> FLOOR
-		glTranslatef(0, 1, 0);
-		drawSurface();
-		glTranslatef(0, -1, 0);
+		glTranslatef(0, size * 1, 0);
+		drawSurface(size, size);
+		glTranslatef(0, size * (-1), 0);
 	}
 	if (block.side[4]) { // 왼면 활성화 -> RIGHT
 		glRotatef(-90, 1, 0, 0);
-		drawSurface();
+		drawSurface(size, size);
 		glRotatef(90, 1, 0, 0);
 	}
 	if (block.side[2]) { // 앞면 활성화 -> BACK
 		glRotatef(90, 0, 0, 1);
-		drawSurface();
+		drawSurface(size, size);
 		glRotatef(-90, 0, 0, 1);
 	}
 	if (block.side[5]) { // 오른면 활성화 -> LEFT
-		glTranslatef(0, 0, 1);
+		glTranslatef(0, 0, size);
 		glRotatef(-90, 1, 0, 0);
-		drawSurface();
-		glRotatef(90, 1, 0, 0);
-		glTranslatef(0, 0, -1);
+		drawSurface(size, size);
+		glRotatef(90, size, 0, 0);
+		glTranslatef(0, 0, size * (-1));
 	}
 	if (block.side[3]) { // 뒷면 활성화 -> FRONT
-		glTranslatef(1, 0, 0);
+		glTranslatef(size, 0, 0);
 		glRotatef(90, 0, 0, 1);
-		drawSurface();
+		drawSurface(size, size);
 		glRotatef(-90, 0, 0, 1);
-		glTranslatef(-1, 0, 0);
+		glTranslatef(size * (-1), 0, 0);
 	}
 	glBindTexture(GL_TEXTURE_2D, 0); // bind cancel
 }

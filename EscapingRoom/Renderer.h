@@ -9,8 +9,9 @@ public:
 	void onDraw();
 	void drawCurrentWorld();
 	void drawEntity();
-	void drawSurface();
-	void drawCube(Block);
+	// Generalizing surface drawing for player modelling.
+	void drawSurface(float = 1.0f, float = 1.0f);
+	void drawCube(Block, float size = 1);
 	void drawCube(Entity);
 	void drawAxis();
 
