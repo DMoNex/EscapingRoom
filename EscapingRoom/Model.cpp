@@ -67,21 +67,53 @@ Block Model::getBlock(int x, int y, int z) {
 	return singleton[x][y][z];
 }
 
+#include "EscapingRoomView.h"
 void Model::draw() {
-	/*
 	glPushMatrix();
 	for (float wx = 0; wx < size; wx++) {
 		for (float wy = 0; wy < size * 2; wy++) {
 			for (float wz = 0; wz < size; wz++) {
-				drawCube(getBlock(wx, wy, wz), size);
-				glTranslatef(0, 0, 1);
+				CEscapingRoomView::renderSingleton.drawCube(getBlock(wx, wy, wz), 1.0f / size);
+				glTranslatef(0, 0, 1.0f / size);
 			}
-			glTranslatef(0, 0, -(endPoint.z - startPoint.z + 1));
-			glTranslatef(0, 1, 0);
+			glTranslatef(0, 0, -1);
+			glTranslatef(0, 1.0f / size, 0);
 		}
-		glTranslatef(0, -(endPoint.y - startPoint.y + 1), 0);
-		glTranslatef(1, 0, 0);
+		glTranslatef(0, -2, 0);
+		glTranslatef(1.0f / size, 0, 0);
 	}
 	glPopMatrix();
-	*/
+}
+
+#include <fstream>
+void Model::load(std::string const& path) {
+	std::ifstream istream(path);
+	int id;
+	for (int wy = 0; wy < size * 2; wy++) {
+		for (int wx = size - 1; wx >= 0; wx--) {
+			for (int wz = size - 1; wz >= 0; wz--) {
+				istream >> id;
+				singleton[wx][wy][wz] = (BlockId)id;
+			}
+		}
+	}
+	istream.close();
+}
+
+void Model::save(std::string const& path) {
+	std::ofstream ostream(path);
+	for (int wy = 0; wy < size * 2; wy++) {
+		for (int wx = size - 1; wx >= 0; wx--) {
+			for (int wz = size - 1; wz >= 0; wz--) {
+				ostream << (int) singleton[wx][wy][wz].id;
+				if (wz != 0)
+					ostream << " ";
+			}
+			if (wx != 0)
+				ostream << "\n";
+		}
+		if (wy != 2 * size - 1)
+			ostream << "\n\n";
+	}
+	ostream.close();
 }

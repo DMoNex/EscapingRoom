@@ -37,8 +37,10 @@ void Renderer::drawCurrentWorld() {
 }
 
 #include "Vec3.h"
+#include "Model.h"
 
 void Renderer::drawEntity() {
+	Model model(10);
 	World* currentWorld = CEscapingRoomView::game.getCurrentWorld();
 	Vec3 centralizingVect;
 	for (int i = 0; i < currentWorld->entityList.size(); i++) {
@@ -49,15 +51,11 @@ void Renderer::drawEntity() {
 			currentWorld->entityList[i]->location.z);
 		switch (currentWorld->entityList[i]->getEntityType()) {
 		case EntityId::PLAYER:
-			drawAxis();
 			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
 			glTranslatef(-centralizingVect.x, -centralizingVect.y, -centralizingVect.z);
 			// ERROR.
-			drawAxis();
-			drawCube(Entity(EntityId::PLAYER));
-			glTranslatef(0, 1, 0);
-			drawCube(Entity(EntityId::PLAYER));
+			model.draw();
 			break;
 		case EntityId::BOX:
 			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;

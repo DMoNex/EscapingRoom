@@ -14,6 +14,7 @@ Game::Game() {
 	init();
 }
 
+#include "Model.h"
 void Game::init() {
 	// Currently only the basic world is loaded.
 	pushWorld(new World(10, 10, 10));
@@ -24,6 +25,8 @@ void Game::init() {
 	worldList[0]->entityList.push_back(box);
 	worldList[0]->player = player;
 	getCurrentWorld()->connectPortal(0, 1);
+	Model model(10);
+	model.save("player.txt");
 }
 
 void Game::onTick() {

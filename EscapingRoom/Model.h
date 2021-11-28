@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Block.h"
+#include <string>
 // Extending World to draw Model.
 class Model {
 	Block*** singleton;
@@ -13,4 +14,6 @@ public:
 	void setBlock(Block, int, int, int);
 	Block getBlock(int, int, int);
 	void draw();
+	void load(std::string const&);
+	void save(std::string const&);
 };
