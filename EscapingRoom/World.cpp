@@ -47,12 +47,10 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 void World::init() {
 	Block closedDoor(BlockId::DOOR_CLOSED);
 	Block openedDoor(BlockId::DOOR_OPENED);
-	Block portalUp(BlockId::PORTAL_UP, FORWARD);
-	Block portalDown(BlockId::PORTAL_DOWN, FORWARD);
+	Block portal(BlockId::PORTAL, TOP);
 	Block pad(BlockId::PAD);
 
-	Block portal2Up(BlockId::PORTAL_UP, TOP);
-	Block portal2Down(BlockId::PORTAL_DOWN, TOP);
+	Block portal2(BlockId::PORTAL, TOP);
 
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
@@ -62,20 +60,14 @@ void World::init() {
 					setBlock(Block::AIR, wx, wy, wz);
 				}
 				// PORTAL 1 for test
-				else if (wx == sizeX - 1 && wy == 1 && wz == 4) {
-					setBlock(portalDown, wx, wy, wz);
+				else if (wx == sizeX - 2 && wy == 0 && wz == 4) {
+					setBlock(portal, wx, wy, wz);
 					makePortal(wx, wy, wz);
-				}
-				else if (wx == sizeX - 1 && wy == 2 && wz == 4) {
-					setBlock(portalUp, wx, wy, wz);
 				}
 				//PORTAL 2 for test
 				else if (wx == 4 && wy == sizeY - 1 && wz == 1) {
-					setBlock(portal2Down, wx, wy, wz);
+					setBlock(portal2, wx, wy, wz);
 					makePortal(wx, wy, wz);
-				}
-				else if (wx == 4 && wy == sizeY - 1 && wz == 2) {
-					setBlock(portal2Up, wx, wy, wz);
 				}
 				// DOOR for test
 				else if (wx == sizeX - 1 && (wy == 1 || wy == 2) && wz == 3) {
@@ -230,7 +222,7 @@ void World::rotateLU() {
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	Block collisingBlock = getBlock(location);
 	// Portalling only for PORTAL_DOWN... this can cause errr......
-	if (collisingBlock.id == BlockId::PORTAL_DOWN) {
+	if (collisingBlock.id == BlockId::PORTAL) {
 		// PORTALLING
 		if (!entity->portaled) {
 			entity->teleport(getNextPortal(location) + 2.5 * getBlock(getNextPortal(location)).getNormal());

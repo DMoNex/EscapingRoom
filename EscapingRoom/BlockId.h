@@ -7,13 +7,12 @@ enum class BlockId {
 	DOOR_OPENED,	// empty
 	WALL, 			
 	STAIRS,			// 5
-	PORTAL_UP,
-	PORTAL_DOWN,
+	PORTAL,
 	LADDER,
 	PAD,			
-	SWITCH,			// 10
-	LASER_SENDER,
+	SWITCH,
+	LASER_SENDER,	// 10
 	LASER_RECEIVER,
 	THORNS_TRAP_FIXED,
-	ARROW_TRAP 		// 14
+	ARROW_TRAP 		// 13
 };

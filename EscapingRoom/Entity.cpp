@@ -76,7 +76,7 @@ bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
 		if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).isCrashable()) {
 			CEscapingRoomView::game.getCurrentWorld()->onCollisingWithBlockAndEntity(entity, entity->location + list[i]);
 			isCollising = true;
-			if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).id == BlockId::PORTAL_DOWN)
+			if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).id == BlockId::PORTAL)
 				isCollisingWithPortal = true;
 		}
 	}

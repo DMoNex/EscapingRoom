@@ -89,11 +89,8 @@ void Renderer::drawCube(Block block) {
 	case(BlockId::DOOR_CLOSED):
 		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[2]);
 		break;
-	case(BlockId::PORTAL_UP):
+	case(BlockId::PORTAL):
 		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[6]);
-		break;
-	case(BlockId::PORTAL_DOWN):
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[7]);
 		break;
 	case(BlockId::PAD):
 		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[9]);
@@ -224,11 +221,10 @@ void Renderer::makeTexture() {
 			break;
 		case 4:
 		case 5:
-		case 6: // portal_up
-			data = stbi_load("image/PORTAL_UP.jpg", &width, &height, &nrChannels, 0);
+		case 6: // portal
+			data = stbi_load("image/PORTAL.jpg", &width, &height, &nrChannels, 0);
 			break;
-		case 7: // portal_down
-			data = stbi_load("image/PORTAL_DOWN.jpg", &width, &height, &nrChannels, 0);
+		case 7: // ladder
 			break;
 		case 8:
 		case 9:
@@ -255,7 +251,7 @@ void Renderer::makeTexture() {
 
 		switch (i) {
 		case 0: // Player
-		case 2: // Ballon
+		case 2: // Balloon
 		case 3:
 		case 4:
 		case 5:
