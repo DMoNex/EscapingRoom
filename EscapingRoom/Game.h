@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "Eye.h"
 
+class Model;
+
 class Game {
 	std::vector<World*> worldList;
 	// Pointing to current world.
@@ -16,6 +18,8 @@ class Game {
 	// This can be used when the game is cleared.
 	static World* emptyWorld;
 public:
+	static Model* playerModel;
+	static int playerModelId;
 	Game();
 	// Loading world data. This calls Loader of map data.
 	void init();

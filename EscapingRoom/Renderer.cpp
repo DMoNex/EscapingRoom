@@ -37,6 +37,7 @@ void Renderer::drawCurrentWorld() {
 }
 
 #include "Vec3.h"
+#include "Model.h"
 
 void Renderer::drawEntity() {
 	World* currentWorld = CEscapingRoomView::game.getCurrentWorld();
@@ -49,15 +50,14 @@ void Renderer::drawEntity() {
 			currentWorld->entityList[i]->location.z);
 		switch (currentWorld->entityList[i]->getEntityType()) {
 		case EntityId::PLAYER:
-			drawAxis();
 			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
 			glTranslatef(-centralizingVect.x, -centralizingVect.y, -centralizingVect.z);
 			// ERROR.
-			drawAxis();
-			drawCube(Entity(EntityId::PLAYER));
-			glTranslatef(0, 1, 0);
-			drawCube(Entity(EntityId::PLAYER));
+			glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[1]);
+			glCallList(CEscapingRoomView::game.playerModelId);
+			glBindTexture(GL_TEXTURE_2D, 0); // bind cancel
+			// CEscapingRoomView::game.playerModel->draw();
 			break;
 		case EntityId::BOX:
 			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
@@ -73,9 +73,9 @@ void Renderer::drawEntity() {
 void Renderer::drawSurface(float x, float y) {
 	glBegin(GL_POLYGON);
 	glVertex3f(0, 0, 0); glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(x, 0, 0); glTexCoord2f(x, 0.0f);
-	glVertex3f(x, 0, y); glTexCoord2f(x, y);
-	glVertex3f(0, 0, y); glTexCoord2f(0.0f, y);
+	glVertex3f(x, 0, 0); glTexCoord2f(1, 0.0f);
+	glVertex3f(x, 0, y); glTexCoord2f(1, 1);
+	glVertex3f(0, 0, y); glTexCoord2f(0.0f, 1);
 	glEnd();
 }
 
@@ -193,6 +193,13 @@ void Renderer::drawAxis() {
 	glVertex3f(0, 0, -100);
 	glVertex3f(0, 0, 100);
 	glEnd();
+}
+
+void Renderer::makeModel() {
+	CEscapingRoomView::game.playerModelId = glGenLists(1);
+	glNewList(CEscapingRoomView::game.playerModelId, GL_COMPILE);
+	CEscapingRoomView::game.playerModel->draw();
+	glEndList();
 }
 
 void Renderer::makeTexture() {
