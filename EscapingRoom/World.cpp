@@ -39,12 +39,12 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 void World::init() {
 	Block closedDoor(BlockId::DOOR_CLOSED);
 	Block openedDoor(BlockId::DOOR_OPENED);
-	Block portalUp(BlockId::PORTAL_UP, 2);
-	Block portalDown(BlockId::PORTAL_DOWN, 2);
+	Block portalUp(BlockId::PORTAL_UP, FORWARD);
+	Block portalDown(BlockId::PORTAL_DOWN, FORWARD);
 	Block pad(BlockId::PAD);
 
-	Block portal2Up(BlockId::PORTAL_UP, 1);
-	Block portal2Down(BlockId::PORTAL_DOWN, 1);
+	Block portal2Up(BlockId::PORTAL_UP, TOP);
+	Block portal2Down(BlockId::PORTAL_DOWN, TOP);
 
 	for (int wx = 0; wx < sizeX; wx++) {
 		for (int wy = 0; wy < sizeY; wy++) {
@@ -220,14 +220,13 @@ void World::rotateLU() {
 }
 
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
-	connectPortal(0, 1);
 	Block collisingBlock = getBlock(location);
 	// Portalling only for PORTAL_DOWN... this can cause errr......
 	if (collisingBlock.id == BlockId::PORTAL_DOWN) {
 		// PORTALLING
 		if (!entity->portaled) {
-			entity->teleport(getNextPortal(location) + Vec3(0, -2.5, 0));
-			CEscapingRoomView::game.getCurrentWorld()->eye.upping(Vec3(0, -1, 0));
+			entity->teleport(getNextPortal(location) + 2.5 * getBlock(getNextPortal(location)).getNormal());
+			CEscapingRoomView::game.getCurrentWorld()->eye.upping(getBlock(getNextPortal(location)).getNormal());
 			cameraInit();
 		}
 	}

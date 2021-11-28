@@ -24,7 +24,7 @@ public:
 	void entityTick();
 	// Moving by player will
 	void playerTick();
-	void createWorld(World* world);
+	void pushWorld(World* world);
 	World* getCurrentWorld();
 	void gotoNextWorld();
 	Player* getPlayer();
