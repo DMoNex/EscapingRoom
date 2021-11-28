@@ -13,6 +13,14 @@ World::~World() {
 		delete[] map[i];
 	}
 	delete[] map;
+
+	for (int i = 0; i < entityList.size(); i++) {
+		delete entityList[i];
+	}
+	for (int i = 0; i < portalRelation.size(); i++) {
+		delete portalRelation[i];
+	}
+	delete data;
 }
 
 World::World(int sizeX, int sizeY, int sizeZ) {
