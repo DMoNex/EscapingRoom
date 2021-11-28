@@ -15,6 +15,6 @@ public:
 	void drawCube(Entity);
 	void drawAxis();
 
-
+	void makeModel();
 	void makeTexture();
 };

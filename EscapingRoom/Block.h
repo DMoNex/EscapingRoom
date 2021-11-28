@@ -95,4 +95,5 @@ public:
 	}
 	bool isCrashable();
 	Vec3 getNormal();
+	Vec3 getNormalBySide();
 };

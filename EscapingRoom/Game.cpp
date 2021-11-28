@@ -4,6 +4,8 @@
 #include "EscapingRoomView.h"
 
 World* Game::emptyWorld;
+Model* Game::playerModel;
+int Game::playerModelId;
 
 Game::Game() {
 	Player* tempPlayer = new Player();
@@ -14,6 +16,7 @@ Game::Game() {
 	init();
 }
 
+#define SIZE 20
 #include "Model.h"
 void Game::init() {
 	// Currently only the basic world is loaded.
@@ -25,8 +28,24 @@ void Game::init() {
 	worldList[0]->entityList.push_back(box);
 	worldList[0]->player = player;
 	getCurrentWorld()->connectPortal(0, 1);
-	Model model(10);
-	model.save("player.txt");
+	playerModel = new Model(SIZE);
+	for (int wy = 0; wy < SIZE * 2; wy++) {
+		for (int wx = SIZE - 1; wx >= 0; wx--) {
+			for (int wz = SIZE - 1; wz >= 0; wz--) {
+				float y = (float) wy / (SIZE - 1) * 2;
+				float x = (float) (SIZE - wx + 1) / (SIZE - 1) * 2;
+				float z = (float) (SIZE - wz + 1) / (SIZE - 1) * 2;
+				x -= 1;
+				z -= 1;
+				y -= 2;
+				if (abs(x) + abs(y / 2) + abs(z) <= 1) {
+					playerModel->setBlock(Block(BlockId::WALL), wx, wy, wz);
+				}
+			}
+		}
+	}
+
+	playerModel->save("player.txt");
 }
 
 void Game::onTick() {

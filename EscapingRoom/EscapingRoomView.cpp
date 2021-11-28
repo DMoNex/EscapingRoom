@@ -244,12 +244,13 @@ void CEscapingRoomView::InitGL(GLvoid) {
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_LIGHT1);
-	glEnable(GL_COLOR_MATERIAL);
+	// glEnable(GL_COLOR_MATERIAL);
 
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
 	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
 	renderSingleton.makeTexture();
+	renderSingleton.makeModel();
 }
 
 void CEscapingRoomView::OnSize(UINT nType, int cx, int cy)
