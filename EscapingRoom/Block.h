@@ -1,14 +1,16 @@
 #pragma once
 
 #include "BlockId.h"
+#include "Vec3.h"
 
-enum class Direction {
-	TOP,	// 0
-	BOTTOM, // 1
-	FOWARD,	// 2
-	BACK,	// 3
-	LEFT,	// 4
-	RIGHT	// 5
+// Don't keep type-safety.
+enum Direction {
+	TOP,		// 0
+	BOTTOM,		// 1
+	FORWARD,	// 2
+	BACK,		// 3
+	LEFT,		// 4
+	RIGHT		// 5
 };
 
 class Entity;
@@ -93,4 +95,5 @@ public:
 		}
 	}
 	bool isCrashable();
+	Vec3 getNormal();
 };

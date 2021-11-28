@@ -29,8 +29,8 @@ class World {
 	// The player of this map.
 	Player* player;
 	GLuint textureId[14];
+	std::vector<Portal*> portalRelation;
 	GLuint entityTextureId[6];
-	std::vector<Portal> portalRelation;
 	Data* data;
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.

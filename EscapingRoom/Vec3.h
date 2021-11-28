@@ -12,6 +12,7 @@ public:
 	float length();
 	Vec3& normalize();
 	Vec3 cross(Vec3 const&);
+	Vec3 gramSchmidting(Vec3);
 };
 
 Vec3 operator*(float, Vec3);

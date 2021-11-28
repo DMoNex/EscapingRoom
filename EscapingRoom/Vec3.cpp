@@ -77,3 +77,7 @@ void ucsRotation(std::vector<Vec3>& list) {
 		list[i] = list[i] - min;
 	}
 }
+
+Vec3 Vec3::gramSchmidting(Vec3 vect) {
+	return vect - dot(vect) / (dot(*this)) * (*this);
+}
