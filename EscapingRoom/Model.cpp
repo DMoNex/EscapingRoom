@@ -7,7 +7,11 @@ Model::Model(int size) {
 		init();
 }
 
-void Model::init() {
+Model::~Model() {
+	free();
+}
+
+void Model::alloc() {
 	singleton = new Block * *[size];
 	for (int i = 0; i < size; i++) {
 		singleton[i] = new Block * [size * 2];
@@ -17,7 +21,21 @@ void Model::init() {
 			singleton[i][j] = new Block[size];
 		}
 	}
+}
 
+void Model::free() {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size * 2; j++) {
+			delete[] singleton[i][j];
+		}
+	}
+	for (int i = 0; i < size; i++) {
+		delete[] singleton[i];
+	}
+	delete[] singleton;
+}
+
+void Model::init() {
 	for (int wx = 0; wx < size; wx++) {
 		for (int wy = 0; wy < size * 2; wy++) {
 			for (int wz = 0; wz < size; wz++) {
@@ -89,6 +107,9 @@ void Model::draw() {
 void Model::load(std::string const& path) {
 	std::ifstream istream(path);
 	int id;
+	istream >> size;
+	free();
+	alloc();
 	for (int wy = 0; wy < size * 2; wy++) {
 		for (int wx = size - 1; wx >= 0; wx--) {
 			for (int wz = size - 1; wz >= 0; wz--) {
@@ -102,6 +123,8 @@ void Model::load(std::string const& path) {
 
 void Model::save(std::string const& path) {
 	std::ofstream ostream(path);
+	ostream << size;
+	ostream << "\n";
 	for (int wy = 0; wy < size * 2; wy++) {
 		for (int wx = size - 1; wx >= 0; wx--) {
 			for (int wz = size - 1; wz >= 0; wz--) {

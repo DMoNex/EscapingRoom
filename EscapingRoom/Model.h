@@ -9,6 +9,9 @@ class Model {
 	int size;
 public:
 	Model(int size = 0);
+	~Model();
+	void alloc();
+	void free();
 	void init(); // loading included.
 	// Removing contiguous side of blocks.
 	void setBlock(Block, int, int, int);
