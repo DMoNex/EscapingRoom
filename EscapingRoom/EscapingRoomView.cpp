@@ -227,10 +227,14 @@ void CEscapingRoomView::OnDestroy() {
 	wglDeleteContext(m_hglRC);
 }
 
-const static GLfloat LightAmbient[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-const static GLfloat LightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+const static GLfloat LightAmbient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+const static GLfloat LightDiffuse[] = { 0.6f, 0.6f, 0.6f, 1.0f };
 const static GLfloat LightPosition[] = { 0.0f, 0.0f, 15.0f, 1.0f };
+const static GLfloat mat_ambient[] = { 0.2f, 0.2f, 0.2f, 0.};
+const static GLfloat mat_diffuse[] = { 0.6f, 0.6f, 0.6f, 0.};
+const static GLfloat mat_specular[] = { 0.2f, 0.2f, 0.2f, 0. };
 void CEscapingRoomView::InitGL(GLvoid) {
+	//light
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 	glShadeModel(GL_SMOOTH);
@@ -244,11 +248,18 @@ void CEscapingRoomView::InitGL(GLvoid) {
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_LIGHT1);
-	// glEnable(GL_COLOR_MATERIAL);
-
+	glEnable(GL_DEPTH_TEST);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
 	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);
+
+	//material
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
 	renderSingleton.makeTexture();
 	renderSingleton.makeModel();
 }
