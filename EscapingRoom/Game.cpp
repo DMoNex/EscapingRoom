@@ -40,12 +40,11 @@ void Game::init() {
 				z -= 1;
 				y -= 2;
 				if (abs(x) + abs(y / 2) + abs(z) <= 1) {
-					playerModel->setBlock(Block((BlockId)100), wx, wy, wz);
+					playerModel->setBlock(Block(BlockId::WALL), wx, wy, wz);
 				}
 			}
 		}
 	}
-
 	playerModel->save("player.txt");
 }
 
@@ -58,6 +57,7 @@ void Game::onTick() {
 
 // Gravity moving part.
 void Game::entityTick() {
+	bool shouldCloseDoor = true;
 	for (int i = 0; i < getCurrentWorld()->entityList.size(); i++) {
 		getCurrentWorld()->entityList[i]->velocity = - 1 / 5.0f * getCurrentWorld()->eye.up;
 		getCurrentWorld()->entityList[i]->moveTo(getCurrentWorld()->entityList[i]->location +
@@ -65,7 +65,12 @@ void Game::entityTick() {
 		getCurrentWorld()->entityList[i]->velocity = Vec3(0, 0, 0);
 		getCurrentWorld()->entityList[i]->portallingDelay = getCurrentWorld()->entityList[i]->portallingDelay > 0 ? getCurrentWorld()->entityList[i]->portallingDelay - 1 :
 			getCurrentWorld()->entityList[i]->portallingDelay;
+		if (getCurrentWorld()->entityList[i]->isSteppingPad) {
+			shouldCloseDoor = false;
+		}
 	}
+	if (shouldCloseDoor)
+		getCurrentWorld()->closeDoor();
 }
 
 // Keyboard moving part
