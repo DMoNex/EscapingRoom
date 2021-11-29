@@ -3,24 +3,17 @@
 #include <fstream>
 using namespace std;
 Data::Data(string const& path) {
-	this->sizeX = sizeX;
-	this->sizeY = sizeY;
-	this->sizeZ = sizeZ;
-	if (sizeX * sizeY * sizeZ > 0) {
-		alloc();
-	}
 	load(path);
 }
 
 Data::~Data() {
-	//free();
+	free();
 }
 
 void Data::load(string const& path) {
 	ifstream fin(path);
 	int id;
 	fin >> sizeX >> sizeY >> sizeZ >> mapStartX >> mapStartY >> mapStartZ >> playerSpawnX >> playerSpawnY >> playerSpawnZ;
-	free();
 	alloc();
 	for (int y = 0; y < sizeY; y++) {
 		for (int x = sizeX - 1; x >= 0; x--) {
@@ -65,14 +58,13 @@ void Data::free() {
 }
 
 void Data::alloc() {
-	if (mapData == NULL) {
-		for (int i = 0; i < sizeX; i++) {
-			mapData[i] = new Block * [sizeY];
-		}
-		for (int i = 0; i < sizeX; i++) {
-			for (int j = 0; j < sizeY; j++) {
-				mapData[i][j] = new Block[sizeZ];
-			}
-		}
+	mapData = new Block * *[sizeX];
+	for (int i = 0; i < sizeX; i++) {
+		mapData[i] = new Block * [sizeY];
 	}
+	for (int i = 0; i < sizeX; i++) {
+		for (int j = 0; j < sizeY; j++) {
+			mapData[i][j] = new Block[sizeZ];
+		}
+	}	
 }

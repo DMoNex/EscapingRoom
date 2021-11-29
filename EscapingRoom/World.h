@@ -31,7 +31,6 @@ class World {
 	GLuint textureId[14];
 	std::vector<Portal*> portalRelation;
 	GLuint entityTextureId[6];
-	Data* data;
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;

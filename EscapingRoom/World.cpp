@@ -20,7 +20,6 @@ World::~World() {
 	for (int i = 0; i < portalRelation.size(); i++) {
 		delete portalRelation[i];
 	}
-	delete data;
 }
 
 World::World(int sizeX, int sizeY, int sizeZ) {
