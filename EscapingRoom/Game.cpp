@@ -27,9 +27,9 @@ void Game::init() {
 	for (int wy = 0; wy < SIZE * 2; wy++) {
 		for (int wx = SIZE - 1; wx >= 0; wx--) {
 			for (int wz = SIZE - 1; wz >= 0; wz--) {
-				float y = (float) wy / (SIZE - 1) * 2;
-				float x = (float) (SIZE - wx + 1) / (SIZE - 1) * 2;
-				float z = (float) (SIZE - wz + 1) / (SIZE - 1) * 2;
+				float y = (float)wy / (SIZE - 1) * 2;
+				float x = (float)(SIZE - wx + 1) / (SIZE - 1) * 2;
+				float z = (float)(SIZE - wz + 1) / (SIZE - 1) * 2;
 				x -= 1;
 				z -= 1;
 				y -= 2;
@@ -53,7 +53,7 @@ void Game::onTick() {
 void Game::entityTick() {
 	bool shouldCloseDoor = true;
 	for (int i = 0; i < getCurrentWorld()->entityList.size(); i++) {
-		getCurrentWorld()->entityList[i]->velocity = - 1 / 5.0f * getCurrentWorld()->eye.up;
+		getCurrentWorld()->entityList[i]->velocity = -1 / 5.0f * getCurrentWorld()->eye.up;
 		getCurrentWorld()->entityList[i]->moveTo(getCurrentWorld()->entityList[i]->location +
 			getCurrentWorld()->entityList[i]->velocity);
 		getCurrentWorld()->entityList[i]->velocity = Vec3(0, 0, 0);
@@ -101,7 +101,7 @@ void Game::loadMap(std::string const& path) {
 	Player* player = new Player();
 	Entity* box = new Entity(EntityId::BOX);
 	world->setMapStartPoint(Vec3(d->mapStartX, d->mapStartY, d->mapStartZ));
-	player->location = Vec3(d->playerSpawnX,d->playerSpawnY, d->playerSpawnZ);
+	player->location = Vec3(d->playerSpawnX, d->playerSpawnY, d->playerSpawnZ);
 	box->location = player->location;
 	world->entityList.push_back(player);
 	world->entityList.push_back(box);
