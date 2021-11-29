@@ -87,7 +87,7 @@ bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
 }
 
 void printVector(Vec3& v) {
-	LOG("(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ", " + std::to_string(v.z) + ")");
+	//LOG("(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ", " + std::to_string(v.z) + ")");
 }
 
 void printVectorList(std::vector<Vec3>& list) {

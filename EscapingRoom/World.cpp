@@ -235,7 +235,7 @@ void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	}
 
 	if (collisingBlock.id != BlockId::ROOM) {
-		LOG("COLLISING BLOCK ID: " + std::to_string((int)collisingBlock.id));
+		//LOG("COLLISING BLOCK ID: " + std::to_string((int)collisingBlock.id));
 		switch (collisingBlock.id) {
 		case BlockId::DOOR_OPENED:
 			CEscapingRoomView::game.gotoNextWorld();
@@ -282,7 +282,7 @@ Vec3 World::getNextPortal(Vec3 loc) {
 				portalRelation[i]->ny + mapStartPoint.y,
 				portalRelation[i]->nz + mapStartPoint.z);
 	}
-	LOG("[E]: Getting a non-existing portal");
+	//LOG("[E]: Getting a non-existing portal");
 	return Vec3(0, 0, 0);
 }
 

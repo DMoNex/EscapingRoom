@@ -45,6 +45,13 @@ Vec3 Vec3::cross(Vec3 const& v) {
 	return v2;
 }
 
+Vec3& Vec3::pack() {
+	x = (x + 1) / 2;
+	y = (y + 1) / 2;
+	z = (z + 1) / 2;
+	return (*this);
+}
+
 Vec3 operator*(float c, Vec3 v) {
 	Vec3 v2;
 	v2.x = v.x * c;

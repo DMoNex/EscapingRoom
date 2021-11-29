@@ -54,10 +54,7 @@ void Renderer::drawEntity() {
 			currentWorld->eye.rotateGLMatrix();
 			glTranslatef(-centralizingVect.x, -centralizingVect.y, -centralizingVect.z);
 			// ERROR.
-			glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[1]);
 			glCallList(CEscapingRoomView::game.playerModelId);
-			glBindTexture(GL_TEXTURE_2D, 0); // bind cancel
-			// CEscapingRoomView::game.playerModel->draw();
 			break;
 		case EntityId::BOX:
 			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
@@ -80,6 +77,9 @@ void Renderer::drawSurface(float x, float y) {
 }
 
 void Renderer::drawCube(Block block, float size) {
+	Vec3 nv = block.getNormalBySide();
+	nv.y + 1;
+	nv.normalize();
 	switch (block.id) {
 	case(BlockId::AIR):
 	case(BlockId::DOOR_OPENED):
@@ -235,6 +235,7 @@ void Renderer::makeTexture() {
 		case 7: // ladder
 			break;
 		case 8:
+			break;
 		case 9:
 			data = stbi_load("image/PAD.jpg", &width, &height, &nrChannels, 0);
 			break;
@@ -243,7 +244,6 @@ void Renderer::makeTexture() {
 		}
 		if (data) { // 유효성검사
 			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
-			
 		}
 		data = 0;
 	}
