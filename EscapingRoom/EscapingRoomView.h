@@ -10,7 +10,7 @@
 #include "Game.h"
 #include <string>
 
-#define LOG(x) CEscapingRoomView::printLog(x)
+//#define LOG(x) CEscapingRoomView::printLog(x)
 
 class CEscapingRoomView : public CView
 {

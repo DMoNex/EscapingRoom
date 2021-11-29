@@ -14,6 +14,7 @@ public:
 	Vec3& teleportizing();
 	Vec3 cross(Vec3 const&);
 	Vec3 gramSchmidting(Vec3);
+	Vec3& pack();
 };
 
 Vec3 operator*(float, Vec3);
