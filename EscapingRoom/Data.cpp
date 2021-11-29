@@ -34,14 +34,14 @@ void Data::load(string const& path) {
 
 void Data::save(string const& path) {
 	ofstream fout(path);
-	fout << sizeX 
-		<< sizeY 
-		<< sizeZ 
-		<< mapStartX 
-		<< mapStartY 
-		<< mapStartZ 
-		<< playerSpawnX 
-		<< playerSpawnY 
+	fout << sizeX << " "
+		<< sizeY << " "
+		<< sizeZ << " "
+		<< mapStartX << " "
+		<< mapStartY << " "
+		<< mapStartZ << " "
+		<< playerSpawnX << " "
+		<< playerSpawnY << " "
 		<< playerSpawnZ << "\n";
 	for (int y = 0; y < sizeY; y++) {
 		for (int x = sizeX - 1; x >= 0; x--) {
