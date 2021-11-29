@@ -37,7 +37,8 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 			map[i][j] = new Block[sizeZ];
 		}
 	}
-	init();
+	isDoorGenerated = false;
+	// init();
 	eye = Eye();
 	cameraInit();
 }
@@ -107,7 +108,8 @@ void World::init() {
 }
 
 void World::cameraInit() {
-	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front + sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) / 3.0f * eye.up;
+	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) -
+		sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front;
 }
 
 void World::setMapStartPoint(Vec3 const& point) {

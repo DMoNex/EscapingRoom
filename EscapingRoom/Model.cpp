@@ -92,8 +92,6 @@ void Model::draw() {
 	for (float wx = 0; wx < size; wx++) {
 		for (float wy = 0; wy < size * 2; wy++) {
 			for (float wz = 0; wz < size; wz++) {
-				Vec3 nv = getBlock(wx, wy, wz).getNormalBySide();
-				glNormal3f(nv.x, nv.y, nv.z);
 				CEscapingRoomView::renderSingleton.drawCube(getBlock(wx, wy, wz), 1.0f / size);
 				glTranslatef(0, 0, 1.0f / size);
 			}

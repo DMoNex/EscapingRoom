@@ -50,16 +50,13 @@ void Renderer::drawEntity() {
 			currentWorld->entityList[i]->location.z);
 		switch (currentWorld->entityList[i]->getEntityType()) {
 		case EntityId::PLAYER:
-			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
 			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
 			currentWorld->eye.rotateGLMatrix();
+			glTranslatef(-centralizingVect.x, -centralizingVect.y, -centralizingVect.z);
 			// ERROR.
 			glCallList(CEscapingRoomView::game.playerModelId);
 			break;
 		case EntityId::BOX:
-			centralizingVect = centralizingVect - currentWorld->eye.getInversedEyeMatrix() * centralizingVect;
-			glTranslatef(centralizingVect.x, centralizingVect.y, centralizingVect.z);
-			currentWorld->eye.rotateGLMatrix();
 			drawCube(Entity(EntityId::BOX));
 			break;
 		}

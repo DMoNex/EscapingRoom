@@ -19,6 +19,11 @@ void Data::load(string const& path) {
 		for (int x = sizeX - 1; x >= 0; x--) {
 			for (int z = sizeZ - 1; z >= 0; z--) {
 				fin >> id;
+				if (id == '\n') {
+					fin >> id;
+					z++;
+					continue;
+				}
 				mapData[x][y][z] = (BlockId)id;
 			}
 		}
@@ -29,7 +34,15 @@ void Data::load(string const& path) {
 
 void Data::save(string const& path) {
 	ofstream fout(path);
-	fout << sizeX << sizeY << sizeZ << mapStartX << mapStartY << mapStartZ << playerSpawnX << playerSpawnY << playerSpawnZ << "\n";
+	fout << sizeX 
+		<< sizeY 
+		<< sizeZ 
+		<< mapStartX 
+		<< mapStartY 
+		<< mapStartZ 
+		<< playerSpawnX 
+		<< playerSpawnY 
+		<< playerSpawnZ << "\n";
 	for (int y = 0; y < sizeY; y++) {
 		for (int x = sizeX - 1; x >= 0; x--) {
 			for (int z = sizeZ - 1; z >= 0; z--) {

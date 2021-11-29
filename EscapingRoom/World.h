@@ -36,6 +36,7 @@ class World {
 	std::vector<Portal*> portalRelation;
 	GLuint entityTextureId[6];
 	Int3 doorLoc1, doorLoc2;
+	bool isDoorGenerated;
 public:
 	// It acts over getBlock/setBlock to change map for gravitational change.
 	Eye eye;
