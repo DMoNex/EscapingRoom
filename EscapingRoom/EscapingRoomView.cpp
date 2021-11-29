@@ -360,14 +360,14 @@ void CEscapingRoomView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		game.getCurrentWorld()->rotateFL();
 		break;
 		// UP and DOWN will be disabled in real game playing.
-	case VK_UP:
+	/*case VK_UP:
 		game.getCurrentWorld()->rotateLU();
 		break;
 	case VK_DOWN:
 		game.getCurrentWorld()->rotateLU();
 		game.getCurrentWorld()->rotateLU();
 		game.getCurrentWorld()->rotateLU();
-		break;
+		break;*/
 	}
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
