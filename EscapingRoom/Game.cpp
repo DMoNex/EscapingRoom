@@ -19,7 +19,7 @@ Game::Game() {
 #define SIZE 20
 #include "Model.h"
 void Game::init() {
-	loadMap("test.txt");
+	loadMap("world2.txt");
 	// getCurrentWorld()->connectPortal(0, 1);
 
 	// Modelling player.
@@ -95,7 +95,7 @@ Player* Game::getPlayer() {
 }
 
 void Game::loadMap(std::string const& path) {
-	Data* d = new Data("test.txt");
+	Data* d = new Data(path);
 	World* world = new World(d->sizeX, d->sizeY, d->sizeZ);
 	pushWorld(world);
 	Player* player = new Player();
@@ -153,6 +153,8 @@ void Game::loadMap(std::string const& path) {
 	for (int i = 0; i < world->portalRelation.size(); i += 2) {
 		world->connectPortal(i, i + 1);
 	}
-
+	string saveFile;
+	saveFile.append("sav_").append(path);
+	d->save(saveFile);
 	delete d;
 }
