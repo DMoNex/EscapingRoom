@@ -72,6 +72,7 @@ void Entity::teleport(Vec3 location) {
 // Chekcing whether at least one collising point is collising.
 bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
 	bool isCollising = false;
+	bool steppingPad = false;
 	bool isCollisingWithPortal = false;
 	bool isSteppingPortal = false;
 	for (int i = 0; i < list.size(); i++) {
@@ -80,14 +81,17 @@ bool checkCollision(std::vector<Vec3>& list, Entity* entity) {
 			isCollising = true;
 			if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).id == BlockId::PORTAL)
 				isCollisingWithPortal = true;
+			if (CEscapingRoomView::game.getCurrentWorld()->getBlock(list[i] + entity->location).id == BlockId::PAD)
+				steppingPad = true;
 		}
 	}
+	entity->isSteppingPad = steppingPad;
 	entity->portaled = isCollisingWithPortal + !entity->portaled + isSteppingPortal;
 	return isCollising;
 }
 
 void printVector(Vec3& v) {
-	LOG("(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ", " + std::to_string(v.z) + ")");
+	// LOG("(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ", " + std::to_string(v.z) + ")");
 }
 
 void printVectorList(std::vector<Vec3>& list) {

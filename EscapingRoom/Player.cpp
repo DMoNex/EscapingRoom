@@ -74,7 +74,7 @@ void Player::grab() {
 	Entity* pointingEntity = getPointingEntity(2.0f);
 	World* currentWorld = CEscapingRoomView::game.getCurrentWorld();
 	if (pointingEntity) {
-		LOG("POINTING ENITTY ID: " + std::to_string((int)pointingEntity->getEntityType()));
+		// LOG("POINTING ENITTY ID: " + std::to_string((int)pointingEntity->getEntityType()));
 		for (int i = 0; i < currentWorld->entityList.size(); i++) {
 			if (currentWorld->entityList[i] == pointingEntity)
 				currentWorld->entityList.erase(currentWorld->entityList.begin() + i--);
