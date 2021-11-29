@@ -11,8 +11,9 @@ Data::Data(string const& path) {
 	}
 	load(path);
 }
+
 Data::~Data() {
-	free();
+	//free();
 }
 
 void Data::load(string const& path) {
@@ -50,22 +51,28 @@ void Data::save(string const& path) {
 }
 
 void Data::free() {
-	for (int i = 0; i < sizeX; i++) {
-		for (int j = 0; j < sizeY; j++) {
-			delete[] mapData[i][j];
+	if (mapData != NULL) {
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				delete[] mapData[i][j];
+			}
 		}
+		for (int i = 0; i < sizeX; i++) {
+			delete[] mapData[i];
+		}
+		delete[] mapData;
 	}
-	for (int i = 0; i < sizeX; i++) {
-		delete[] mapData[i];
-	}
-	delete[] mapData;
 }
 
 void Data::alloc() {
-	for (int x = 0; x < sizeX; x++) {
-		mapData[x] = new Block * [sizeY];
-		for (int y = 0; y < sizeY; y++) {
-			mapData[x][y] = new Block[sizeZ];
+	if (mapData == NULL) {
+		for (int i = 0; i < sizeX; i++) {
+			mapData[i] = new Block * [sizeY];
+		}
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				mapData[i][j] = new Block[sizeZ];
+			}
 		}
 	}
 }
