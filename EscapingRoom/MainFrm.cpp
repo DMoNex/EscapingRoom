@@ -57,7 +57,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	///* /// Delete Tool Bar ///
+	/* /// Delete Tool Bar ///
 	BOOL bNameValid;
 	
 	if (!m_wndMenuBar.Create(this))
@@ -148,7 +148,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		}
 	}
 
-	//*/ /// Delete Tool Bar ///
+	*/ /// Delete Tool Bar ///
 	// 메뉴 개인 설정을 활성화합니다(가장 최근에 사용한 명령).
 	// TODO: 사용자의 기본 명령을 정의하여 각 풀다운 메뉴에 하나 이상의 기본 명령을 포함시킵니다.
 	CList<UINT, UINT> lstBasicCommands;
@@ -187,11 +187,10 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 		return FALSE;
 	// TODO: CREATESTRUCT cs를 수정하여 여기에서
 	//  Window 클래스 또는 스타일을 수정합니다.
-//	if (cs.hMenu != NULL) 
-//	{
-//		::DestroyMenu(cs.hMenu);
-//		cs.hMenu = NULL; 
-//	}
+	if (cs.hMenu != NULL) {
+		::DestroyMenu(cs.hMenu);
+		cs.hMenu = NULL; 
+	}
 	return TRUE;
 }
 

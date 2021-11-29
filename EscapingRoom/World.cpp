@@ -20,7 +20,6 @@ World::~World() {
 	for (int i = 0; i < portalRelation.size(); i++) {
 		delete portalRelation[i];
 	}
-	delete data;
 }
 
 World::World(int sizeX, int sizeY, int sizeZ) {
@@ -45,8 +44,8 @@ World::World(int sizeX, int sizeY, int sizeZ) {
 
 // Making a room
 void World::init() {
-	Block closedDoor(BlockId::DOOR_CLOSED);
-	Block openedDoor(BlockId::DOOR_OPENED);
+	Block closedDoor(BlockId::DOOR_CLOSED, FORWARD);
+	Block openedDoor(BlockId::DOOR_OPENED, FORWARD);
 	Block portal(BlockId::PORTAL, TOP);
 	Block pad(BlockId::PAD);
 

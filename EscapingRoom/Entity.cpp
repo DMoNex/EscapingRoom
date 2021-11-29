@@ -31,12 +31,12 @@ void Entity::init() {
 		break;
 	case EntityId::PRISM_BLOCK:
 		caseCrash = true;
-		lightTransmission = 2; // ±¼Àı
+		lightTransmission = 2; // Â±Â¼Ã€Ã½
 		flight = false;
 		break;
 	case EntityId::MIRROR_BLOCK:
 		caseCrash = true;
-		lightTransmission = 3; // ¹İ»ç
+		lightTransmission = 3; // Â¹ÃÂ»Ã§
 		flight = false;
 		break;
 	case EntityId::THORNS_TRAP:

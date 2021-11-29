@@ -27,6 +27,7 @@ void Game::init() {
 	worldList[0]->entityList.push_back(player);
 	worldList[0]->entityList.push_back(box);
 	worldList[0]->player = player;
+	loadMap(worldList[0], "test.txt");
 	getCurrentWorld()->connectPortal(0, 1);
 	playerModel = new Model(SIZE);
 	for (int wy = 0; wy < SIZE * 2; wy++) {
@@ -97,4 +98,20 @@ void Game::gotoNextWorld() {
 
 Player* Game::getPlayer() {
 	return getCurrentWorld()->player;
+}
+
+void Game::loadMap(World* world, string const& path) {
+	Data* d = new Data("test.txt");
+	world->sizeX = d->sizeX;
+	world->sizeY = d->sizeY;
+	world->sizeZ = d->sizeZ;
+	world->setMapStartPoint(Vec3(d->mapStartX, d->mapStartY, d->mapStartZ));
+	world->player->location = Vec3(d->playerSpawnX,d->playerSpawnY, d->playerSpawnZ);
+	for (int y = 0; y < world->sizeY; y++) {
+		for (int x = world->sizeX - 1; x >= 0; x--) {
+			for (int z = world->sizeZ - 1; z >= 0; z--) {
+				world->map[x][y][z] = (Block)d->mapData[x][y][z];
+			}
+		}
+	}
 }

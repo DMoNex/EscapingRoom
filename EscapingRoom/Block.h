@@ -51,6 +51,7 @@ public:
 			caseCrash = false;
 			break;
 		case BlockId::DOOR_OPENED:
+			side[align] = 1;
 			caseCrash = true;
 			lightTransmission = false;
 			break;
@@ -79,7 +80,7 @@ public:
 		case BlockId::DOOR_CLOSED:
 			caseCrash = true;
 			lightTransmission = true;
-			side[2] = 1;
+			side[align] = 1;
 			break;
 		case BlockId::WALL:
 		case BlockId::STAIRS:
