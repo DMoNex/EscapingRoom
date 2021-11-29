@@ -71,7 +71,7 @@ public:
 		case BlockId::PAD:
 			caseCrash = true;
 			lightTransmission = true;
-			side[0] = 1;
+			side[align] = 1;
 			break;
 		case BlockId::ARROW_TRAP:
 			caseCrash = false;

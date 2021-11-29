@@ -16,11 +16,21 @@ Game::Game() {
 	init();
 }
 
+#define WORLDCNT 3
 #define SIZE 20
 #include "Model.h"
+#include <sstream>
 void Game::init() {
+	/*
+	std::stringstream str;
+	for (int i = 1; i <= WORLDCNT; i++) {
+		str << i;
+		loadMap("world" + str.str() + ".txt");
+	}
+	*/
+	loadMap("world1.txt");
 	loadMap("world2.txt");
-	// getCurrentWorld()->connectPortal(0, 1);
+	loadMap("world3.txt");
 
 	// Modelling player.
 	playerModel = new Model(SIZE);
@@ -153,6 +163,7 @@ void Game::loadMap(std::string const& path) {
 	for (int i = 0; i < world->portalRelation.size(); i += 2) {
 		world->connectPortal(i, i + 1);
 	}
+
 	string saveFile;
 	saveFile.append("sav_").append(path);
 	d->save(saveFile);

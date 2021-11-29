@@ -32,9 +32,7 @@ class World {
 	std::vector<Entity*> entityList;
 	// The player of this map.
 	Player* player;
-	GLuint textureId[14];
 	std::vector<Portal*> portalRelation;
-	GLuint entityTextureId[6];
 	Int3 doorLoc1, doorLoc2;
 	bool isDoorGenerated;
 	Block door;

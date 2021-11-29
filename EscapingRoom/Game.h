@@ -18,6 +18,8 @@ class Game {
 	// This can be used when the game is cleared.
 	static World* emptyWorld;
 public:
+	GLuint textureId[14];
+	GLuint entityTextureId[6];
 	static Model* playerModel;
 	static int playerModelId;
 	Game();

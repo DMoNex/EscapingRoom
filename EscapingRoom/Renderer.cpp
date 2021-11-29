@@ -82,16 +82,16 @@ void Renderer::drawCube(Block block, float size) {
 	case(BlockId::DOOR_OPENED):
 		break;
 	case(BlockId::ROOM):
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[1]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.textureId[1]);
 		break;
 	case(BlockId::DOOR_CLOSED):
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[2]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.textureId[2]);
 		break;
 	case(BlockId::PORTAL):
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[6]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.textureId[6]);
 		break;
 	case(BlockId::PAD):
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[9]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.textureId[9]);
 		break;
 	}
 	if (block.side[1]) { // 아랫면 활성화 -> LOOP
@@ -137,7 +137,7 @@ void Renderer::drawCube(Entity entity) {
 	case(EntityId::THORNS_TRAP):
 		break;
 	case(EntityId::BOX): // BOX
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->entityTextureId[1]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.entityTextureId[1]);
 		break;
 	}
 	// Entity 확장시 각 면을 분리해서 활성화해야 할지도....?
@@ -204,10 +204,10 @@ void Renderer::makeTexture() {
 	unsigned char* data = 0;
 	GLint width = 1024, height = 1024, nrChannels;
 	//texture creat
-	glGenTextures(14, CEscapingRoomView::game.getCurrentWorld()->textureId); // textureId 1~13 (0 == empty)
+	glGenTextures(14, CEscapingRoomView::game.textureId); // textureId 1~13 (0 == empty)
 	for (i = 0; i < 14; i++) {
 		//texture bind
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->textureId[i]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.textureId[i]);
 		//set binded texture's option
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -244,10 +244,10 @@ void Renderer::makeTexture() {
 		}
 		data = 0;
 	}
-	glGenTextures(6, CEscapingRoomView::game.getCurrentWorld()->entityTextureId); // textureId 1~6 (0 == empty)
+	glGenTextures(6, CEscapingRoomView::game.entityTextureId); // textureId 1~6 (0 == empty)
 	for (i = 0; i < 6; i++) { // create Entity Texture
 		//texture Bind
-		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.getCurrentWorld()->entityTextureId[i]);
+		glBindTexture(GL_TEXTURE_2D, CEscapingRoomView::game.entityTextureId[i]);
 		//set binded texture's option
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
