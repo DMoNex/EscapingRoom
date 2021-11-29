@@ -37,10 +37,10 @@ Vec3 Block::getNormal() {
 		return Vec3(-1, 0, 0);
 		break;
 	case LEFT:
-		return Vec3(0, 0, 1);
+		return Vec3(0, 0, -1);
 		break;
 	case RIGHT:
-		return Vec3(0, 0, -1);
+		return Vec3(0, 0, 1);
 		break;
 	}
 	return Vec3(0, 1, 0);

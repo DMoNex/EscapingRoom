@@ -34,6 +34,8 @@ Vec3& Vec3::normalize() {
 
 Vec3& Vec3::teleportizing() {
 	if (y < 0) y -= 1;
+	if (z > 0) z += 1;
+	if (z < 0) z -= 1;
 	return (*this);
 }
 

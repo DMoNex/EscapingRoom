@@ -69,6 +69,7 @@ void Eye::upping(Vec3 up) {
 			this->up = this->front;
 			this->up = up;
 			this->front = this->left.cross(this->up);
+			this->left = getLeft();
 		}
 	}
 }
