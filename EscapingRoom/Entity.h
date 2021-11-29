@@ -20,6 +20,7 @@ public:
 	// Relative to entity leg location meaing aligned by up vector.
 	// It is recommended to give some minimum points as possible.
 	std::vector<Vec3> collisingPoints;
+	bool isSteppingPad;
 public:
 	virtual ~Entity() {}
 	// Showing the entity is what.

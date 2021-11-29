@@ -69,11 +69,14 @@ void World::init() {
 					makePortal(wx, wy, wz);
 				}
 				// DOOR for test
-				else if (wx == sizeX - 1 && (wy == 1 || wy == 2) && wz == 3) {
-					setBlock(closedDoor, wx, wy, wz);
-				}
-				else if (wx == sizeX - 1 && (wy == 1 || wy == 2) && wz == 6) {
+				else if (wx == sizeX - 1 && (wy == 1) && wz == 6) {
 					setBlock(openedDoor, wx, wy, wz);
+					doorLoc1 = { wx, wy, wz };
+				}
+				// DOOR for test
+				else if (wx == sizeX - 1 && (wy == 2) && wz == 6) {
+					setBlock(openedDoor, wx, wy, wz);
+					doorLoc2 = { wx, wy, wz };
 				}
 				//PAD for test
 				else if (wx == 2 && wy == 0 && wz == 4) {
@@ -104,7 +107,7 @@ void World::init() {
 }
 
 void World::cameraInit() {
-	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front;
+	camera = 1 / 2.0f * (mapEndPoint + mapStartPoint + Vec3(1, 1, 1)) - sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) * eye.front + sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ) / 3.0f * eye.up;
 }
 
 void World::setMapStartPoint(Vec3 const& point) {
@@ -221,6 +224,7 @@ void World::rotateLU() {
 void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	Block collisingBlock = getBlock(location);
 	Vec3 centralizingVect = entity->getCentralizingVector() + Vec3(0, 1, 0);
+	// LOG("COLLISING BLOCK ID: " + std::to_string((int)collisingBlock.id));
 	// Portalling only for PORTAL_DOWN... this can cause errr......
 	if (collisingBlock.id == BlockId::PORTAL) {
 		// PORTALLING
@@ -234,13 +238,13 @@ void World::onCollisingWithBlockAndEntity(Entity* entity, Vec3 location) {
 	}
 
 	if (collisingBlock.id != BlockId::ROOM) {
-		//LOG("COLLISING BLOCK ID: " + std::to_string((int)collisingBlock.id));
 		switch (collisingBlock.id) {
 		case BlockId::DOOR_OPENED:
 			CEscapingRoomView::game.gotoNextWorld();
 			break;
 		case BlockId::PAD:
-
+			isDoorOpened = true;
+			openDoor();
 			break;
 		}
 	}
@@ -281,6 +285,57 @@ Vec3 World::getNextPortal(Vec3 loc) {
 				portalRelation[i]->ny + mapStartPoint.y,
 				portalRelation[i]->nz + mapStartPoint.z);
 	}
-	//LOG("[E]: Getting a non-existing portal");
+	// LOG("[E]: Getting a non-existing portal");
 	return Vec3(0, 0, 0);
+}
+
+void World::load(char* filename) {
+	//맵이 이미 있으면 제거
+	if (map != NULL) {
+		for (int i = 0; i < sizeX; i++) {
+			for (int j = 0; j < sizeY; j++) {
+				delete[] map[i][j];
+			}
+		}
+		for (int i = 0; i < sizeX; i++) {
+			delete[] map[i];
+		}
+		delete[] map;
+	}
+	this->data->loadData(filename);
+	mapStartPoint = { data->mapStartX, data->mapStartY, data->mapStartZ };
+	this->sizeX = sizeX;
+	this->sizeY = sizeY;
+	this->sizeZ = sizeZ;
+	map = new Block * *[sizeX];
+	for (int i = 0; i < sizeX; i++) {
+		map[i] = new Block * [sizeY];
+	}
+	for (int i = 0; i < sizeX; i++) {
+		for (int j = 0; j < sizeY; j++) {
+			map[i][j] = new Block[sizeZ];
+		}
+	}
+	init();
+	eye = Eye();
+	cameraInit();
+
+	player->location = { data->playerSpawnX - mapStartPoint.x, data->playerSpawnY - mapStartPoint.y, data->playerSpawnZ - mapStartPoint.z };
+	for (int y = 0; y < sizeY; y++) {
+		for (int x = sizeX - 1; x >= 0; x--) {
+			for (int z = sizeZ - 1; y >= 0; z--) {
+				setBlock(Block(data->mapData[x][y][z]), x - mapStartPoint.x, y - mapStartPoint.y, z - mapStartPoint.z);
+			}
+		}
+	}
+}
+
+void World::closeDoor() {
+	setBlock(Block(BlockId::DOOR_CLOSED), doorLoc1.x, doorLoc1.y, doorLoc1.z);
+	setBlock(Block(BlockId::DOOR_CLOSED), doorLoc2.x, doorLoc2.y, doorLoc2.z);
+}
+
+void World::openDoor() {
+	setBlock(Block(BlockId::DOOR_OPENED), doorLoc1.x, doorLoc1.y, doorLoc1.z);
+	setBlock(Block(BlockId::DOOR_OPENED), doorLoc2.x, doorLoc2.y, doorLoc2.z);
 }
