@@ -68,7 +68,6 @@ public:
 	// id1 -> id2, portal id starts from 0.
 	void directizePortal(int, int);
 	void connectPortal(int, int);
-	void load(char* filename);
 	void closeDoor();
 	void openDoor();
 	Vec3 getNextPortal(Vec3);
