@@ -32,4 +32,5 @@ public:
 	World* getCurrentWorld();
 	void gotoNextWorld();
 	Player* getPlayer();
+	void loadMap(World*, string const&);
 };
