@@ -292,11 +292,11 @@ Vec3 World::getNextPortal(Vec3 loc) {
 }
 
 void World::closeDoor() {
-	setBlock(Block(BlockId::DOOR_CLOSED), doorLoc1.x, doorLoc1.y, doorLoc1.z);
-	setBlock(Block(BlockId::DOOR_CLOSED), doorLoc2.x, doorLoc2.y, doorLoc2.z);
+	setBlock(door, doorLoc1.x, doorLoc1.y, doorLoc1.z);
+	setBlock(door, doorLoc2.x, doorLoc2.y, doorLoc2.z);
 }
 
 void World::openDoor() {
-	setBlock(Block(BlockId::DOOR_OPENED), doorLoc1.x, doorLoc1.y, doorLoc1.z);
-	setBlock(Block(BlockId::DOOR_OPENED), doorLoc2.x, doorLoc2.y, doorLoc2.z);
+	setBlock(door, doorLoc1.x, doorLoc1.y, doorLoc1.z);
+	setBlock(door, doorLoc2.x, doorLoc2.y, doorLoc2.z);
 }

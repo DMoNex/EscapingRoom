@@ -139,6 +139,7 @@ void Game::loadMap(std::string const& path) {
 					world->makePortal(wx, wy, wz);
 				if (d->mapData[wx][wy][wz].id == BlockId::DOOR_CLOSED ||
 					d->mapData[wx][wy][wz].id == BlockId::DOOR_OPENED) {
+					world->door = world->map[wx][wy][wz];
 					if (!world->isDoorGenerated) {
 						world->doorLoc1 = { wx, wy, wz };
 						world->isDoorGenerated = true;
